@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Media Downloader</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: #1e293b; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); width: 100%; max-width: 500px; text-align: center; }
+        h1 { margin-bottom: 20px; color: #38bdf8; font-size: 24px; }
+        input { width: 100%; padding: 14px; border: 2px solid #334155; border-radius: 8px; background: #0f172a; color: #fff; font-size: 16px; margin-bottom: 15px; outline: none; }
+        input:focus { border-color: #38bdf8; }
+        button { width: 100%; padding: 14px; background: #0284c7; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #0369a1; }
+        #result { margin-top: 20px; word-break: break-all; }
+        .download-btn { display: inline-block; margin-top: 15px; padding: 12px 20px; background: #22c55e; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        .error { color: #ef4444; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Media Downloader</h1>
+        <input type="text" id="url" placeholder="Paste link here (TikTok, Insta, YT)...">
+        <button onclick="downloadMedia()">Download</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function downloadMedia() {
+            const urlInput = document.getElementById('url').value;
+            const resultDiv = document.getElementById('result');
+            if(!urlInput) { resultDiv.innerHTML = '<p class="error">Please enter a valid URL</p>'; return; }
+            resultDiv.innerHTML = '<p>Processing...</p>';
+            try {
+                const response = await fetch(`/api/download?url=${encodeURIComponent(urlInput)}`);
+                const data = await response.json();
+                if(data.downloadUrl) {
+                    resultDiv.innerHTML = `<a class="download-btn" href="${data.downloadUrl}" target="_blank" download>Click to Download File</a>`;
+                } else {
+                    resultDiv.innerHTML = `<p class="error">${data.error || 'Failed to fetch media'}</p>`;
+                }
+            } catch (err) {
+                resultDiv.innerHTML = '<p class="error">Error connecting to server</p>';
+            }
+        }
+    </script>
+</body>
+  </html>
+  

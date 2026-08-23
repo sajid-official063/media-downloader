@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- Google Search Console Verification Tag -->
+    <meta name="google-site-verification" content="gQK4pn0prrircznQ9U8..." />
+
     <!-- SEO Meta Tags for Google Search -->
     <title>All-in-One Video Downloader | Free HD No Watermark Downloader</title>
     <meta name="description" content="Download HD videos and MP3 audio from TikTok, Facebook, Instagram, YouTube and 18+ platforms without watermark for free.">
@@ -18,7 +21,11 @@
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-        body { background-color: #0f172a; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        body { background-color: #0f172a; color: #fff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
+        
+        /* Language Selector Banner */
+        #google_translate_element { margin-bottom: 15px; }
+        
         .container { background: #1e293b; width: 100%; max-width: 500px; padding: 25px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; }
         h1 { font-size: 24px; color: #38bdf8; margin-bottom: 8px; }
         p.subtitle { font-size: 13px; color: #94a3b8; margin-bottom: 20px; }
@@ -33,9 +40,23 @@
         .dl-btn { display: block; width: 100%; padding: 12px; margin: 8px 0; background: #0284c7; color: white; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 14px; cursor: pointer; border: none; }
         .dl-btn.mp3 { background: #475569; }
         .error { color: #ef4444; font-size: 13px; margin-top: 10px; display: none; }
+        
+        /* Monetization Ad Space */
+        .ad-container { margin: 20px 0; width: 100%; text-align: center; }
     </style>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'ur', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
+
+<!-- Language Switcher -->
+<div id="google_translate_element"></div>
 
 <div class="container">
     <h1>Media Downloader</h1>
@@ -48,6 +69,11 @@
 
     <p id="errorMsg" class="error"></p>
 
+    <!-- Top Ad Placement Space -->
+    <div class="ad-container" id="ad-top">
+        <!-- Adsterra / Monetag Code Will Go Here -->
+    </div>
+
     <div id="resultBox" class="result-box">
         <img id="thumb" src="" alt="Thumbnail">
         <h3 id="author"></h3>
@@ -56,6 +82,11 @@
         <!-- Direct Force Download Buttons -->
         <button class="dl-btn" onclick="forceDownload(videoLinkUrl, 'video.mp4')">Without Watermark (Direct Download)</button>
         <button class="dl-btn mp3" onclick="forceDownload(audioLinkUrl, 'audio.mp3')">Download MP3</button>
+    </div>
+
+    <!-- Bottom Ad Placement Space -->
+    <div class="ad-container" id="ad-bottom">
+        <!-- Adsterra / Monetag Code Will Go Here -->
     </div>
 </div>
 
@@ -100,7 +131,6 @@
         }
     }
 
-    // Function to force direct file download without opening video player
     async function forceDownload(fileUrl, fileName) {
         try {
             const response = await fetch(fileUrl);
@@ -117,12 +147,11 @@
             window.URL.revokeObjectURL(blobUrl);
             a.remove();
         } catch (error) {
-            // Fallback if Blob fails
             window.location.href = fileUrl;
         }
     }
 </script>
 
 </body>
-    </html>
+        </html>
     

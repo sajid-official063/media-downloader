@@ -16,6 +16,9 @@
         
         /* Ads Section Styling */
         .ad-container { margin: 25px 0; padding: 10px; background: #0f172a; border-radius: 12px; border: 1px dashed #334155; min-height: 100px; display: flex; justify-content: center; align-items: center; }
+        
+        .dl-btn { display: inline-block; padding: 12px 20px; background: #22c55e; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px; }
+        .dl-btn:hover { background: #16a34a; }
     </style>
 </head>
 <body>
@@ -40,15 +43,50 @@
     </div>
 
     <script>
-        function downloadMedia() {
-            const url = document.getElementById('videoUrl').value;
-            if(!url) {
+        async function downloadMedia() {
+            const videoUrl = document.getElementById('videoUrl').value;
+            const resultDiv = document.getElementById('result');
+
+            if(!videoUrl) {
                 alert('براہ کرم ویڈیو کا لنک درج کریں!');
                 return;
             }
-            document.getElementById('result').innerHTML = '<p style="color: #38bdf8; margin-top: 15px;">ویدیو ڈاؤنلوڈ کی جا رہی ہے، براہ کرم انتظار کریں...</p>';
-            // API integration call comes here
+
+            resultDiv.innerHTML = '<p style="color: #38bdf8; margin-top: 15px;">ویدیو پروسیس ہو رہی ہے، براہ کرم انتظار کریں...</p>';
+
+            try {
+                // Cobalt Public Free API Instance
+                const response = await fetch('https://api.cobalt.tools/api/json', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        url: videoUrl
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.url) {
+                    resultDiv.innerHTML = `<a href="${data.url}" target="_blank" class="dl-btn">کلک کر کے ویڈیو ڈاؤنلوڈ کریں 📥</a>`;
+                } else if (data.status === 'stream' || data.picker) {
+                    const mediaUrl = data.url || (data.picker && data.picker[0].url);
+                    if(mediaUrl) {
+                        resultDiv.innerHTML = `<a href="${mediaUrl}" target="_blank" class="dl-btn">کلک کر کے ویڈیو ڈاؤنلوڈ کریں 📥</a>`;
+                    } else {
+                        resultDiv.innerHTML = '<p style="color: #ef4444; margin-top: 15px;">معذرت، اس ویڈیو کا لنک حاصل نہیں ہو سکا۔ براہ کرم دوسرا لنک ٹرائی کریں۔</p>';
+                    }
+                } else {
+                    resultDiv.innerHTML = '<p style="color: #ef4444; margin-top: 15px;">ویڈیو پروسیس نہیں ہو سکی، براہ کرم درست لنک درج کریں۔</p>';
+                }
+
+            } catch (error) {
+                resultDiv.innerHTML = '<p style="color: #ef4444; margin-top: 15px;">سرویس سے کنکشن میں مسئلہ آیا ہے۔ دوبارہ کوشش کریں۔</p>';
+            }
         }
     </script>
 </body>
-</html>
+    </html>
+    

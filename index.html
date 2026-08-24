@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+               <!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -14,10 +15,10 @@
         button { padding: 14px; border-radius: 8px; border: none; background: #0284c7; color: white; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         button:hover { background: #0369a1; }
         
-        /* Ads Section Styling */
+        /* Ads Section */
         .ad-container { margin: 25px 0; padding: 10px; background: #0f172a; border-radius: 12px; border: 1px dashed #334155; min-height: 100px; display: flex; justify-content: center; align-items: center; }
         
-        .dl-btn { display: inline-block; padding: 12px 20px; background: #22c55e; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px; word-break: break-all; }
+        .dl-btn { display: inline-block; padding: 14px 24px; background: #22c55e; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px; font-size: 16px; }
         .dl-btn:hover { background: #16a34a; }
     </style>
 </head>
@@ -54,20 +55,13 @@
 
             resultDiv.innerHTML = '<p style="color: #38bdf8; margin-top: 15px;">ویدیو پروسیس ہو رہی ہے، براہ کرم انتظار کریں...</p>';
 
-            // Using Corsproxy to bypass browser restrictions
-            const proxyUrl = 'https://corsproxy.io/?';
-            const apiUrl = 'https://api.cobalt.tools/api/json';
-
             try {
-                const response = await fetch(proxyUrl + encodeURIComponent(apiUrl), {
+                const response = await fetch('/api/download', {
                     method: 'POST',
                     headers: {
-                        'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        url: videoUrl
-                    })
+                    body: JSON.stringify({ url: videoUrl })
                 });
 
                 const data = await response.json();
@@ -87,3 +81,4 @@
     </script>
 </body>
 </html>
+'

@@ -15,21 +15,30 @@
         button { padding: 14px; border-radius: 8px; border: none; background: #0284c7; color: white; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         button:hover { background: #0369a1; }
         
-        /* Result Section (Directly below download button) */
-        #result { margin: 15px 0; }
-        .dl-btn { display: inline-block; padding: 14px 24px; background: #22c55e; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; width: 100%; }
+        /* SaveFrom Card Style */
+        .preview-card { background: #0f172a; border-radius: 12px; padding: 15px; margin: 15px 0; border: 1px solid #334155; }
+        .thumb-box { position: relative; width: 100%; max-height: 250px; overflow: hidden; border-radius: 8px; margin-bottom: 12px; }
+        .thumb-box img { width: 100%; height: auto; object-fit: cover; }
+        .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 45px; color: rgba(255,255,255,0.85); }
+        .video-title { font-size: 14px; color: #cbd5e1; margin-bottom: 12px; word-break: break-all; line-height: 1.4; }
+        
+        .download-group { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+        .dl-btn { flex: 1; min-width: 130px; padding: 12px 16px; background: #22c55e; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
         .dl-btn:hover { background: #16a34a; }
+        .dl-audio { background: #eab308; color: #000; }
+        .dl-audio:hover { background: #ca8a04; }
 
-        /* Supported Platforms Section */
-        .platforms { margin: 20px 0; }
-        .platforms p { color: #94a3b8; font-size: 14px; margin-bottom: 12px; }
-        .icons { display: flex; justify-content: center; gap: 20px; font-size: 28px; }
+        .platforms { margin: 25px 0 15px 0; }
+        .platforms p { color: #94a3b8; font-size: 14px; margin-bottom: 15px; }
+        .icons { display: flex; justify-content: center; gap: 15px; font-size: 26px; flex-wrap: wrap; }
         .icon-tiktok { color: #ff0050; }
         .icon-youtube { color: #ff0000; }
         .icon-facebook { color: #1877f2; }
         .icon-instagram { color: #e4405f; }
+        .icon-twitter { color: #1da1f2; }
+        .icon-pinterest { color: #e60023; }
+        .icon-snapchat { color: #fffc00; }
 
-        /* Ads Section */
         .ad-container { margin-top: 20px; padding: 10px; background: #0f172a; border-radius: 12px; border: 1px dashed #334155; min-height: 100px; display: flex; justify-content: center; align-items: center; }
     </style>
 </head>
@@ -47,12 +56,15 @@
         <div id="result"></div>
 
         <div class="platforms">
-            <p>سپورٹ شدہ سوشل میڈیا ایپس</p>
+            <p>سپورٹ شدہ تمام سوشل میڈیا ایپس</p>
             <div class="icons">
                 <i class="fa-brands fa-tiktok icon-tiktok" title="TikTok"></i>
                 <i class="fa-brands fa-youtube icon-youtube" title="YouTube"></i>
                 <i class="fa-brands fa-facebook icon-facebook" title="Facebook"></i>
                 <i class="fa-brands fa-instagram icon-instagram" title="Instagram"></i>
+                <i class="fa-brands fa-x-twitter icon-twitter" title="Twitter/X"></i>
+                <i class="fa-brands fa-pinterest icon-pinterest" title="Pinterest"></i>
+                <i class="fa-brands fa-snapchat icon-snapchat" title="Snapchat"></i>
             </div>
         </div>
 
@@ -60,7 +72,6 @@
             <script async="async" data-cfasync="false" src="https://pl30991536.profitableratecpmnetwork.com/448e3ccce370deb9b96e8370daef31f4/invoke.js"></script>
             <div id="container-448e3ccce370deb9b96e8370daef31f4"></div>
         </div>
-        
     </div>
 
     <script>
@@ -84,8 +95,29 @@
 
                 const data = await response.json();
 
-                if (data.url) {
-                    resultDiv.innerHTML = `<a href="${data.url}" download target="_blank" rel="noopener noreferrer" class="dl-btn">کلک کر کے ویڈیو ڈاؤنلوڈ کریں 📥</a>`;
+                if (data.sd_url || data.hd_url) {
+                    const videoLink = data.hd_url || data.sd_url;
+                    const directSaveVideo = `/api/download?action=file&streamUrl=${encodeURIComponent(videoLink)}&title=${encodeURIComponent(data.title)}`;
+                    
+                    let audioBtnHTML = '';
+                    if (data.audio_url) {
+                        const directSaveAudio = `/api/download?action=file&streamUrl=${encodeURIComponent(data.audio_url)}&title=audio`;
+                        audioBtnHTML = `<a href="${directSaveAudio}" class="dl-btn dl-audio"><i class="fa-solid fa-music"></i> Audio MP3</a>`;
+                    }
+
+                    resultDiv.innerHTML = `
+                        <div class="preview-card">
+                            <div class="thumb-box">
+                                <img src="${data.cover}" alt="Preview">
+                                <i class="fa-regular fa-circle-play play-icon"></i>
+                            </div>
+                            <p class="video-title">${data.title}</p>
+                            <div class="download-group">
+                                <a href="${directSaveVideo}" class="dl-btn"><i class="fa-solid fa-download"></i> HD MP4</a>
+                                ${audioBtnHTML}
+                            </div>
+                        </div>
+                    `;
                 } else {
                     resultDiv.innerHTML = '<p style="color: #ef4444; margin-top: 10px;">معذرت، اس ویڈیو کا لنک حاصل نہیں ہو سکا۔</p>';
                 }

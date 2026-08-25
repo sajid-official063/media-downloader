@@ -3,242 +3,137 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All-in-One Creator & Business Ecosystem</title>
+  <title>One-Click Bio Link & Live Chat</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #f8fafc; }
-    .tab-btn.active { border-bottom: 4px solid #3b82f6; color: #60a5fa; font-weight: bold; }
+    .chat-box { max-height: 300px; overflow-y: auto; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-2 sm:p-4">
+<body class="min-h-screen flex flex-col items-center p-3">
 
-  <!-- Header -->
-  <header class="w-full max-w-4xl text-center py-4">
-    <h1 class="text-2xl sm:text-3xl font-extrabold text-blue-500 mb-2">Social Saver & Business Portal</h1>
-    <p class="text-xs sm:text-sm text-slate-400">کریئیٹرز کے لیے آسان بائیو لنکس اور بزنس مین کے لیے ڈائریکٹ واٹس ایپ سیلز</p>
-    
-    <!-- Main Navigation Tabs -->
-    <div class="flex justify-center border-b border-slate-700 w-full mt-4">
-      <button id="btn-downloader" onclick="switchTab('downloader')" class="tab-btn active px-3 sm:px-6 py-3 text-sm sm:text-base">ویڈیو ڈاؤنلوڈر</button>
-      <button id="btn-creator" onclick="switchTab('creator')" class="tab-btn px-3 sm:px-6 py-3 text-sm sm:text-base">کریئیٹر پورٹل</button>
-      <button id="btn-business" onclick="switchTab('business')" class="tab-btn px-3 sm:px-6 py-3 text-sm sm:text-base">بزنس پورٹل</button>
-    </div>
+  <header class="w-full max-w-xl text-center py-4">
+    <h1 class="text-2xl font-extrabold text-blue-500 mb-1">Bio Link & Private Chat Engine</h1>
+    <p class="text-xs text-slate-400">اپنا فوراً بائیو لنک بنائیں اور ویب سائٹ کے اندر پرائیویٹ چیٹ کریں</p>
   </header>
 
-  <!-- TAB 1: Video Downloader -->
-  <main id="tab-downloader" class="w-full max-w-xl bg-slate-800 p-4 sm:p-6 rounded-2xl shadow-xl mt-4">
-    <h2 class="text-lg font-bold mb-4 text-center">بغیر واٹر مارک ویڈیو ڈاؤن لوڈ کریں</h2>
-    <div class="flex gap-2 mb-4">
-      <input type="text" id="video-url" placeholder="ٹک ٹاک / انسٹاگرام لنک پیسٹ کریں..." class="w-full p-3 rounded-xl bg-slate-700 text-white outline-none border border-slate-600 focus:border-blue-500 text-sm">
-      <button onclick="downloadVideo()" class="bg-blue-600 hover:bg-blue-700 px-4 sm:px-6 py-3 rounded-xl font-bold transition text-sm">ڈاؤن لوڈ</button>
-    </div>
-
-    <!-- Download Result / Promo Banner -->
-    <div id="download-result" class="hidden mt-6 p-4 bg-slate-700 rounded-xl text-center">
-      <p class="text-green-400 font-bold mb-3">آپ کی ویڈیو ڈاؤن لوڈ کے لیے تیار ہے!</p>
-      <a id="dl-link" href="#" target="_blank" class="inline-block bg-green-600 px-6 py-2 rounded-lg font-bold mb-4 text-sm">Download No-Watermark Video</a>
+  <main class="w-full max-w-xl bg-slate-800 p-4 sm:p-6 rounded-2xl shadow-xl space-y-6">
+    
+    <!-- SECTION 1: INSTANT BIO LINK GENERATOR -->
+    <div class="bg-slate-900 p-4 rounded-xl border border-blue-500/40">
+      <h2 class="text-base font-bold text-blue-400 mb-3 text-center">فوری بائیو لنک جینیریٹر (Instant Link Generator)</h2>
       
-      <div class="mt-4 p-4 bg-slate-900 rounded-lg border border-yellow-500/40 text-right">
-        <p class="text-yellow-400 font-bold mb-1 text-sm">پیسے کمائیں یا بزنس بڑھائیں!</p>
-        <p class="text-xs text-slate-300 mb-3">اپنا مفت بائیو لنک بنائیں یا اپنی دکان کی پروڈکٹس رجسٹر کر کے واٹس ایپ پر آرڈرز لیں۔</p>
-        <div class="flex gap-2">
-          <button onclick="switchTab('creator')" class="w-1/2 bg-yellow-500 text-slate-900 font-bold py-2 rounded-lg text-xs">کریئیٹر بنیں</button>
-          <button onclick="switchTab('business')" class="w-1/2 bg-blue-500 text-slate-900 font-bold py-2 rounded-lg text-xs">بزنس رجسٹر کریں</button>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- TAB 2: Creator Portal -->
-  <main id="tab-creator" class="w-full max-w-2xl bg-slate-800 p-4 sm:p-6 rounded-2xl shadow-xl mt-4 hidden">
-    <h2 class="text-lg font-bold mb-4 text-center text-blue-400">کریئیٹر پروفائل اور آٹو والٹ</h2>
-    
-    <form id="creator-form" onsubmit="setupCreator(event)" class="space-y-3">
-      <div>
-        <label class="block text-xs mb-1">نام یا چینل کا نام:</label>
-        <input type="text" id="c-name" required class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-sm">
-      </div>
-      <div>
-        <label class="block text-xs mb-1">ٹک ٹاک/انسٹاگرام پرومو ویڈیو URL (پروفائل کے لیے):</label>
-        <input type="url" id="c-video" placeholder="https://..." class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-sm">
-      </div>
-      <div class="grid grid-cols-2 gap-2">
-        <div>
-          <label class="block text-xs mb-1">واٹس ایپ نمبر:</label>
-          <input type="text" id="c-wa" placeholder="923000000000" class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-sm">
-        </div>
-        <div>
-          <label class="block text-xs mb-1">یوٹیوب / دیگر لنکس:</label>
-          <input type="url" id="c-yt" placeholder="https://..." class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-sm">
-        </div>
-      </div>
-      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm">پروفائل اور ڈیش بورڈ تیار کریں</button>
-    </form>
-
-    <!-- Creator Dashboard -->
-    <div id="creator-dashboard" class="hidden mt-6 border-t border-slate-700 pt-6">
-      <div class="bg-slate-900 p-4 rounded-xl mb-6 border border-slate-700">
-        <h3 class="font-bold text-sm text-yellow-400 mb-2">Internal Digital Wallet & Analytics</h3>
-        <div class="grid grid-cols-2 gap-3 text-center my-2">
-          <div class="bg-slate-800 p-3 rounded-lg">
-            <p class="text-xs text-slate-400">یونیک وزٹرز (Unique Views)</p>
-            <p id="c-views" class="text-xl font-bold text-green-400">0</p>
-          </div>
-          <div class="bg-slate-800 p-3 rounded-lg">
-            <p class="text-xs text-slate-400">والٹ بیلنس ($)</p>
-            <p id="c-wallet" class="text-xl font-bold text-yellow-400">$0.00</p>
-          </div>
-        </div>
-
-        <!-- Withdraw Request -->
-        <div class="mt-4 pt-3 border-t border-slate-800">
-          <p class="text-xs font-bold mb-2">کمائی نکالیں (Withdrawal):</p>
-          <div class="flex gap-2 mb-2">
-            <select id="payout-country" class="bg-slate-700 p-2 rounded text-xs w-1/2">
-              <option value="PK">Pakistan (EasyPaisa/JazzCash)</option>
-              <option value="IN">India (UPI/Paytm)</option>
-              <option value="GLOBAL">All Countries (Binance USDT)</option>
-            </select>
-            <input type="text" placeholder="اکاؤنٹ نمبر / Wallet Address" class="bg-slate-700 p-2 rounded text-xs w-1/2">
-          </div>
-          <button onclick="alert('ودڈرال ریکوئسٹ محفوظ ہو گئی ہے۔ ٹارگٹ پورا ہونے پر رقم بھیج دی جائے گی۔')" class="w-full bg-green-600 py-2 rounded font-bold text-xs">رقم نکلوانے کی درخواست کریں</button>
-        </div>
-      </div>
-
-      <!-- Generated Bio Link Preview -->
-      <div class="text-center bg-slate-900 p-4 rounded-2xl border border-blue-500/30">
-        <h4 id="prev-name" class="text-xl font-bold mb-3"></h4>
-        <div class="space-y-2 mb-4">
-          <a id="prev-wa" href="#" target="_blank" class="block bg-green-600 py-2 rounded-lg font-bold text-xs">واٹس ایپ پر رابطہ کریں</a>
-          <a id="prev-yt" href="#" target="_blank" class="block bg-red-600 py-2 rounded-lg font-bold text-xs">یوٹیوب چینل وزٹ کریں</a>
-          <button onclick="alert('Followed!')" class="w-full bg-purple-600 py-2 rounded-lg font-bold text-xs">Follow Creator</button>
-        </div>
-        <div class="flex flex-col items-center mt-3">
-          <p class="text-xs text-slate-400 mb-1">پروفائل QR Code:</p>
-          <div id="c-qrcode" class="p-2 bg-white rounded-lg"></div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- TAB 3: Business Portal -->
-  <main id="tab-business" class="w-full max-w-2xl bg-slate-800 p-4 sm:p-6 rounded-2xl shadow-xl mt-4 hidden">
-    <h2 class="text-lg font-bold mb-4 text-center text-green-400">بزنس پروڈکٹ رجسٹریشن و ڈائریکٹ واٹس ایپ سیلز</h2>
-    
-    <form id="business-form" onsubmit="addProduct(event)" class="space-y-3">
-      <div>
-        <label class="block text-xs mb-1">دکان یا بزنس کا نام:</label>
-        <input type="text" id="b-store" required class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-sm">
-      </div>
-      <div>
-        <label class="block text-xs mb-1">پروڈکٹ کا نام:</label>
-        <input type="text" id="b-title" required class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-sm">
-      </div>
-      <div class="grid grid-cols-2 gap-2">
-        <div>
-          <label class="block text-xs mb-1">قیمت (روپے/ڈالر):</label>
-          <input type="text" id="b-price" required placeholder="Rs. 1500" class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-sm">
-        </div>
-        <div>
-          <label class="block text-xs mb-1">واٹس ایپ نمبر (آرڈرز کے لیے):</label>
-          <input type="text" id="b-phone" required placeholder="923000000000" class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-sm">
-        </div>
-      </div>
-      <div>
-        <label class="block text-xs mb-1">پروڈکٹ کی تصویر کا لنک (URL):</label>
-        <input type="url" id="b-img" placeholder="https://..." class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-sm">
-      </div>
-      <button type="submit" class="w-full bg-green-600 hover:bg-green-700 py-3 rounded-xl font-bold text-sm">پروڈکٹ لائیو کریں</button>
-    </form>
-
-    <!-- Business Catalog Display -->
-    <div id="business-catalog" class="hidden mt-6 border-t border-slate-700 pt-6">
-      <h3 class="font-bold text-sm mb-4 text-center">آپ کی دکان کا آن لائن کیٹلاگ</h3>
-      <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 max-w-sm mx-auto text-center">
-        <img id="prev-b-img" src="https://via.placeholder.com/150" alt="Product" class="w-full h-40 object-cover rounded-lg mb-3">
-        <h4 id="prev-b-title" class="font-bold text-base mb-1"></h4>
-        <p id="prev-b-store" class="text-xs text-slate-400 mb-2"></p>
-        <p id="prev-b-price" class="text-green-400 font-bold mb-4 text-lg"></p>
+      <div class="space-y-3">
+        <input type="text" id="user-name" placeholder="اپنا نام یا برانڈ کا نام لکھیں..." class="w-full p-3 rounded-xl bg-slate-800 text-white border border-slate-700 text-sm outline-none focus:border-blue-500">
         
-        <!-- Direct WhatsApp Order Button -->
-        <a id="b-order-btn" href="#" target="_blank" class="block w-full bg-green-600 hover:bg-green-700 py-2.5 rounded-lg font-bold text-xs">Direct WhatsApp Order</a>
+        <button onclick="generateBioLink()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm transition">
+          اپنا بائیو لنک اور QR کوڈ جنریٹ کریں
+        </button>
+      </div>
+
+      <!-- Generated Link Result -->
+      <div id="link-result" class="hidden mt-4 pt-4 border-t border-slate-800 text-center">
+        <p class="text-xs text-yellow-400 font-bold mb-1">آپ کا تیار شدہ بائیو لنک:</p>
+        <div class="flex items-center gap-2 bg-slate-800 p-2 rounded-lg border border-slate-700 my-2">
+          <input type="text" id="final-link" readonly class="w-full bg-transparent text-xs text-blue-300 outline-none text-left dir-ltr">
+          <button onclick="copyLink()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded font-bold">کاپی</button>
+        </div>
+
+        <div class="flex justify-center my-3">
+          <div id="qrcode" class="p-2 bg-white rounded-lg"></div>
+        </div>
       </div>
     </div>
+
+    <!-- SECTION 2: MESSENGER / INSTAGRAM STYLE CHAT -->
+    <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
+      <h2 class="text-base font-bold text-green-400 mb-2 text-center">پرائیویٹ ان ایپ چیٹ (Messenger Chat)</h2>
+      <p class="text-xs text-slate-400 mb-3 text-center">نمبر ظاہر کیے بغیر تصویر، ویڈیو اور میسج بھیج کر ڈائریکٹ بات چیت کریں</p>
+
+      <!-- Chat Screen -->
+      <div id="chat-messages" class="chat-box bg-slate-950 p-3 rounded-xl border border-slate-800 mb-3 space-y-2 flex flex-col">
+        <div class="bg-slate-800 p-2.5 rounded-xl max-w-[80%] self-start text-xs text-slate-300">
+          سلام! آپ ویب سائٹ کے پرائیویٹ میسنجر پر بغیر واٹس ایپ کے ڈائریکٹ میسج اور فائلز بھیج سکتے ہیں۔
+        </div>
+      </div>
+
+      <!-- Chat Inputs -->
+      <div class="space-y-2">
+        <div class="flex gap-2">
+          <input type="text" id="chat-input" placeholder="میسج لکھیں..." class="w-full p-2.5 rounded-xl bg-slate-800 text-white border border-slate-700 text-xs outline-none">
+          <button onclick="sendMessage()" class="bg-green-600 hover:bg-green-700 px-4 py-2.5 rounded-xl font-bold text-xs whitespace-nowrap">بھیجیں</button>
+        </div>
+
+        <!-- Media Attachment Inputs (Photo/Video URL) -->
+        <div class="flex gap-2">
+          <input type="url" id="media-url" placeholder="تصویر یا ویڈیو کا URL شیئر کریں..." class="w-full p-2 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 text-xs dir-ltr">
+          <button onclick="sendMedia()" class="bg-purple-600 hover:bg-purple-700 px-3 py-2 rounded-lg text-xs font-bold whitespace-nowrap">میڈیا بھیجیں</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
-  <!-- JavaScript Logic -->
   <script>
-    function switchTab(tab) {
-      document.getElementById('tab-downloader').classList.add('hidden');
-      document.getElementById('tab-creator').classList.add('hidden');
-      document.getElementById('tab-business').classList.add('hidden');
-      document.getElementById('btn-downloader').classList.remove('active');
-      document.getElementById('btn-creator').classList.remove('active');
-      document.getElementById('btn-business').classList.remove('active');
+    function generateBioLink() {
+      const name = document.getElementById('user-name').value;
+      if(!name) return alert('براہ کرم اپنا یا چینل کا نام لکھیں!');
 
-      if(tab === 'downloader') {
-        document.getElementById('tab-downloader').classList.remove('hidden');
-        document.getElementById('btn-downloader').classList.add('active');
-      } else if(tab === 'creator') {
-        document.getElementById('tab-creator').classList.remove('hidden');
-        document.getElementById('btn-creator').classList.add('active');
-      } else {
-        document.getElementById('tab-business').classList.remove('hidden');
-        document.getElementById('btn-business').classList.add('active');
-      }
-    }
-
-    function downloadVideo() {
-      const url = document.getElementById('video-url').value;
-      if(!url) return alert('براہ کرم صحیح ویڈیو لنک درج کریں!');
-      document.getElementById('download-result').classList.remove('hidden');
-      document.getElementById('dl-link').href = url;
-    }
-
-    function setupCreator(e) {
-      e.preventDefault();
-      const name = document.getElementById('c-name').value;
-      const wa = document.getElementById('c-wa').value;
-      const yt = document.getElementById('c-yt').value;
-
-      document.getElementById('prev-name').innerText = name;
-      document.getElementById('prev-wa').href = `https://wa.me/${wa}`;
-      document.getElementById('prev-yt').href = yt;
-
-      document.getElementById('creator-dashboard').classList.remove('hidden');
+      const bioUrl = `${window.location.origin}?bio=${encodeURIComponent(name)}`;
+      document.getElementById('final-link').value = bioUrl;
+      document.getElementById('link-result').classList.remove('hidden');
 
       // Generate QR
-      document.getElementById('c-qrcode').innerHTML = "";
-      new QRCode(document.getElementById("c-qrcode"), {
-        text: window.location.href,
+      document.getElementById('qrcode').innerHTML = "";
+      new QRCode(document.getElementById("qrcode"), {
+        text: bioUrl,
         width: 100,
         height: 100
       });
-
-      // Simulated Auto Balance
-      document.getElementById('c-views').innerText = "1";
-      document.getElementById('c-wallet').innerText = "$0.002";
     }
 
-    function addProduct(e) {
-      e.preventDefault();
-      const store = document.getElementById('b-store').value;
-      const title = document.getElementById('b-title').value;
-      const price = document.getElementById('b-price').value;
-      const phone = document.getElementById('b-phone').value;
-      const img = document.getElementById('b-img').value || 'https://via.placeholder.com/150';
+    function copyLink() {
+      const linkInput = document.getElementById('final-link');
+      linkInput.select();
+      navigator.clipboard.writeText(linkInput.value);
+      alert('بائیو لنک کاپی ہو گیا ہے!');
+    }
 
-      document.getElementById('prev-b-store').innerText = store;
-      document.getElementById('prev-b-title').innerText = title;
-      document.getElementById('prev-b-price').innerText = price;
-      document.getElementById('prev-b-img').src = img;
+    function sendMessage() {
+      const input = document.getElementById('chat-input');
+      if(!input.value.trim()) return;
 
-      const orderMsg = encodeURIComponent(`سلام! مجھے آپ کی دکان (${store}) سے یہ پروڈکٹ (${title}) خریدنی ہے۔ قیمت: ${price}`);
-      document.getElementById('b-order-btn').href = `https://wa.me/${phone}?text=${orderMsg}`;
+      const chatContainer = document.getElementById('chat-messages');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = "bg-blue-600 text-white p-2.5 rounded-xl max-w-[80%] self-end text-xs my-1";
+      msgDiv.innerText = input.value;
 
-      document.getElementById('business-catalog').classList.remove('hidden');
+      chatContainer.appendChild(msgDiv);
+      input.value = "";
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function sendMedia() {
+      const mediaInput = document.getElementById('media-url');
+      const url = mediaInput.value.trim();
+      if(!url) return alert('تصویر یا ویڈیو کا صحیح لنک درج کریں!');
+
+      const chatContainer = document.getElementById('chat-messages');
+      const mediaDiv = document.createElement('div');
+      mediaDiv.className = "bg-slate-800 p-2 rounded-xl max-w-[80%] self-end text-xs my-1 border border-slate-700";
+
+      if(url.match(/\.(jpeg|jpg|gif|png)$/) != null || url.includes('unsplash') || url.includes('imgur')) {
+        mediaDiv.innerHTML = `<img src="${url}" class="w-full h-32 object-cover rounded-lg mb-1"><span class="text-[10px] text-slate-400">تصویر ارسال کی گئی</span>`;
+      } else {
+        mediaDiv.innerHTML = `<a href="${url}" target="_blank" class="text-blue-400 underline break-all">میڈیا/ویڈیو لنک کھولیں</a>`;
+      }
+
+      chatContainer.appendChild(mediaDiv);
+      mediaInput.value = "";
+      chatContainer.scrollTop = chatContainer.scrollHeight;
     }
   </script>
 </body>
-</html>
+  </html>
+          

@@ -3,137 +3,217 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>One-Click Bio Link & Live Chat</title>
+  <title>Social Saver & Bio Link Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #f8fafc; }
-    .chat-box { max-height: 300px; overflow-y: auto; }
+    .tab-btn.active { border-bottom: 4px solid #3b82f6; color: #60a5fa; font-weight: bold; }
+    input { text-align: right; }
+    input[type="url"], input[type="tel"] { text-align: ltr; direction: ltr; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-3">
+<body class="min-h-screen flex flex-col items-center p-3 sm:p-5">
 
-  <header class="w-full max-w-xl text-center py-4">
-    <h1 class="text-2xl font-extrabold text-blue-500 mb-1">Bio Link & Private Chat Engine</h1>
-    <p class="text-xs text-slate-400">اپنا فوراً بائیو لنک بنائیں اور ویب سائٹ کے اندر پرائیویٹ چیٹ کریں</p>
+  <!-- Header Section -->
+  <header class="w-full max-w-2xl text-center py-4">
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-blue-500 mb-2">سوشل سیور و بائیو لنک پورٹل</h1>
+    <p class="text-xs sm:text-sm text-slate-400">ویڈیو ڈاؤن لوڈ کریں اور اپنا ذاتی بائیو لنک پیج بنائیں</p>
+    
+    <!-- Updated Navigation Tabs -->
+    <div class="flex justify-around border-b border-slate-700 w-full mt-4">
+      <button id="btn-downloader" onclick="switchTab('downloader')" class="tab-btn active px-3 py-3 text-xs sm:text-sm">ویڈیو ڈاؤنلوڈر</button>
+      <button id="btn-biogen" onclick="switchTab('biogen')" class="tab-btn px-3 py-3 text-xs sm:text-sm">بائیو لنک جینیریٹر</button>
+      <button id="btn-creator" onclick="switchTab('creator')" class="tab-btn px-3 py-3 text-xs sm:text-sm">کریئیٹر ڈیش بورڈ</button>
+    </div>
   </header>
 
-  <main class="w-full max-w-xl bg-slate-800 p-4 sm:p-6 rounded-2xl shadow-xl space-y-6">
-    
-    <!-- SECTION 1: INSTANT BIO LINK GENERATOR -->
-    <div class="bg-slate-900 p-4 rounded-xl border border-blue-500/40">
-      <h2 class="text-base font-bold text-blue-400 mb-3 text-center">فوری بائیو لنک جینیریٹر (Instant Link Generator)</h2>
+  <!-- TAB 1: Video Downloader -->
+  <main id="tab-downloader" class="w-full max-w-xl bg-slate-800 p-4 sm:p-6 rounded-2xl shadow-xl mt-4">
+    <h2 class="text-base sm:text-lg font-bold mb-4 text-center">بغیر واٹر مارک ویڈیو ڈاؤن لوڈ کریں</h2>
+    <div class="flex gap-2 mb-4">
+      <input type="text" id="video-url" placeholder="ٹک ٹاک / انسٹاگرام لنک پیسٹ کریں..." class="w-full p-3 rounded-xl bg-slate-700 text-white outline-none border border-slate-600 focus:border-blue-500 text-xs sm:text-sm">
+      <button onclick="downloadVideo()" class="bg-blue-600 hover:bg-blue-700 px-4 sm:px-6 py-3 rounded-xl font-bold transition text-xs sm:text-sm whitespace-nowrap">ڈاؤن لوڈ</button>
+    </div>
+
+    <div id="download-result" class="hidden mt-6 p-4 bg-slate-700 rounded-xl text-center">
+      <p class="text-green-400 font-bold mb-3 text-sm">آپ کی ویڈیو تیار ہے!</p>
+      <a id="dl-link" href="#" target="_blank" class="inline-block bg-green-600 px-6 py-2 rounded-lg font-bold mb-4 text-xs sm:text-sm">ڈاؤن لوڈ ویڈیو</a>
       
-      <div class="space-y-3">
-        <input type="text" id="user-name" placeholder="اپنا نام یا برانڈ کا نام لکھیں..." class="w-full p-3 rounded-xl bg-slate-800 text-white border border-slate-700 text-sm outline-none focus:border-blue-500">
-        
-        <button onclick="generateBioLink()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-sm transition">
-          اپنا بائیو لنک اور QR کوڈ جنریٹ کریں
-        </button>
-      </div>
-
-      <!-- Generated Link Result -->
-      <div id="link-result" class="hidden mt-4 pt-4 border-t border-slate-800 text-center">
-        <p class="text-xs text-yellow-400 font-bold mb-1">آپ کا تیار شدہ بائیو لنک:</p>
-        <div class="flex items-center gap-2 bg-slate-800 p-2 rounded-lg border border-slate-700 my-2">
-          <input type="text" id="final-link" readonly class="w-full bg-transparent text-xs text-blue-300 outline-none text-left dir-ltr">
-          <button onclick="copyLink()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded font-bold">کاپی</button>
-        </div>
-
-        <div class="flex justify-center my-3">
-          <div id="qrcode" class="p-2 bg-white rounded-lg"></div>
-        </div>
+      <div class="mt-4 p-4 bg-slate-900 rounded-lg border border-yellow-500/40 text-right">
+        <p class="text-yellow-400 font-bold mb-1 text-xs sm:text-sm">اپنا پروفائل پیج بنائیں!</p>
+        <p class="text-xs text-slate-300 mb-3">اپنا بائیو لنک پیج بنائیں جس میں انسٹاگرام میسنجر چیٹ بھی شامل ہو۔</p>
+        <button onclick="switchTab('biogen')" class="w-full bg-yellow-500 text-slate-900 font-bold py-2 rounded-lg text-xs">بائیو لنک بنائیں</button>
       </div>
     </div>
-
-    <!-- SECTION 2: MESSENGER / INSTAGRAM STYLE CHAT -->
-    <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
-      <h2 class="text-base font-bold text-green-400 mb-2 text-center">پرائیویٹ ان ایپ چیٹ (Messenger Chat)</h2>
-      <p class="text-xs text-slate-400 mb-3 text-center">نمبر ظاہر کیے بغیر تصویر، ویڈیو اور میسج بھیج کر ڈائریکٹ بات چیت کریں</p>
-
-      <!-- Chat Screen -->
-      <div id="chat-messages" class="chat-box bg-slate-950 p-3 rounded-xl border border-slate-800 mb-3 space-y-2 flex flex-col">
-        <div class="bg-slate-800 p-2.5 rounded-xl max-w-[80%] self-start text-xs text-slate-300">
-          سلام! آپ ویب سائٹ کے پرائیویٹ میسنجر پر بغیر واٹس ایپ کے ڈائریکٹ میسج اور فائلز بھیج سکتے ہیں۔
-        </div>
-      </div>
-
-      <!-- Chat Inputs -->
-      <div class="space-y-2">
-        <div class="flex gap-2">
-          <input type="text" id="chat-input" placeholder="میسج لکھیں..." class="w-full p-2.5 rounded-xl bg-slate-800 text-white border border-slate-700 text-xs outline-none">
-          <button onclick="sendMessage()" class="bg-green-600 hover:bg-green-700 px-4 py-2.5 rounded-xl font-bold text-xs whitespace-nowrap">بھیجیں</button>
-        </div>
-
-        <!-- Media Attachment Inputs (Photo/Video URL) -->
-        <div class="flex gap-2">
-          <input type="url" id="media-url" placeholder="تصویر یا ویڈیو کا URL شیئر کریں..." class="w-full p-2 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 text-xs dir-ltr">
-          <button onclick="sendMedia()" class="bg-purple-600 hover:bg-purple-700 px-3 py-2 rounded-lg text-xs font-bold whitespace-nowrap">میڈیا بھیجیں</button>
-        </div>
-      </div>
-    </div>
-
   </main>
 
+  <!-- TAB 2: LINK BIO GENERATOR (Replaced Business Portal) -->
+  <main id="tab-biogen" class="w-full max-w-xl bg-slate-800 p-4 sm:p-6 rounded-2xl shadow-xl mt-4 hidden">
+    <h2 class="text-base sm:text-lg font-bold mb-4 text-center text-green-400">بائیو لنک اور میسنجر پیج جینیریٹر</h2>
+    
+    <form id="bio-form" onsubmit="generateBioPage(event)" class="space-y-4">
+      <div>
+        <label class="block text-xs mb-1 text-slate-300">آپ کا نام / بزنس کا نام:</label>
+        <input type="text" id="bio-name" required placeholder="مثلاً: ساجد وائب / الیکٹرونکس" class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-xs sm:text-sm">
+      </div>
+      <div>
+        <label class="block text-xs mb-1 text-slate-300">تفصیل / بائیو (Bio Description):</label>
+        <input type="text" id="bio-desc" placeholder="اپنی یا بزنس کی تفصیل لکھیں..." class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-xs sm:text-sm">
+      </div>
+      <div>
+        <label class="block text-xs mb-1 text-slate-300">پروڈکٹ / پروفائل تصویر یا ویڈیو لنک (URL):</label>
+        <input type="url" id="bio-media" placeholder="https://..." class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-xs sm:text-sm">
+      </div>
+
+      <button type="submit" class="w-full bg-green-600 hover:bg-green-700 py-3 rounded-xl font-bold text-xs sm:text-sm">بائیو لنک پیج تیار کریں</button>
+    </form>
+
+    <!-- Generated Link Result -->
+    <div id="bio-link-output" class="hidden mt-6 bg-slate-900 p-4 rounded-xl border border-green-500/50 text-center">
+      <p class="text-xs text-yellow-400 font-bold mb-1">آپ کا تیار شدہ بائیو پیج لنک:</p>
+      <div class="flex items-center gap-2 bg-slate-800 p-2 rounded-lg border border-slate-700 my-2">
+        <input type="text" id="shareable-bio-link" readonly class="w-full bg-transparent text-xs text-blue-300 outline-none text-left dir-ltr">
+        <button onclick="copyBioUrl()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded font-bold">کاپی</button>
+      </div>
+      <div class="flex justify-center my-3">
+        <div id="bio-qrcode" class="p-2 bg-white rounded-lg"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- TAB 3: Creator Portal / Preview -->
+  <main id="tab-creator" class="w-full max-w-xl bg-slate-800 p-4 sm:p-6 rounded-2xl shadow-xl mt-4 hidden">
+    <h2 class="text-base sm:text-lg font-bold mb-4 text-center text-blue-400">کریئیٹر پروفائل اور والٹ</h2>
+    <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 text-center">
+      <p class="text-xs text-slate-400 mb-2">کل وزٹرز (Views)</p>
+      <p class="text-2xl font-bold text-green-400 mb-4">0</p>
+      <p class="text-xs text-slate-400">والٹ بیلنس</p>
+      <p class="text-xl font-bold text-yellow-400">$0.00</p>
+    </div>
+  </main>
+
+  <!-- PUBLIC BIO PAGE WITH IN-APP MESSENGER CHAT (Visible only on created link) -->
+  <div id="public-page-container" class="w-full max-w-xl bg-slate-900 p-5 rounded-2xl border border-blue-500/50 shadow-2xl mt-6 hidden">
+    <div class="text-center space-y-2 mb-6">
+      <img id="pub-img" src="https://via.placeholder.com/100" class="w-24 h-24 rounded-full mx-auto object-cover border-2 border-blue-500">
+      <h3 id="pub-title" class="text-xl font-bold text-white"></h3>
+      <p id="pub-desc" class="text-xs text-slate-300"></p>
+    </div>
+
+    <!-- Messenger Chat inside user page for privacy -->
+    <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+      <h4 class="text-xs font-bold text-green-400 mb-3 text-center">پرائیویٹ میسنجر چیٹ (Direct In-App Messenger)</h4>
+      
+      <div id="chat-messages" class="h-40 overflow-y-auto bg-slate-950 p-3 rounded-lg border border-slate-800 mb-3 space-y-2 flex flex-col">
+        <div class="bg-slate-800 p-2 rounded-lg max-w-[80%] text-xs text-slate-300">
+          سلام! آپ یہاں ڈائریکٹ میسج یا تصویر کا لنک بھیج کر بات چیت کر سکتے ہیں۔
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <div class="flex gap-2">
+          <input type="text" id="chat-text" placeholder="میسج لکھیں..." class="w-full p-2 bg-slate-700 text-white rounded-lg text-xs outline-none">
+          <button onclick="sendChatMessage()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-bold text-xs">بھیجیں</button>
+        </div>
+        <div class="flex gap-2">
+          <input type="url" id="chat-media" placeholder="تصویر/ویڈیو کا URL لنک..." class="w-full p-2 bg-slate-700 text-white rounded-lg text-xs outline-none dir-ltr">
+          <button onclick="sendChatMedia()" class="bg-purple-600 hover:bg-purple-700 px-3 py-2 rounded-lg font-bold text-xs">میڈیا</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    function generateBioLink() {
-      const name = document.getElementById('user-name').value;
-      if(!name) return alert('براہ کرم اپنا یا چینل کا نام لکھیں!');
+    function switchTab(tab) {
+      document.getElementById('tab-downloader').classList.add('hidden');
+      document.getElementById('tab-biogen').classList.add('hidden');
+      document.getElementById('tab-creator').classList.add('hidden');
+      
+      document.getElementById('btn-downloader').classList.remove('active');
+      document.getElementById('btn-biogen').classList.remove('active');
+      document.getElementById('btn-creator').classList.remove('active');
 
-      const bioUrl = `${window.location.origin}?bio=${encodeURIComponent(name)}`;
-      document.getElementById('final-link').value = bioUrl;
-      document.getElementById('link-result').classList.remove('hidden');
+      if(tab === 'downloader') {
+        document.getElementById('tab-downloader').classList.remove('hidden');
+        document.getElementById('btn-downloader').classList.add('active');
+      } else if(tab === 'biogen') {
+        document.getElementById('tab-biogen').classList.remove('hidden');
+        document.getElementById('btn-biogen').classList.add('active');
+      } else {
+        document.getElementById('tab-creator').classList.remove('hidden');
+        document.getElementById('btn-creator').classList.add('active');
+      }
+    }
 
-      // Generate QR
-      document.getElementById('qrcode').innerHTML = "";
-      new QRCode(document.getElementById("qrcode"), {
+    function downloadVideo() {
+      const url = document.getElementById('video-url').value;
+      if(!url) return alert('براہ کرم صحیح ویڈیو لنک درج کریں!');
+      document.getElementById('download-result').classList.remove('hidden');
+      document.getElementById('dl-link').href = url;
+    }
+
+    function generateBioPage(e) {
+      e.preventDefault();
+      const name = document.getElementById('bio-name').value;
+      const desc = document.getElementById('bio-desc').value;
+      const media = document.getElementById('bio-media').value || 'https://via.placeholder.com/100';
+
+      const bioUrl = `${window.location.origin}?page=${encodeURIComponent(name)}&desc=${encodeURIComponent(desc)}&img=${encodeURIComponent(media)}`;
+      
+      document.getElementById('shareable-bio-link').value = bioUrl;
+      document.getElementById('bio-link-output').classList.remove('hidden');
+
+      document.getElementById('bio-qrcode').innerHTML = "";
+      new QRCode(document.getElementById("bio-qrcode"), {
         text: bioUrl,
         width: 100,
         height: 100
       });
     }
 
-    function copyLink() {
-      const linkInput = document.getElementById('final-link');
+    function copyBioUrl() {
+      const linkInput = document.getElementById('shareable-bio-link');
       linkInput.select();
       navigator.clipboard.writeText(linkInput.value);
       alert('بائیو لنک کاپی ہو گیا ہے!');
     }
 
-    function sendMessage() {
-      const input = document.getElementById('chat-input');
-      if(!input.value.trim()) return;
-
-      const chatContainer = document.getElementById('chat-messages');
-      const msgDiv = document.createElement('div');
-      msgDiv.className = "bg-blue-600 text-white p-2.5 rounded-xl max-w-[80%] self-end text-xs my-1";
-      msgDiv.innerText = input.value;
-
-      chatContainer.appendChild(msgDiv);
-      input.value = "";
-      chatContainer.scrollTop = chatContainer.scrollHeight;
+    function sendChatMessage() {
+      const txt = document.getElementById('chat-text').value;
+      if(!txt.trim()) return;
+      const box = document.getElementById('chat-messages');
+      const msg = document.createElement('div');
+      msg.className = "bg-blue-600 text-white p-2 rounded-lg max-w-[80%] self-end text-xs";
+      msg.innerText = txt;
+      box.appendChild(msg);
+      document.getElementById('chat-text').value = "";
+      box.scrollTop = box.scrollHeight;
     }
 
-    function sendMedia() {
-      const mediaInput = document.getElementById('media-url');
-      const url = mediaInput.value.trim();
-      if(!url) return alert('تصویر یا ویڈیو کا صحیح لنک درج کریں!');
+    function sendChatMedia() {
+      const url = document.getElementById('chat-media').value;
+      if(!url.trim()) return;
+      const box = document.getElementById('chat-messages');
+      const msg = document.createElement('div');
+      msg.className = "bg-slate-800 p-2 rounded-lg max-w-[80%] self-end text-xs border border-slate-700";
+      msg.innerHTML = `<a href="${url}" target="_blank" class="text-blue-400 underline dir-ltr block">فائل / ویڈیو لنک کھلیں</a>`;
+      box.appendChild(msg);
+      document.getElementById('chat-media').value = "";
+      box.scrollTop = box.scrollHeight;
+    }
 
-      const chatContainer = document.getElementById('chat-messages');
-      const mediaDiv = document.createElement('div');
-      mediaDiv.className = "bg-slate-800 p-2 rounded-xl max-w-[80%] self-end text-xs my-1 border border-slate-700";
-
-      if(url.match(/\.(jpeg|jpg|gif|png)$/) != null || url.includes('unsplash') || url.includes('imgur')) {
-        mediaDiv.innerHTML = `<img src="${url}" class="w-full h-32 object-cover rounded-lg mb-1"><span class="text-[10px] text-slate-400">تصویر ارسال کی گئی</span>`;
-      } else {
-        mediaDiv.innerHTML = `<a href="${url}" target="_blank" class="text-blue-400 underline break-all">میڈیا/ویڈیو لنک کھولیں</a>`;
+    // Check URL query parameters for public bio page load
+    window.onload = function() {
+      const params = new URLSearchParams(window.location.search);
+      if(params.has('page')) {
+        document.getElementById('public-page-container').classList.remove('hidden');
+        document.getElementById('pub-title').innerText = params.get('page');
+        document.getElementById('pub-desc').innerText = params.get('desc') || '';
+        if(params.get('img')) document.getElementById('pub-img').src = params.get('img');
       }
-
-      chatContainer.appendChild(mediaDiv);
-      mediaInput.value = "";
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
+    };
   </script>
 </body>
-  </html>
-          
+          </html>
+        

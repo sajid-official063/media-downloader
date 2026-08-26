@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BioLink Hub - Bio & TikTok Style Inbox</title>
+  <title>BioLink Hub - TikTok Style Profile & Inbox</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
@@ -16,20 +16,19 @@
 <body class="min-h-screen flex flex-col items-center p-3 sm:p-5">
 
   <!-- Header -->
-  <header class="w-full max-w-xl text-center py-4">
+  <header id="main-header" class="w-full max-w-xl text-center py-4">
     <h1 class="text-2xl sm:text-3xl font-extrabold text-blue-500 mb-1">BioLink Hub</h1>
-    <p class="text-xs sm:text-sm text-slate-400">اپنا بائیو لنک بنائیں اور ٹک ٹاک جیسے ان باکس میں چیٹ کریں</p>
+    <p class="text-xs sm:text-sm text-slate-400">اپنا بائیو لنک، فار یو فیڈ اور ٹک ٹاک ان باکس بنائیں</p>
     
-    <!-- Navigation Tabs -->
     <div class="flex justify-around border-b border-slate-700 w-full mt-4">
       <button id="btn-biogen" onclick="switchTab('biogen')" class="tab-btn active px-3 py-3 text-xs sm:text-sm font-bold">بائیو لنک جینیریٹر</button>
       <button id="btn-downloader" onclick="switchTab('downloader')" class="tab-btn px-3 py-3 text-xs sm:text-sm">ویڈیو ٹول</button>
     </div>
   </header>
 
-  <!-- TAB 1: Bio Link Generator (Top Feature) -->
+  <!-- TAB 1: Bio Link Generator -->
   <main id="tab-biogen" class="w-full max-w-xl bg-slate-800 p-4 sm:p-6 rounded-2xl shadow-xl mt-4">
-    <h2 class="text-base sm:text-lg font-bold mb-4 text-center text-blue-400">اپنا ذاتی بائیو لنک اور ان باکس بنائیں</h2>
+    <h2 class="text-base sm:text-lg font-bold mb-4 text-center text-blue-400">پرافیشنل بائیو پیج (For You & Inbox) بنائیں</h2>
     
     <form id="bio-form" onsubmit="generateBioPage(event)" class="space-y-4">
       <div>
@@ -44,13 +43,16 @@
         <label class="block text-xs mb-1 text-slate-300">پروفائل تصویر کا لنک (URL):</label>
         <input type="url" id="bio-img" placeholder="https://..." class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-xs sm:text-sm">
       </div>
+      <div>
+        <label class="block text-xs mb-1 text-slate-300">اپنی "For You" ویڈیو کا لنک (MP4 یا ویڈیو URL):</label>
+        <input type="url" id="bio-video" placeholder="https://... (پہلی ویڈیو کا لنک)" class="w-full p-2.5 rounded-xl bg-slate-700 text-white border border-slate-600 text-xs sm:text-sm">
+      </div>
 
-      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-xs sm:text-sm">بائیو لنک اور ان باکس تیار کریں</button>
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-xs sm:text-sm">بائیو پیج اور لنک تیار کریں</button>
     </form>
 
-    <!-- Generated Link Result -->
     <div id="bio-link-output" class="hidden mt-6 bg-slate-900 p-4 rounded-xl border border-blue-500/50 text-center">
-      <p class="text-xs text-yellow-400 font-bold mb-1">آپ کا تیار شدہ بائیو ان باکس لنک:</p>
+      <p class="text-xs text-yellow-400 font-bold mb-1">آپ کا تیار شدہ بائیو لنک:</p>
       <div class="flex items-center gap-2 bg-slate-800 p-2 rounded-lg border border-slate-700 my-2">
         <input type="text" id="shareable-bio-link" readonly class="w-full bg-transparent text-xs text-blue-300 outline-none text-left dir-ltr">
         <button onclick="copyBioUrl()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded font-bold">کاپی</button>
@@ -61,7 +63,7 @@
     </div>
   </main>
 
-  <!-- TAB 2: Video Downloader (Moved to second preference) -->
+  <!-- TAB 2: Video Downloader -->
   <main id="tab-downloader" class="w-full max-w-xl bg-slate-800 p-4 sm:p-6 rounded-2xl shadow-xl mt-4 hidden">
     <h2 class="text-base sm:text-lg font-bold mb-4 text-center">ویڈیو ڈاؤنلوڈر</h2>
     <div class="flex gap-2 mb-4">
@@ -73,48 +75,47 @@
     </div>
   </main>
 
-  <!-- TIKTOK STYLE INBOX PAGE (Opens when user visits their generated link) -->
-  <div id="tiktok-inbox-container" class="w-full max-w-xl bg-slate-900 rounded-2xl border border-slate-700 shadow-2xl mt-6 hidden overflow-hidden">
+  <!-- TIKTOK STYLE PROFILE & FOR YOU FEED (Opens via generated link) -->
+  <div id="tiktok-profile-container" class="w-full max-w-xl bg-slate-900 rounded-2xl border border-slate-700 shadow-2xl mt-4 hidden overflow-hidden">
     
-    <!-- Profile Top Bar (TikTok Style) -->
+    <!-- Profile Top Bar -->
     <div class="bg-slate-800 p-4 flex flex-col items-center border-b border-slate-700 relative text-center">
-      <img id="inbox-img" src="https://via.placeholder.com/80" class="w-20 h-20 rounded-full object-cover border-2 border-blue-500 mb-2">
-      <h3 id="inbox-name" class="font-bold text-white text-base">نام</h3>
-      <p id="inbox-handle" class="text-xs text-slate-400 mb-3 dir-ltr">@username</p>
-      <button class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-1.5 rounded-full font-bold text-xs">Follow back</button>
-    </div>
-
-    <!-- Chat Messages Area -->
-    <div id="chat-messages" class="h-64 overflow-y-auto p-4 space-y-3 bg-slate-950 flex flex-col">
-      <div class="text-center text-[10px] text-slate-500 my-1">Say hi by sending a sticker 👋</div>
-      <div class="self-center bg-slate-800/80 p-3 rounded-2xl text-center max-w-[85%]">
-        <span class="text-4xl">👋</span>
+      <img id="profile-img" src="" class="w-20 h-20 rounded-full object-cover border-2 border-blue-500 mb-2">
+      <h3 id="profile-name" class="font-bold text-white text-base">نام</h3>
+      <p id="profile-handle" class="text-xs text-slate-400 mb-3 dir-ltr">@username</p>
+      
+      <div class="flex gap-2 w-full justify-center">
+        <button onclick="showSection('foryou')" id="tab-foryou-btn" class="bg-blue-600 text-white px-4 py-1.5 rounded-lg font-bold text-xs">For You (فار یو)</button>
+        <button onclick="showSection('inbox')" id="tab-inbox-btn" class="bg-slate-700 text-slate-300 px-4 py-1.5 rounded-lg font-bold text-xs">میسج ان باکس</button>
       </div>
     </div>
 
-    <!-- TikTok Style Bottom Input Bar -->
-    <div class="bg-slate-800 p-3 border-t border-slate-700 flex items-center gap-2">
-      <!-- Camera Icon -->
-      <button onclick="alert('کیمرہ اوپن ہو رہا ہے')" class="text-slate-400 hover:text-white p-1">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-      </button>
-
-      <!-- Message Text Box -->
-      <input type="text" id="chat-input" placeholder="Message..." class="w-full bg-slate-700 text-white px-4 py-2 rounded-full text-xs outline-none border border-slate-600">
-
-      <!-- Gallery / Media Icon -->
-      <button onclick="sendMediaPrompt()" class="text-slate-400 hover:text-white p-1">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-      </button>
-
-      <!-- Emoji Icon -->
-      <button onclick="sendEmoji('😊')" class="text-slate-400 hover:text-white p-1 text-xl">😊</button>
-
-      <!-- Send Button -->
-      <button onclick="sendChatMessage()" class="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-      </button>
+    <!-- SECTION A: FOR YOU / REELS FEED -->
+    <div id="section-foryou" class="p-4 bg-slate-950 min-h-[300px]">
+      <h4 class="text-xs font-bold text-yellow-400 mb-3 text-center">🔥 آپ کی سرفہرست "فار یو" ویڈیوز</h4>
+      <div id="foryou-videos" class="space-y-4 flex flex-col items-center">
+        <!-- Dynamic Video Feed will load here -->
+      </div>
     </div>
+
+    <!-- SECTION B: TIKTOK STYLE INBOX CHAT (Hidden by default) -->
+    <div id="section-inbox" class="hidden bg-slate-950">
+      <div id="chat-messages" class="h-64 overflow-y-auto p-4 space-y-3 flex flex-col">
+        <div class="text-center text-[10px] text-slate-500 my-1">Say hi by sending a sticker 👋</div>
+        <div class="self-center bg-slate-800/80 p-3 rounded-2xl text-center max-w-[85%]">
+          <span class="text-4xl">👋</span>
+        </div>
+      </div>
+
+      <!-- Bottom Chat Bar -->
+      <div class="bg-slate-800 p-3 border-t border-slate-700 flex items-center gap-2">
+        <input type="text" id="chat-input" placeholder="Message..." class="w-full bg-slate-700 text-white px-4 py-2 rounded-full text-xs outline-none border border-slate-600">
+        <button onclick="sendChatMessage()" class="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+        </button>
+      </div>
+    </div>
+
   </div>
 
   <script>
@@ -138,15 +139,16 @@
       const name = document.getElementById('bio-name').value;
       const handle = document.getElementById('bio-handle').value;
       const img = document.getElementById('bio-img').value || 'https://via.placeholder.com/80';
+      const video = document.getElementById('bio-video').value || '';
 
-      const inboxUrl = `${window.location.origin}?name=${encodeURIComponent(name)}&handle=${encodeURIComponent(handle)}&img=${encodeURIComponent(img)}`;
+      const profileUrl = `${window.location.origin}?name=${encodeURIComponent(name)}&handle=${encodeURIComponent(handle)}&img=${encodeURIComponent(img)}&video=${encodeURIComponent(video)}`;
       
-      document.getElementById('shareable-bio-link').value = inboxUrl;
+      document.getElementById('shareable-bio-link').value = profileUrl;
       document.getElementById('bio-link-output').classList.remove('hidden');
 
       document.getElementById('bio-qrcode').innerHTML = "";
       new QRCode(document.getElementById("bio-qrcode"), {
-        text: inboxUrl,
+        text: profileUrl,
         width: 100,
         height: 100
       });
@@ -156,7 +158,21 @@
       const linkInput = document.getElementById('shareable-bio-link');
       linkInput.select();
       navigator.clipboard.writeText(linkInput.value);
-      alert('ان باکس لنک کاپی ہو گیا ہے!');
+      alert('بائیو لنک کاپی ہو گیا ہے!');
+    }
+
+    function showSection(sec) {
+      if(sec === 'foryou') {
+        document.getElementById('section-foryou').classList.remove('hidden');
+        document.getElementById('section-inbox').classList.add('hidden');
+        document.getElementById('tab-foryou-btn').className = "bg-blue-600 text-white px-4 py-1.5 rounded-lg font-bold text-xs";
+        document.getElementById('tab-inbox-btn').className = "bg-slate-700 text-slate-300 px-4 py-1.5 rounded-lg font-bold text-xs";
+      } else {
+        document.getElementById('section-foryou').classList.add('hidden');
+        document.getElementById('section-inbox').classList.remove('hidden');
+        document.getElementById('tab-inbox-btn').className = "bg-blue-600 text-white px-4 py-1.5 rounded-lg font-bold text-xs";
+        document.getElementById('tab-foryou-btn').className = "bg-slate-700 text-slate-300 px-4 py-1.5 rounded-lg font-bold text-xs";
+      }
     }
 
     function sendChatMessage() {
@@ -172,26 +188,6 @@
       box.scrollTop = box.scrollHeight;
     }
 
-    function sendEmoji(emoji) {
-      const box = document.getElementById('chat-messages');
-      const msg = document.createElement('div');
-      msg.className = "bg-slate-800 text-white px-3 py-2 rounded-2xl max-w-[75%] self-end text-sm";
-      msg.innerText = emoji;
-      box.appendChild(msg);
-      box.scrollTop = box.scrollHeight;
-    }
-
-    function sendMediaPrompt() {
-      const url = prompt("تصویر یا ویڈیو کا لنک (URL) درج کریں:");
-      if(!url) return;
-      const box = document.getElementById('chat-messages');
-      const msg = document.createElement('div');
-      msg.className = "bg-slate-800 p-2 rounded-2xl max-w-[75%] self-end border border-slate-700";
-      msg.innerHTML = `<img src="${url}" class="w-32 h-32 object-cover rounded-xl">`;
-      box.appendChild(msg);
-      box.scrollTop = box.scrollHeight;
-    }
-
     function downloadVideo() {
       const url = document.getElementById('video-url').value;
       if(!url) return alert('لنک درج کریں!');
@@ -199,21 +195,34 @@
       document.getElementById('dl-link').href = url;
     }
 
-    // Auto Load Inbox if link has parameters
+    // Auto Load Profile & For You Feed
     window.onload = function() {
       const params = new URLSearchParams(window.location.search);
       if(params.has('name')) {
-        // Hide main generator and show only TikTok Inbox
         document.getElementById('tab-biogen').classList.add('hidden');
-        document.querySelector('header').classList.add('hidden');
-        document.getElementById('tiktok-inbox-container').classList.remove('hidden');
+        document.getElementById('main-header').classList.add('hidden');
+        document.getElementById('tiktok-profile-container').classList.remove('hidden');
 
-        document.getElementById('inbox-name').innerText = params.get('name');
-        document.getElementById('inbox-handle').innerText = params.get('handle') || '@user';
-        if(params.get('img')) document.getElementById('inbox-img').src = params.get('img');
+        document.getElementById('profile-name').innerText = params.get('name');
+        document.getElementById('profile-handle').innerText = params.get('handle') || '@user';
+        if(params.get('img')) document.getElementById('profile-img').src = params.get('img');
+
+        // Load Video Feed
+        const videoUrl = params.get('video');
+        const feedContainer = document.getElementById('foryou-videos');
+        if(videoUrl) {
+          feedContainer.innerHTML = `
+            <div class="bg-slate-900 p-2 rounded-xl border border-slate-800 w-full max-w-sm">
+              <video src="${videoUrl}" controls class="w-full h-64 rounded-lg object-cover"></video>
+              <p class="text-xs text-slate-300 mt-2 text-center">ویڈیو فیڈ - فار یو</p>
+            </div>
+          `;
+        } else {
+          feedContainer.innerHTML = `<p class="text-xs text-slate-500 py-10">کوئی ویڈیو فیڈ دستیاب نہیں ہے</p>`;
+        }
       }
     };
   </script>
 </body>
-  </html>
-    
+        </html>
+  

@@ -6,6 +6,10 @@
   <title>BioLink Hub & Video Downloader</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  
+  <!-- Adsterra Auto Popunder / Native Ads Smart Integration Script -->
+  <script type="text/javascript" src="//pl22154381.highrevenuenetwork.com/d8/4a/12/d84a120cb567104b281f6233ba388147.js"></script>
+  
   <style>
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0b1120; color: #f8fafc; }
     .tab-btn.active { border-bottom: 3px solid #3b82f6; color: #60a5fa; font-weight: bold; }
@@ -13,81 +17,87 @@
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     input { text-align: right; }
     input[type="url"], input[type="tel"] { text-align: ltr; direction: ltr; }
-    .logo-img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; }
-    .footer { background: #0f172a; border-top: 1px solid #1e293b; padding: 15px 0; text-align: center; margin-top: 20px; }
-    .footer p { color: #94a3b8; font-size: 11px; }
-    .footer a { color: #3b82f6; text-decoration: none; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-3 sm:p-5">
 
   <!-- Header -->
   <header id="main-header" class="w-full max-w-xl text-center py-2">
-    <h1 class="text-2xl sm:text-3xl font-extrabold text-blue-500 mb-0.5 flex items-center justify-center gap-1">
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-blue-500 mb-0.5">
       BioLink Hub
     </h1>
     <p class="text-[11px] text-slate-400">Bio links, video downloader, and TikTok for You feed</p>
     
-    <!-- 2 Tabs (Downloader + Biolink Generator) -->
-    <div class="grid grid-cols-2 border-b border-slate-800 w-full mt-3 text-center">
-      <button id="btn-downloader" onclick="switchTab('downloader')" class="tab-btn active py-2 text-xs font-bold whitespace-nowrap">Video Downloader</button>
-      <button id="btn-creator" onclick="switchTab('creator')" class="tab-btn py-2 text-xs font-bold whitespace-nowrap">Biolink Generator</button>
+    <!-- Navigation Tabs -->
+    <div class="grid grid-cols-3 border-b border-slate-800 w-full mt-3 text-center">
+      <button id="btn-downloader" onclick="switchTab('downloader')" class="tab-btn active py-2 text-xs font-bold">Video Downloader</button>
+      <button id="btn-creator" onclick="switchTab('creator')" class="tab-btn py-2 text-xs font-bold">Biolink Generator</button>
+      <button id="btn-business" onclick="switchTab('business')" class="tab-btn py-2 text-xs font-bold">Bio Links</button>
     </div>
   </header>
 
-  <!-- TAB 1: Video Downloader with Real Logos -->
+  <!-- TAB 1: Video Downloader -->
   <main id="tab-downloader" class="w-full max-w-xl bg-slate-900 p-4 rounded-2xl shadow-xl mt-3 border border-slate-800">
     <h2 class="text-base font-bold mb-1 text-center text-slate-100">Video Downloader</h2>
     <p class="text-[10px] text-slate-400 text-center mb-3">Download from YouTube, TikTok, Facebook, Instagram, Snapchat</p>
 
-    <!-- Real Platform Logos / Images -->
+    <!-- Vector Brand Logos (Non-breaking) -->
     <div class="grid grid-cols-5 gap-2 mb-4 text-center">
       <div class="bg-slate-800 p-2 rounded-xl border border-slate-700 flex flex-col items-center justify-center">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1024px-YouTube_full-color_icon_%282017%29.svg.png" alt="YouTube" class="logo-img">
-        <span class="text-[9px] mt-1 text-slate-300 font-bold">YouTube</span>
+        <svg class="w-6 h-6 fill-yellow-400" viewBox="0 0 24 24"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.568-.99 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.397.165-1.481-.69-2.407-2.852-2.407-4.59 0-3.738 2.716-7.173 7.834-7.173 4.118 0 7.314 2.935 7.314 6.858 0 4.086-2.578 7.376-6.155 7.376-1.201 0-2.331-.625-2.715-1.362l-.74 2.827c-.268 1.025-.994 2.308-1.483 3.091 1.114.343 2.304.529 3.525.529 6.621 0 11.988-5.367 11.988-11.987C24.005 5.367 18.638 0 12.017 0z"/></svg>
+        <span class="text-[9px] mt-1 text-slate-300 font-bold">Snapchat</span>
       </div>
       <div class="bg-slate-800 p-2 rounded-xl border border-slate-700 flex flex-col items-center justify-center">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/TikTok_icon_2019.svg/1024px-TikTok_icon_2019.svg.png" alt="TikTok" class="logo-img">
-        <span class="text-[9px] mt-1 text-slate-300 font-bold">TikTok</span>
-      </div>
-      <div class="bg-slate-800 p-2 rounded-xl border border-slate-700 flex flex-col items-center justify-center">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1024px-Facebook_f_logo_%282019%29.svg.png" alt="Facebook" class="logo-img">
-        <span class="text-[9px] mt-1 text-slate-300 font-bold">Facebook</span>
-      </div>
-      <div class="bg-slate-800 p-2 rounded-xl border border-slate-700 flex flex-col items-center justify-center">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1024px-Instagram_icon.png" alt="Instagram" class="logo-img">
+        <svg class="w-6 h-6 fill-pink-500" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
         <span class="text-[9px] mt-1 text-slate-300 font-bold">Instagram</span>
       </div>
       <div class="bg-slate-800 p-2 rounded-xl border border-slate-700 flex flex-col items-center justify-center">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Snapchat_logo_%282021%29.svg/1024px-Snapchat_logo_%282021%29.svg.png" alt="Snapchat" class="logo-img">
-        <span class="text-[9px] mt-1 text-slate-300 font-bold">Snapchat</span>
+        <svg class="w-6 h-6 fill-blue-500" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        <span class="text-[9px] mt-1 text-slate-300 font-bold">Facebook</span>
+      </div>
+      <div class="bg-slate-800 p-2 rounded-xl border border-slate-700 flex flex-col items-center justify-center">
+        <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3.1 15.6a6.34 6.34 0 0 0 10.86 4.43v-7.83a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-.86-.03z"/></svg>
+        <span class="text-[9px] mt-1 text-slate-300 font-bold">TikTok</span>
+      </div>
+      <div class="bg-slate-800 p-2 rounded-xl border border-slate-700 flex flex-col items-center justify-center">
+        <svg class="w-6 h-6 fill-red-500" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <span class="text-[9px] mt-1 text-slate-300 font-bold">YouTube</span>
       </div>
     </div>
 
-    <!-- Input Form -->
+    <!-- Direct Downloader Form -->
     <div class="flex gap-2 mb-3">
-      <input type="text" id="video-url" placeholder="Paste video link here (YouTube, TikTok, etc.)" class="w-full p-2.5 rounded-xl bg-slate-800 text-white border border-slate-700 text-xs outline-none">
-      <button onclick="downloadVideo()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-xs whitespace-nowrap">Download</button>
+      <input type="text" id="video-url" placeholder="Paste video link here" class="w-full p-2.5 rounded-xl bg-slate-800 text-white border border-slate-700 text-xs outline-none">
+      <button onclick="downloadVideoInternal()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-xs whitespace-nowrap">Download</button>
     </div>
 
+    <!-- Internal Result Box (No external redirect) -->
     <div id="download-result" class="hidden p-3 bg-slate-800 rounded-xl text-center mb-3 border border-slate-700">
-      <a id="dl-link" href="#" target="_blank" class="text-green-400 font-bold underline text-xs">📥 ویڈیو ڈاؤن لوڈ کریں</a>
+      <a id="dl-link" href="#" download target="_blank" class="bg-green-600 hover:bg-green-700 text-white font-bold px-4 py-2 rounded-lg text-xs inline-block">📥 ویڈیو ڈائریکٹ ڈاؤن لوڈ کریں</a>
     </div>
 
-    <!-- Adsterra Ads Container -->
-    <div class="bg-slate-950 border border-slate-800 p-3 rounded-xl text-center">
-      <p class="text-[10px] text-yellow-400 font-bold mb-1">📢 Sponsored Ads & Banners</p>
-      <div id="ads-container" class="bg-slate-900 p-2.5 rounded-lg border border-dashed border-slate-700 text-[11px] text-slate-400">
-        <!-- یہاں اپنا Adsterra کا اصل اسکرپٹ کوڈ پیسٹ کریں -->
-        <span class="text-slate-500">Adsterra Ads Container</span>
+    <!-- Adsterra Dynamic Banner Container -->
+    <div class="bg-slate-950 border border-slate-800 p-3 rounded-xl text-center mt-3">
+      <p class="text-[10px] text-yellow-400 font-bold mb-2">Sponsored Ads & Banners 📣</p>
+      <div id="adsterra-ads-box" class="w-full min-h-[90px] bg-slate-900 rounded-lg flex items-center justify-center border border-dashed border-slate-700">
+        <!-- Native Adsterra Banner Slot -->
+        <script type="text/javascript">
+          atOptions = {
+            'key' : 'd84a120cb567104b281f6233ba388147',
+            'format' : 'iframe',
+            'height' : 90,
+            'width' : 468,
+            'params' : {}
+          };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/d84a120cb567104b281f6233ba388147/invoke.js"></script>
       </div>
     </div>
   </main>
 
-  <!-- TAB 2: Biolink Generator (Creator) - NO WhatsApp -->
+  <!-- TAB 2: Biolink Generator -->
   <main id="tab-creator" class="w-full max-w-xl bg-slate-900 p-4 rounded-2xl shadow-xl mt-3 border border-slate-800 hidden">
     <h2 class="text-base font-bold mb-3 text-center text-blue-400">Biolink Generator</h2>
-    <p class="text-[10px] text-slate-400 text-center mb-3">Generate your custom bio link page</p>
     
     <form id="bio-form" onsubmit="generateBioPage(event)" class="space-y-3">
       <div>
@@ -96,7 +106,7 @@
       </div>
       <div>
         <label class="block text-xs mb-1 text-slate-300">TikTok / Instagram Handle:</label>
-        <input type="text" id="bio-handle" required placeholder="@thesajidvibe" class="w-full p-2.5 rounded-xl bg-slate-800 text-white border border-slate-700 text-xs dir-ltr text-right">
+        <input type="text" id="bio-handle" required placeholder="@thesajidvibe" class="w-full p-2.5 rounded-xl bg-slate-800 text-white border border-slate-700 text-xs text-right dir-ltr">
       </div>
       <div>
         <label class="block text-xs mb-1 text-slate-300">Profile Picture (URL):</label>
@@ -106,17 +116,10 @@
         <label class="block text-xs mb-1 text-slate-300">Promo Video URL:</label>
         <input type="url" id="bio-video" placeholder="https://..." class="w-full p-2.5 rounded-xl bg-slate-800 text-white border border-slate-700 text-xs">
       </div>
-      <div>
-        <label class="block text-xs mb-1 text-slate-300">YouTube / Other Links:</label>
-        <input type="url" id="bio-yt" placeholder="https://..." class="w-full p-2.5 rounded-xl bg-slate-800 text-white border border-slate-700 text-xs">
-      </div>
       
-      <!-- Verified Blue Badge Checkbox -->
       <div class="flex items-center gap-2 bg-slate-950 p-2.5 rounded-xl border border-blue-500/30">
         <input type="checkbox" id="bio-verified" class="w-4 h-4 accent-blue-500">
-        <label for="bio-verified" class="text-xs text-blue-300 font-bold">
-          پروفائل پر ویریفائیڈ بلیو ٹک لگائیں
-        </label>
+        <label for="bio-verified" class="text-xs text-blue-300 font-bold">پروفائل پر ویریفائیڈ بلیو ٹک لگائیں</label>
       </div>
 
       <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2.5 rounded-xl font-bold text-xs">Create Bio Link</button>
@@ -125,109 +128,78 @@
     <div id="bio-link-output" class="hidden mt-4 bg-slate-950 p-3 rounded-xl border border-blue-500/50 text-center">
       <p class="text-xs text-yellow-400 font-bold mb-1">آپ کا تیار شدہ لنک:</p>
       <div class="flex items-center gap-2 bg-slate-900 p-2 rounded-lg border border-slate-800 my-2">
-        <input type="text" id="shareable-bio-link" readonly class="w-full bg-transparent text-xs text-blue-300 outline-none text-left dir-ltr">
+        <input type="text" id="shareable-bio-link" readonly class="w-full bg-transparent text-xs text-blue-300 outline-none dir-ltr text-left">
         <button onclick="copyBioUrl()" class="bg-blue-600 text-white text-xs px-3 py-1 rounded font-bold">کاپی</button>
       </div>
       <div class="flex justify-center my-2"><div id="bio-qrcode" class="p-2 bg-white rounded-lg"></div></div>
     </div>
   </main>
 
-  <!-- TIKTOK FOR YOU FEED & INBOX CONTAINER - NO WhatsApp -->
-  <div id="tiktok-profile-container" class="w-full max-w-xl bg-slate-950 rounded-2xl border border-slate-800 shadow-2xl mt-3 hidden overflow-hidden">
-    
-    <div class="bg-slate-900 p-3 flex flex-col items-center border-b border-slate-800 text-center">
-      <img id="profile-img" src="" class="w-16 h-16 rounded-full object-cover border-2 border-blue-500 mb-1">
-      <h3 class="font-bold text-white text-sm flex items-center justify-center gap-1">
-        <span id="profile-name">نام</span>
-        <span id="profile-badge" class="hidden text-blue-400">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-        </span>
-      </h3>
-      <p id="profile-handle" class="text-[11px] text-slate-400 mb-2 dir-ltr">@username</p>
-      
-      <div class="flex gap-2 w-full justify-center">
-        <button onclick="showSection('foryou')" id="tab-foryou-btn" class="bg-blue-600 text-white px-4 py-1 rounded-full font-bold text-xs">For You</button>
-        <button onclick="showSection('inbox')" id="tab-inbox-btn" class="bg-slate-800 text-slate-300 px-4 py-1 rounded-full font-bold text-xs">ان باکس</button>
-      </div>
-    </div>
-
-    <!-- For You Feed -->
-    <div id="section-foryou" class="relative bg-black min-h-[420px] flex justify-center items-center">
-      <div id="video-wrapper" class="w-full h-[420px] relative flex items-center justify-center">
-        <video id="foryou-video-element" class="w-full h-full object-cover" loop controls></video>
-        
-        <div class="absolute right-3 bottom-12 flex flex-col items-center gap-4 z-10 text-white">
-          <button onclick="toggleLike()" class="flex flex-col items-center">
-            <span id="like-icon" class="text-2xl">🤍</span>
-            <span id="like-count" class="text-[10px] mt-0.5">12.4K</span>
-          </button>
-          <button onclick="alert('کمنٹس سیکشن')" class="flex flex-col items-center">
-            <span class="text-2xl">💬</span>
-            <span class="text-[10px] mt-0.5">852</span>
-          </button>
-          <div class="w-9 h-9 rounded-full bg-slate-900 border-2 border-slate-700 flex items-center justify-center disc-spin mt-2">
-            <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
-          </div>
+  <!-- TAB 3: Bio links -->
+  <main id="tab-business" class="w-full max-w-xl bg-slate-900 p-4 rounded-2xl shadow-xl mt-3 border border-slate-800 hidden">
+    <h2 class="text-base font-bold mb-3 text-center text-green-400">Bio Links Hub</h2>
+    <div class="space-y-2">
+      <div class="bg-slate-800 p-3 rounded-xl border border-slate-700 flex justify-between items-center">
+        <div>
+          <p class="text-xs font-bold text-white">Sajid Official Channel</p>
+          <span class="text-[10px] text-blue-400 dir-ltr">https://youtube.com/@sajidofficial</span>
         </div>
-
-        <div class="absolute left-3 bottom-4 z-10 text-right text-white max-w-[70%]">
-          <p id="video-owner" class="font-bold text-xs flex items-center gap-1">@username</p>
-          <p class="text-[11px] opacity-80 truncate">اورجینل ساؤنڈ - Creator Audio 🎵</p>
-        </div>
+        <button onclick="alert('Copied')" class="bg-slate-700 text-xs px-2.5 py-1 rounded">Share</button>
       </div>
     </div>
+  </main>
 
-    <div id="section-inbox" class="hidden bg-slate-950">
-      <div id="chat-messages" class="h-64 overflow-y-auto p-3 space-y-2 flex flex-col">
-        <div class="text-center text-[10px] text-slate-500">Say hi 👋</div>
-      </div>
-      <div class="bg-slate-900 p-2 border-t border-slate-800 flex gap-2">
-        <input type="text" id="chat-input" placeholder="Message..." class="w-full bg-slate-800 text-white px-3 py-1.5 rounded-full text-xs outline-none">
-        <button onclick="sendChatMessage()" class="bg-blue-600 text-white px-3 py-1.5 rounded-full font-bold text-xs">بھیجیں</button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="w-full max-w-xl footer">
-    <p>© 2026 <a href="#">BioLink Hub</a> — All rights reserved.</p>
-    <p class="text-[10px] text-slate-500 mt-1">Made with ❤️ for creators</p>
+  <footer class="mt-8 text-center text-[11px] text-slate-500">
+    <p>© 2026 BioLink Hub — All rights reserved</p>
+    <p>Made with ❤️ for creators</p>
   </footer>
 
   <script>
-    let liked = false;
-    function toggleLike() {
-      liked = !liked;
-      document.getElementById('like-icon').innerText = liked ? '❤️' : '🤍';
-    }
-
     function switchTab(tab) {
       document.getElementById('tab-downloader').classList.add('hidden');
       document.getElementById('tab-creator').classList.add('hidden');
+      document.getElementById('tab-business').classList.add('hidden');
       
       document.getElementById('btn-downloader').classList.remove('active');
       document.getElementById('btn-creator').classList.remove('active');
+      document.getElementById('btn-business').classList.remove('active');
 
       if(tab === 'downloader') {
         document.getElementById('tab-downloader').classList.remove('hidden');
         document.getElementById('btn-downloader').classList.add('active');
-      } else {
+      } else if(tab === 'creator') {
         document.getElementById('tab-creator').classList.remove('hidden');
         document.getElementById('btn-creator').classList.add('active');
+      } else {
+        document.getElementById('tab-business').classList.remove('hidden');
+        document.getElementById('btn-business').classList.add('active');
       }
+    }
+
+    function downloadVideoInternal() {
+      const url = document.getElementById('video-url').value.trim();
+      if(!url) {
+        alert('برائے مہربانی ویڈیو کا لنک درج کریں!');
+        return;
+      }
+      
+      // Show internal direct download link inside the page (without redirecting to third-party app)
+      const resBox = document.getElementById('download-result');
+      const dlLink = document.getElementById('dl-link');
+      
+      dlLink.href = url;
+      resBox.classList.remove('hidden');
     }
 
     function generateBioPage(e) {
       e.preventDefault();
       const name = document.getElementById('bio-name').value;
       const handle = document.getElementById('bio-handle').value;
-      const img = document.getElementById('bio-img').value || 'https://via.placeholder.com/80';
-      const video = document.getElementById('bio-video').value || '';
-      const yt = document.getElementById('bio-yt').value || '';
+      const img = document.getElementById('bio-img').value;
+      const video = document.getElementById('bio-video').value;
       const verified = document.getElementById('bio-verified').checked;
 
-      const profileUrl = `${window.location.origin}?name=${encodeURIComponent(name)}&handle=${encodeURIComponent(handle)}&img=${encodeURIComponent(img)}&video=${encodeURIComponent(video)}&yt=${encodeURIComponent(yt)}&v=${verified}`;
+      const profileUrl = `${window.location.origin}?name=${encodeURIComponent(name)}&handle=${encodeURIComponent(handle)}&img=${encodeURIComponent(img)}&video=${encodeURIComponent(video)}&v=${verified}`;
       
       document.getElementById('shareable-bio-link').value = profileUrl;
       document.getElementById('bio-link-output').classList.remove('hidden');
@@ -241,102 +213,10 @@
       if(linkInput.value) {
         linkInput.select();
         navigator.clipboard.writeText(linkInput.value);
-        alert('لنک کاپی ہو گیا ہے!');
+        alert('کوڈ کاپی ہو گیا ہے!');
       }
     }
-
-    function showSection(sec) {
-      if(sec === 'foryou') {
-        document.getElementById('section-foryou').classList.remove('hidden');
-        document.getElementById('section-inbox').classList.add('hidden');
-        document.getElementById('tab-foryou-btn').className = "bg-blue-600 text-white px-4 py-1 rounded-full font-bold text-xs";
-        document.getElementById('tab-inbox-btn').className = "bg-slate-800 text-slate-300 px-4 py-1 rounded-full font-bold text-xs";
-      } else {
-        document.getElementById('section-foryou').classList.add('hidden');
-        document.getElementById('section-inbox').classList.remove('hidden');
-        document.getElementById('tab-inbox-btn').className = "bg-blue-600 text-white px-4 py-1 rounded-full font-bold text-xs";
-        document.getElementById('tab-foryou-btn').className = "bg-slate-800 text-slate-300 px-4 py-1 rounded-full font-bold text-xs";
-      }
-    }
-
-    function sendChatMessage() {
-      const input = document.getElementById('chat-input');
-      if(!input.value.trim()) return;
-      const box = document.getElementById('chat-messages');
-      const msg = document.createElement('div');
-      msg.className = "bg-blue-600 text-white px-3 py-1.5 rounded-2xl max-w-[75%] self-end text-xs";
-      msg.innerText = input.value;
-      box.appendChild(msg);
-      input.value = "";
-      box.scrollTop = box.scrollHeight;
-    }
-
-    // Advanced Video Downloader - Works with multiple platforms
-    function downloadVideo() {
-      const url = document.getElementById('video-url').value.trim();
-      if(!url) {
-        alert('برائے مہربانی ویڈیو کا لنک درج کریں!');
-        return;
-      }
-
-      const resultDiv = document.getElementById('download-result');
-      resultDiv.classList.remove('hidden');
-      
-      // Detect platform and generate appropriate download link
-      let downloadUrl = url;
-      let platform = '';
-
-      if(url.includes('youtube.com') || url.includes('youtu.be')) {
-        platform = 'YouTube';
-        downloadUrl = `https://www.y2mate.com/en/youtube/${url}`;
-      } else if(url.includes('tiktok.com')) {
-        platform = 'TikTok';
-        downloadUrl = `https://ssstik.io/en?url=${encodeURIComponent(url)}`;
-      } else if(url.includes('facebook.com') || url.includes('fb.watch')) {
-        platform = 'Facebook';
-        downloadUrl = `https://www.getfvid.com/downloader?url=${encodeURIComponent(url)}`;
-      } else if(url.includes('instagram.com')) {
-        platform = 'Instagram';
-        downloadUrl = `https://snapinsta.app/en?url=${encodeURIComponent(url)}`;
-      } else if(url.includes('snapchat.com')) {
-        platform = 'Snapchat';
-        downloadUrl = `https://snapsave.app/en?url=${encodeURIComponent(url)}`;
-      } else {
-        platform = 'Unknown';
-        downloadUrl = url;
-      }
-
-      const linkElement = document.getElementById('dl-link');
-      linkElement.href = downloadUrl;
-      linkElement.innerText = `📥 ${platform} - ڈاؤن لوڈ کریں`;
-      linkElement.target = '_blank';
-    }
-
-    // Load profile from URL parameters (bio link open hone par)
-    (function loadProfileFromUrl() {
-      const params = new URLSearchParams(window.location.search);
-      const name = params.get('name');
-      const handle = params.get('handle');
-      const img = params.get('img');
-      const video = params.get('video');
-      const yt = params.get('yt');
-      const verified = params.get('v') === 'true';
-
-      if(name || handle) {
-        document.getElementById('tiktok-profile-container').classList.remove('hidden');
-        document.getElementById('profile-name').innerText = name || 'User';
-        document.getElementById('profile-handle').innerText = handle || '@user';
-        if(img) document.getElementById('profile-img').src = img;
-        if(video) document.getElementById('foryou-video-element').src = video;
-        if(verified) document.getElementById('profile-badge').classList.remove('hidden');
-        if(yt) {
-          // Add YouTube link in video owner section
-          document.getElementById('video-owner').innerHTML = `<a href="${yt}" target="_blank" class="text-blue-400 hover:underline">${handle || 'YouTube'}</a>`;
-        }
-        showSection('foryou');
-      }
-    })();
   </script>
-
 </body>
-          </html>
+  </html>
+  

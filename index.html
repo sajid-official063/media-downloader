@@ -36,7 +36,7 @@
     <!-- TAB 1: DOWNLOADER -->
     <div id="section-downloader" class="p-4 space-y-4">
       
-      <!-- Supported Platforms Logobar (SSSTik style with YouTube) -->
+      <!-- Supported Platforms Logobar -->
       <div class="bg-[#0b1320] p-3 rounded-2xl border border-slate-800 text-center">
         <p class="text-[10px] text-slate-400 font-bold mb-2 uppercase tracking-wider">Supported Platforms</p>
         <div class="flex items-center justify-center gap-4 text-xl">
@@ -52,7 +52,7 @@
       <p class="text-xs text-slate-300 text-center font-medium">Paste Video URL to Download Fast</p>
 
       <div class="space-y-3">
-        <input type="text" id="video-url-input" placeholder="Paste YouTube, TikTok, Insta, FB, Snapchat Link..." 
+        <input type="text" id="video-url-input" placeholder="Paste TikTok, Insta, FB, YouTube Link..." 
                class="w-full p-3 rounded-xl bg-[#0b1320] text-white border border-slate-700 text-xs focus:outline-none focus:border-sky-500">
 
         <button id="fetch-btn" onclick="handleFetchVideo()" class="w-full bg-[#0284c7] hover:bg-[#0369a1] text-white font-bold py-3 rounded-xl text-sm transition flex items-center justify-center gap-2">
@@ -60,14 +60,24 @@
         </button>
       </div>
 
-      <!-- Result Box -->
+      <!-- Result Box with Video Preview Thumbnail & Title -->
       <div id="video-result-box" class="space-y-3 pt-1 hidden">
         <div class="bg-[#0b1320] border border-slate-800 rounded-2xl p-4 text-center space-y-3">
-          <p id="video-caption-text" class="text-xs text-slate-300 font-medium px-1 line-clamp-2">
-            Video Ready for Auto-Download
-          </p>
+          
+          <!-- Video Cover Image -->
+          <div class="relative w-full rounded-xl overflow-hidden border border-slate-700 bg-black max-h-64 flex items-center justify-center">
+            <img id="video-cover-img" src="" alt="Video Preview" class="w-full object-cover max-h-64">
+          </div>
 
-          <div class="space-y-2 pt-1">
+          <!-- Creator & Video Caption -->
+          <div class="space-y-1">
+            <p id="video-author-text" class="text-xs font-bold text-sky-400">@author</p>
+            <p id="video-caption-text" class="text-xs text-slate-300 font-medium px-1 line-clamp-2">
+              Video Title Preview
+            </p>
+          </div>
+
+          <div class="space-y-2 pt-2">
             <button id="hd-download-btn" onclick="triggerDirectDownload()" class="w-full bg-[#16a34a] hover:bg-[#15803d] text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition shadow-lg">
               Download HD Video Directly 📥
             </button>
@@ -196,6 +206,9 @@
       const url = document.getElementById('video-url-input').value.trim();
       const fetchBtn = document.getElementById('fetch-btn');
       const resBox = document.getElementById('video-result-box');
+      const coverImg = document.getElementById('video-cover-img');
+      const authorText = document.getElementById('video-author-text');
+      const captionText = document.getElementById('video-caption-text');
 
       if (!url) { alert('Please paste a video URL!'); return; }
 
@@ -210,13 +223,24 @@
         if (data && data.data) {
           currentVideoUrl = data.data.play;
           currentAudioUrl = data.data.music || data.data.play;
+
+          // Set Image Thumbnail & Details
+          coverImg.src = data.data.cover || data.data.origin_cover || "";
+          authorText.innerText = `@${data.data.author.unique_id || data.data.author.nickname || 'Creator'}`;
+          captionText.innerText = data.data.title || "Video Ready for Download";
         } else {
           currentVideoUrl = url;
           currentAudioUrl = url;
+          coverImg.src = "https://via.placeholder.com/400x250/0f172a/ffffff?text=Video+Ready";
+          authorText.innerText = "@VideoDownloader";
+          captionText.innerText = "Click below to start download";
         }
       } catch (err) {
         currentVideoUrl = url;
         currentAudioUrl = url;
+        coverImg.src = "https://via.placeholder.com/400x250/0f172a/ffffff?text=Video+Ready";
+        authorText.innerText = "@VideoDownloader";
+        captionText.innerText = "Click below to start download";
       }
 
       fetchBtn.innerHTML = "<span>Fetch Video</span> 🚀";
@@ -287,5 +311,5 @@
     }
   </script>
 </body>
-            </html>
-  
+      </html>
+                                                                                               

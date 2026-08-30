@@ -3,9 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All Social Media Video Downloader & Bio Hub</title>
+  <title>All Video Downloader & Bio Link</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- App Manifest & Mobile Theme Setup -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0b1320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0b1320; color: #ffffff; }
     .tab-btn.active { border-bottom: 3px solid #0284c7; color: #38bdf8; font-weight: 700; }
@@ -14,18 +21,21 @@
     .platform-icon:hover { transform: scale(1.15); }
   </style>
 
+  <!-- Adsterra Social Bar Ad Code -->
   <script src="https://pl31087341.profitableratecpmnetwork.com/22/c9/ac/22c9ac26eef58cfaf7365f1582cddc9f.js"></script>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-start p-2 sm:p-4">
 
   <div class="w-full max-w-md bg-[#131d31] rounded-3xl shadow-2xl border border-slate-800 overflow-hidden flex flex-col my-auto">
     
+    <!-- Header -->
     <div class="p-4 text-center border-b border-slate-800/80">
       <h1 class="text-xl font-extrabold text-[#38bdf8] tracking-wide mb-1">
         All Media Downloader & Bio Hub
       </h1>
       <p class="text-[11px] text-slate-400">Download HD Videos & Manage Bio Links</p>
 
+      <!-- Tabs -->
       <div class="grid grid-cols-3 border-b border-slate-800 mt-4 text-center">
         <button id="tab-btn-downloader" onclick="showTab('downloader')" class="tab-btn active py-2 text-xs font-semibold">Downloader</button>
         <button id="tab-btn-generator" onclick="showTab('generator')" class="tab-btn py-2 text-xs font-semibold">Bio Generator</button>
@@ -33,8 +43,26 @@
       </div>
     </div>
 
+    <!-- TAB 1: DOWNLOADER -->
     <div id="section-downloader" class="p-4 space-y-4">
       
+      <!-- Google Play Store Banner Option -->
+      <div id="install-app-banner" class="bg-gradient-to-r from-sky-600 to-blue-700 p-3 rounded-2xl mb-1 text-white flex items-center justify-between shadow-lg">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center font-bold text-emerald-400 text-sm shadow-inner border border-slate-700">
+            <i class="fa-brands fa-google-play text-emerald-400"></i>
+          </div>
+          <div>
+            <p class="text-xs font-bold leading-tight flex items-center gap-1">Get App on Play Store <span class="bg-emerald-500 text-[8px] px-1.5 py-0.2 rounded-full font-extrabold text-slate-950 uppercase">Official</span></p>
+            <p class="text-[9px] text-sky-100">Fast downloads & Bio link generator</p>
+          </div>
+        </div>
+        <button onclick="handleAppDownload()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-[10px] px-3 py-1.5 rounded-xl shadow flex items-center gap-1 transition-all transform active:scale-95">
+          <span>Install App</span> <i class="fa-solid fa-download"></i>
+        </button>
+      </div>
+
+      <!-- Supported Platforms Logobar -->
       <div class="bg-[#0b1320] p-3 rounded-2xl border border-slate-800 text-center">
         <p class="text-[10px] text-slate-400 font-bold mb-2 uppercase tracking-wider">Supported Platforms</p>
         <div class="flex items-center justify-center gap-4 text-xl">
@@ -58,6 +86,7 @@
         </button>
       </div>
 
+      <!-- Result Box with Video Preview Thumbnail -->
       <div id="video-result-box" class="space-y-3 pt-1 hidden">
         <div class="bg-[#0b1320] border border-slate-800 rounded-2xl p-4 text-center space-y-3">
           
@@ -83,6 +112,7 @@
         </div>
       </div>
 
+      <!-- Native Banner Ad Unit 1 -->
       <div class="ad-container mt-4 text-center">
         <p class="text-[10px] text-yellow-400 font-bold mb-2">Sponsored Ad 📣</p>
         <div class="w-full flex justify-center items-center min-h-[100px]">
@@ -92,6 +122,7 @@
       </div>
     </div>
 
+    <!-- TAB 2: BIO GENERATOR -->
     <div id="section-generator" class="p-4 space-y-3 hidden">
       <h2 class="text-sm font-bold text-center text-sky-400 mb-2">Create Your Custom Bio Link</h2>
       
@@ -128,6 +159,7 @@
       </div>
     </div>
 
+    <!-- TAB 3: MY BIO LINKS -->
     <div id="section-creator" class="p-4 space-y-3 hidden">
       <h2 class="text-sm font-bold text-center text-emerald-400 mb-1">All Profile & Channel Links</h2>
       <p class="text-[10px] text-slate-400 text-center mb-3">Copy your official links directly to paste on your profiles</p>
@@ -192,6 +224,10 @@
         document.getElementById('section-creator').classList.remove('hidden');
         document.getElementById('tab-btn-creator').classList.add('active');
       }
+    }
+
+    function handleAppDownload() {
+      alert("Official Play Store App coming soon! Adding shortcut to your mobile screen.");
     }
 
     async function handleFetchVideo() {
@@ -302,5 +338,5 @@
     }
   </script>
 </body>
-            </html>
+  </html>
             

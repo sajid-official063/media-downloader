@@ -1,0 +1,22 @@
+{
+  "short_name": "Downloader",
+  "name": "All Video Downloader & Bio Link",
+  "icons": [
+    {
+      "src": "https://media-downloader-olive.vercel.app/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://media-downloader-olive.vercel.app/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0b1320",
+  "theme_color": "#0b1320",
+  "display": "standalone",
+  "orientation": "portrait"
+}
+

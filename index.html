@@ -7,7 +7,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- App Manifest & Mobile Theme Setup -->
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0b1320">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -26,7 +25,7 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-start p-2 sm:p-4">
 
-  <div class="w-full max-w-md bg-[#131d31] rounded-3xl shadow-2xl border border-slate-800 overflow-hidden flex flex-col my-auto">
+  <div class="w-full max-w-md bg-[#131d31] rounded-3xl shadow-2xl border border-slate-800 overflow-hidden flex flex-col my-auto relative">
     
     <!-- Header -->
     <div class="p-4 text-center border-b border-slate-800/80">
@@ -46,18 +45,18 @@
     <!-- TAB 1: DOWNLOADER -->
     <div id="section-downloader" class="p-4 space-y-4">
       
-      <!-- Google Play Store Banner Option -->
+      <!-- Combined App Store Banner -->
       <div id="install-app-banner" class="bg-gradient-to-r from-sky-600 to-blue-700 p-3 rounded-2xl mb-1 text-white flex items-center justify-between shadow-lg">
         <div class="flex items-center gap-2.5">
           <div class="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center font-bold text-emerald-400 text-sm shadow-inner border border-slate-700">
             <i class="fa-brands fa-google-play text-emerald-400"></i>
           </div>
           <div>
-            <p class="text-xs font-bold leading-tight flex items-center gap-1">Get App on Play Store <span class="bg-emerald-500 text-[8px] px-1.5 py-0.2 rounded-full font-extrabold text-slate-950 uppercase">Official</span></p>
-            <p class="text-[9px] text-sky-100">Fast downloads & Bio link generator</p>
+            <p class="text-xs font-bold leading-tight flex items-center gap-1">Download Mobile App <span class="bg-emerald-500 text-[8px] px-1.5 py-0.2 rounded-full font-extrabold text-slate-950 uppercase">Official</span></p>
+            <p class="text-[9px] text-sky-100">Play Store & Palm Store Available</p>
           </div>
         </div>
-        <button onclick="handleAppDownload()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-[10px] px-3 py-1.5 rounded-xl shadow flex items-center gap-1 transition-all transform active:scale-95">
+        <button onclick="openStoreModal()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-[10px] px-3 py-1.5 rounded-xl shadow flex items-center gap-1 transition-all transform active:scale-95">
           <span>Install App</span> <i class="fa-solid fa-download"></i>
         </button>
       </div>
@@ -86,21 +85,16 @@
         </button>
       </div>
 
-      <!-- Result Box with Video Preview Thumbnail -->
+      <!-- Result Box -->
       <div id="video-result-box" class="space-y-3 pt-1 hidden">
         <div class="bg-[#0b1320] border border-slate-800 rounded-2xl p-4 text-center space-y-3">
-          
           <div class="relative w-full rounded-xl overflow-hidden border border-slate-700 bg-black max-h-64 flex items-center justify-center">
             <img id="video-cover-img" src="" alt="Video Preview" class="w-full object-cover max-h-64">
           </div>
-
           <div class="space-y-1">
             <p id="video-author-text" class="text-xs font-bold text-sky-400">@author</p>
-            <p id="video-caption-text" class="text-xs text-slate-300 font-medium px-1 line-clamp-2">
-              Video Title Preview
-            </p>
+            <p id="video-caption-text" class="text-xs text-slate-300 font-medium px-1 line-clamp-2">Video Title Preview</p>
           </div>
-
           <div class="space-y-2 pt-2">
             <button id="hd-download-btn" onclick="triggerDirectDownload()" class="w-full bg-[#16a34a] hover:bg-[#15803d] text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition shadow-lg">
               Download HD Video Directly 📥
@@ -125,7 +119,6 @@
     <!-- TAB 2: BIO GENERATOR -->
     <div id="section-generator" class="p-4 space-y-3 hidden">
       <h2 class="text-sm font-bold text-center text-sky-400 mb-2">Create Your Custom Bio Link</h2>
-      
       <form id="bio-form" onsubmit="handleGenerateBio(event)" class="space-y-3">
         <div>
           <label class="block text-[11px] text-slate-300 mb-1">Name / Page Title:</label>
@@ -135,7 +128,6 @@
           <label class="block text-[11px] text-slate-300 mb-1">Social Handle:</label>
           <input type="text" id="bio-handle" required placeholder="@thesajidvibe" class="w-full p-2.5 rounded-xl bg-[#0b1320] text-white border border-slate-700 text-xs">
         </div>
-
         <div class="border-t border-slate-800 pt-2 space-y-2">
           <p class="text-[11px] text-yellow-400 font-bold">Add Your Links Below:</p>
           <input type="url" id="bio-yt" placeholder="YouTube Link" class="w-full p-2 rounded-xl bg-[#0b1320] text-white border border-slate-700 text-xs">
@@ -144,7 +136,6 @@
           <input type="url" id="bio-snap" placeholder="Snapchat Link" class="w-full p-2 rounded-xl bg-[#0b1320] text-white border border-slate-700 text-xs">
           <input type="url" id="bio-pin" placeholder="Pinterest Link" class="w-full p-2 rounded-xl bg-[#0b1320] text-white border border-slate-700 text-xs">
         </div>
-
         <button type="submit" class="w-full bg-[#0284c7] hover:bg-[#0369a1] py-2.5 rounded-xl font-bold text-xs text-white">
           Generate My Bio Link Page
         </button>
@@ -195,6 +186,36 @@
       </div>
     </div>
 
+    <!-- STORE SELECTION POPUP MODAL -->
+    <div id="store-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+      <div class="bg-[#131d31] border border-slate-700 w-full max-w-xs rounded-2xl p-5 text-center space-y-4 shadow-2xl relative">
+        <button onclick="closeStoreModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white text-sm">✕</button>
+        
+        <h3 class="text-sm font-bold text-white">Select App Store to Install</h3>
+        <p class="text-[10px] text-slate-400">Choose your device store below:</p>
+
+        <div class="space-y-3">
+          <!-- Option 1: Palm Store -->
+          <button onclick="selectStore('palm')" class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 p-3 rounded-xl flex items-center gap-3 transition text-left">
+            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-extrabold text-xs">🌴</div>
+            <div>
+              <p class="text-xs font-bold text-white leading-tight">1. Palm Store</p>
+              <p class="text-[9px] text-slate-400">For Infinix, Tecno & itel Devices</p>
+            </div>
+          </button>
+
+          <!-- Option 2: Google Play Store -->
+          <button onclick="selectStore('play')" class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 p-3 rounded-xl flex items-center gap-3 transition text-left">
+            <div class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white text-xs"><i class="fa-brands fa-google-play"></i></div>
+            <div>
+              <p class="text-xs font-bold text-white leading-tight">2. Google Play Store</p>
+              <p class="text-[9px] text-slate-400">For All Android Devices</p>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div class="p-3 text-center border-t border-slate-800/80 bg-[#0b1320]">
       <p class="text-[10px] text-slate-500">© 2026 Media Downloader & Bio Hub</p>
     </div>
@@ -204,6 +225,23 @@
   <script>
     let currentVideoUrl = "";
     let currentAudioUrl = "";
+
+    function openStoreModal() {
+      document.getElementById('store-modal').classList.remove('hidden');
+    }
+
+    function closeStoreModal() {
+      document.getElementById('store-modal').classList.add('hidden');
+    }
+
+    function selectStore(type) {
+      if(type === 'palm') {
+        alert("Palm Store Registration Coming Soon! Adding web shortcut to your device.");
+      } else {
+        alert("Google Play Store App Coming Soon! Adding web shortcut to your device.");
+      }
+      closeStoreModal();
+    }
 
     function showTab(tabName) {
       document.getElementById('section-downloader').classList.add('hidden');
@@ -224,10 +262,6 @@
         document.getElementById('section-creator').classList.remove('hidden');
         document.getElementById('tab-btn-creator').classList.add('active');
       }
-    }
-
-    function handleAppDownload() {
-      alert("Official Play Store App coming soon! Adding shortcut to your mobile screen.");
     }
 
     async function handleFetchVideo() {
@@ -338,5 +372,5 @@
     }
   </script>
 </body>
-  </html>
-            
+          </html>
+          

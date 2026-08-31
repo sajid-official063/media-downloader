@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>All Media Downloader & Bio Hub</title>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         * {
@@ -114,10 +113,6 @@
         .card input:focus, .card textarea:focus {
             border-color: #f7971e;
         }
-        .card textarea {
-            resize: vertical;
-            min-height: 50px;
-        }
 
         .btn {
             display: inline-block;
@@ -140,11 +135,6 @@
             transform: scale(0.97);
             box-shadow: 0 4px 20px rgba(247, 151, 30, 0.3);
         }
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #f7971e;
-            color: #f7971e;
-        }
         .btn-success {
             background: #00c853;
             color: #fff;
@@ -152,6 +142,11 @@
         .btn-danger {
             background: #d32f2f;
             color: #fff;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #f7971e;
+            color: #f7971e;
         }
 
         .link-item {
@@ -351,15 +346,29 @@
             color: #5a6a8a;
             margin-top: 8px;
         }
-
-        /* Real link style */
-        .real-link {
-            color: #64ffda;
-            text-decoration: underline;
-            cursor: pointer;
+        .download-result-box .video-thumbnail {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            max-height: 200px;
+            object-fit: cover;
         }
-        .real-link:hover {
+
+        .loading-spinner {
+            text-align: center;
+            padding: 20px;
+        }
+        .loading-spinner i {
+            font-size: 30px;
             color: #f7971e;
+        }
+
+        .error-msg {
+            color: #ff6b6b;
+            padding: 10px;
+            background: #1a0a0a;
+            border-radius: 10px;
+            border: 1px solid #ff6b6b33;
         }
     </style>
 </head>
@@ -373,17 +382,17 @@
         <p>Download HD Videos & Manage Bio Links</p>
     </div>
 
-    <!-- App Banner with Play Store & Palm Store -->
+    <!-- App Banner -->
     <div class="app-banner">
         <div class="app-text">
             <strong>📱 Get Mobile App</strong><br>
             Fast & Free Download Manager
         </div>
         <div class="store-buttons">
-            <button class="store-btn" onclick="showToast('🔗 Play Store link copied!')">
+            <button class="store-btn" onclick="window.open('https://play.google.com/store','_blank')">
                 <i class="fab fa-google-play"></i> Play Store
             </button>
-            <button class="store-btn palm" onclick="showToast('🔗 Palm Store link copied!')">
+            <button class="store-btn palm" onclick="showToast('🔗 Palm Store Coming Soon!')">
                 <i class="fas fa-store"></i> Palm Store
             </button>
         </div>
@@ -399,7 +408,6 @@
     <!-- ===================== TAB 1: DOWNLOADER ===================== -->
     <div id="downloader" class="tab-content active">
 
-        <!-- Supported Platforms -->
         <div class="card">
             <h3>📌 SUPPORTED PLATFORMS</h3>
             <div class="supported-icons">
@@ -410,17 +418,16 @@
             </div>
         </div>
 
-        <!-- Download Form -->
         <div class="card">
             <h3>🔗 Paste Video URL to Download Fast</h3>
-            <input type="text" id="videoUrl" placeholder="Paste Insta, TikTok, FB, YouTube Link..." style="margin-bottom:8px;">
+            <input type="text" id="videoUrl" placeholder="Paste Insta, TikTok, FB, YouTube Link..." style="margin-bottom:8px;" value="https://www.facebook.com/share/r/18u1ye">
             <button class="btn btn-primary" onclick="fetchMedia()">
                 <i class="fas fa-cloud-download-alt"></i> Fetch Media
             </button>
             <div id="downloadResult" style="margin-top:12px;"></div>
         </div>
 
-        <!-- AD PLACEHOLDER - Your Ad Code -->
+        <!-- AD 1 -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
             <div class="ad-box" id="adBox1">
@@ -429,7 +436,7 @@
             </div>
         </div>
 
-        <!-- Second Ad -->
+        <!-- AD 2 -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
             <div class="ad-box" id="adBox2">
@@ -459,7 +466,6 @@
                 <i class="fas fa-magic"></i> Generate My Bio Link Page
             </button>
 
-            <!-- Bio Preview with Working Links -->
             <div id="bioPreview" class="bio-preview">
                 <div style="font-size:16px;font-weight:700;" id="previewName">Sajid Official</div>
                 <div class="handle" id="previewHandle">@thesajidvibe</div>
@@ -473,7 +479,6 @@
             </div>
         </div>
 
-        <!-- Ad inside Bio -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
             <div class="ad-box">
@@ -511,7 +516,6 @@
             </div>
         </div>
 
-        <!-- Ad -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
             <div class="ad-box">
@@ -520,7 +524,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <div class="footer">
         All-in-One Media Downloader & Bio Hub © 2026
     </div>
@@ -531,7 +534,7 @@
             const t = document.getElementById('toast');
             t.textContent = msg || '✅ Copied!';
             t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 2200);
+            setTimeout(() => t.classList.remove('show'), 2500);
         }
 
         // ===================== COPY =====================
@@ -565,20 +568,21 @@
             });
         });
 
-        // ===================== FETCH MEDIA (REAL WORKING) =====================
-        function fetchMedia() {
+        // ===================== FETCH MEDIA (USING FREE API) =====================
+        async function fetchMedia() {
             const url = document.getElementById('videoUrl').value.trim();
             const resultDiv = document.getElementById('downloadResult');
 
             if (!url) {
-                resultDiv.innerHTML = `<div style="color:#ff6b6b;font-size:14px;">⚠️ Please paste a valid URL</div>`;
+                resultDiv.innerHTML = `<div class="error-msg">⚠️ Please paste a valid URL</div>`;
                 return;
             }
 
-            // Show loading
-            resultDiv.innerHTML = `<div style="color:#f7971e;text-align:center;padding:20px;">
-                <i class="fas fa-spinner fa-spin" style="font-size:24px;"></i><br>
-                ⏳ Fetching media...
-            </div>`;
+            resultDiv.innerHTML = `
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i><br>
+                    ⏳ Fetching media...
+                </div>
+            `;
 
-            // Simulate API 
+            try

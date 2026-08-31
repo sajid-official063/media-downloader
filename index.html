@@ -43,9 +43,9 @@
         .ad-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #5a6a8a; margin-bottom: 6px; }
         .ad-box { background: #0b0e1a; padding: 15px 10px; border-radius: 12px; font-size: 13px; color: #ccd6f6; }
         
-        .bio-preview { background: #0b0e1a; border-radius: 14px; padding: 14px; margin-top: 12px; border: 1px solid #1f2a3f; }
-        .bio-preview .handle { color: #f7971e; font-weight: 600; }
-        .bio-preview .links a { color: #64ffda; text-decoration: none; display: block; padding: 4px 0; font-size: 13px; }
+        .bio-preview { background: #0b0e1a; border-radius: 14px; padding: 14px; margin-top: 12px; border: 1px solid #1f2a3f; text-align: center; }
+        .bio-preview .handle { color: #f7971e; font-weight: 600; margin-bottom: 10px; }
+        .bio-preview .links a { color: #0b0e1a; background: #f7971e; text-decoration: none; display: block; padding: 10px; border-radius: 10px; margin: 6px 0; font-size: 13px; font-weight: 600; }
         
         .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #f7971e; color: #0b0e1a; padding: 10px 24px; border-radius: 30px; font-size: 14px; font-weight: 700; box-shadow: 0 8px 30px rgba(0,0,0,0.6); display: none; z-index: 999; }
         .toast.show { display: block; animation: fade 0.3s ease; }
@@ -75,7 +75,6 @@
         <button class="tab-btn" onclick="switchTab('mylinks', this)"><i class="fas fa-list"></i> My Bio Links</button>
     </div>
 
-    <!-- TAB 1: DOWNLOADER -->
     <div id="downloader" class="tab-content active">
         <div class="card">
             <h3>📌 SUPPORTED PLATFORMS</h3>
@@ -94,7 +93,6 @@
             <div id="downloadResult" style="display:none;"></div>
         </div>
 
-        <!-- AD 1 -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
             <div class="ad-box">
@@ -103,7 +101,6 @@
             </div>
         </div>
 
-        <!-- AD 2 -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
             <div class="ad-box">
@@ -112,36 +109,38 @@
         </div>
     </div>
 
-    <!-- TAB 2: BIO GENERATOR -->
     <div id="bio" class="tab-content">
         <div class="card">
-            <h3>✨ Create Your Custom Bio Link</h3>
+            <h3>✨ Create Your Master Bio Hub Link</h3>
             <label>Name / Page Title</label>
             <input type="text" id="bioName" value="Sajid Official" oninput="updateBioPreview()">
+            
             <label>Social Handle</label>
             <input type="text" id="bioHandle" value="@thesajidvibe" oninput="updateBioPreview()">
+            
             <label>YouTube Link</label>
             <input type="text" id="linkYouTube" value="https://youtube.com/@sajidofficial" oninput="updateBioPreview()">
+            
             <label>Facebook Link</label>
             <input type="text" id="linkFacebook" value="https://facebook.com/sajidofficial" oninput="updateBioPreview()">
+            
             <label>Instagram Link</label>
             <input type="text" id="linkInstagram" value="https://instagram.com/thesajidvibe" oninput="updateBioPreview()">
 
-            <button class="btn btn-primary" style="margin-top:14px;" onclick="generateBioLink()"><i class="fas fa-link"></i> Generate & Copy Bio Link</button>
+            <label>TikTok Link</label>
+            <input type="text" id="linkTiktok" value="https://tiktok.com/@sajid" oninput="updateBioPreview()">
+
+            <button class="btn btn-primary" style="margin-top:14px;" onclick="generateBioLink()"><i class="fas fa-link"></i> Generate & Copy Master Bio Link</button>
 
             <div id="bioPreview" class="bio-preview">
-                <div style="font-size:16px;font-weight:700;" id="previewName">Sajid Official</div>
+                <div style="font-size:18px;font-weight:700;" id="previewName">Sajid Official</div>
                 <div class="handle" id="previewHandle">@thesajidvibe</div>
                 <div class="links" id="previewLinks">
-                    <a href="https://youtube.com/@sajidofficial" target="_blank">▶️ YouTube</a>
-                    <a href="https://facebook.com/sajidofficial" target="_blank">📘 Facebook</a>
-                    <a href="https://instagram.com/thesajidvibe" target="_blank">📸 Instagram</a>
-                </div>
+                    </div>
             </div>
         </div>
     </div>
 
-    <!-- TAB 3: MY BIO LINKS -->
     <div id="mylinks" class="tab-content">
         <div class="card">
             <h3>📋 All Profile & Channel Links</h3>
@@ -156,6 +155,10 @@
             <div class="link-item">
                 <span><i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook Profile</span>
                 <button class="copy-btn" onclick="copyText('https://facebook.com/sajidofficial')">Copy Link</button>
+            </div>
+            <div class="link-item">
+                <span><i class="fab fa-tiktok" style="color:#fff;"></i> TikTok Profile</span>
+                <button class="copy-btn" onclick="copyText('https://tiktok.com/@sajid')">Copy Link</button>
             </div>
         </div>
     </div>
@@ -200,6 +203,7 @@
             document.getElementById('storeModal').style.display = 'flex';
         }
         function closeStoreModal() { document.getElementById('storeModal').style.display = 'none'; }
+        
         function fetchMedia() {
             const urlInput = document.getElementById('videoUrl').value.trim();
             const resultBox = document.getElementById('downloadResult');
@@ -216,27 +220,46 @@
                 showToast('✅ میڈیا تیار ہے!');
             }, 1000);
         }
+
         function updateBioPreview() {
             const name = document.getElementById('bioName').value || 'Sajid Official';
             const handle = document.getElementById('bioHandle').value || '@thesajidvibe';
             const yt = document.getElementById('linkYouTube').value;
             const fb = document.getElementById('linkFacebook').value;
             const insta = document.getElementById('linkInstagram').value;
+            const tiktok = document.getElementById('linkTiktok').value;
+
             document.getElementById('previewName').textContent = name;
             document.getElementById('previewHandle').textContent = handle;
+            
             let linksHtml = '';
-            if(yt) linksHtml += `<a href="${yt}" target="_blank">▶️ YouTube</a>`;
-            if(fb) linksHtml += `<a href="${fb}" target="_blank">📘 Facebook</a>`;
-            if(insta) linksHtml += `<a href="${insta}" target="_blank">📸 Instagram</a>`;
+            if(yt) linksHtml += `<a href="${yt}" target="_blank"><i class="fab fa-youtube"></i> YouTube Channel</a>`;
+            if(fb) linksHtml += `<a href="${fb}" target="_blank"><i class="fab fa-facebook"></i> Facebook Profile</a>`;
+            if(insta) linksHtml += `<a href="${insta}" target="_blank"><i class="fab fa-instagram"></i> Instagram Vibe</a>`;
+            if(tiktok) linksHtml += `<a href="${tiktok}" target="_blank"><i class="fab fa-tiktok"></i> TikTok Profile</a>`;
+            
             document.getElementById('previewLinks').innerHTML = linksHtml;
         }
+
         function generateBioLink() {
             const handle = document.getElementById('bioHandle').value || 'sajid';
-            const customLink = window.location.origin + '/?profile=' + encodeURIComponent(handle);
-            copyText(customLink);
-            showToast('🔗 بایو لنک کاپی ہو گیا!');
+            const yt = encodeURIComponent(document.getElementById('linkYouTube').value);
+            const fb = encodeURIComponent(document.getElementById('linkFacebook').value);
+            const insta = encodeURIComponent(document.getElementById('linkInstagram').value);
+            const tiktok = encodeURIComponent(document.getElementById('linkTiktok').value);
+            
+            // ایک ہی سنگل ماسٹر لنک جس میں سارے لنکس جڑے ہوں گے
+            const masterLink = `${window.location.origin}/?handle=${encodeURIComponent(handle)}&yt=${yt}&fb=${fb}&insta=${insta}&tiktok=${tiktok}`;
+            
+            copyText(masterLink);
+            showToast('🔗 ماسٹر بائیو لنک کاپی ہو گیا!');
         }
+
+        // الصفحة لوڈ ہوتے ہی پری ویو اپ ڈیٹ کر دیں
+        window.onload = function() {
+            updateBioPreview();
+        };
     </script>
 </body>
-                        </html>
-    
+            </html>
+                

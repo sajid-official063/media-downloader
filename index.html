@@ -84,18 +84,19 @@
             <i class="fa-solid fa-bolt"></i> Fetch Media
           </button>
 
-          <!-- RESULT BOX -->
+          <!-- RESULT BOX (پہلے سے ہائیڈ رہے گا، لنک فیچ ہونے پر نظر آئے گا) -->
           <div id="video-result-box" class="hidden space-y-3 p-3 bg-slate-900 border border-slate-700 rounded-xl text-center">
             <div id="video-preview-container" class="w-full max-h-48 rounded-lg overflow-hidden bg-black flex items-center justify-center">
               <img id="video-thumb" src="" alt="Video Preview" class="max-h-48 object-contain">
             </div>
             <p id="video-title" class="text-xs text-slate-300 font-medium line-clamp-2"></p>
+            <p id="video-caption-text" class="text-[10px] text-slate-400 italic line-clamp-2"></p>
             
             <div class="space-y-2">
-              <button id="hd-download-btn" class="w-full py-2.5 bg-green-600 hover:bg-green-500 font-bold text-xs rounded-lg flex items-center justify-center gap-2 text-white">
+              <button id="hd-download-btn" onclick="triggerDirectDownload(currentVideoUrl, 'Video.mp4')" class="w-full py-2.5 bg-green-600 hover:bg-green-500 font-bold text-xs rounded-lg flex items-center justify-center gap-2 text-white">
                 <i class="fa-solid fa-download"></i> Download HD Video Directly 🎬
               </button>
-              <button id="audio-download-btn" class="w-full py-2.5 bg-purple-600 hover:bg-purple-500 font-bold text-xs rounded-lg flex items-center justify-center gap-2 text-white">
+              <button id="audio-download-btn" onclick="triggerDirectDownloadAudio(currentAudioUrl || currentVideoUrl, 'Audio.mp3')" class="w-full py-2.5 bg-purple-600 hover:bg-purple-500 font-bold text-xs rounded-lg flex items-center justify-center gap-2 text-white">
                 <i class="fa-solid fa-music"></i> Download Audio MP3 🎵
               </button>
             </div>
@@ -264,6 +265,10 @@
       const urlInput = document.getElementById('video-url').value.trim();
       const fetchBtn = document.getElementById('fetch-btn');
       const resultBox = document.getElementById('video-result-box');
+      const resBox = document.getElementById('video-result-box');
+      const thumb = document.getElementById('video-thumb');
+      const title = document.getElementById('video-title');
+      const captionText = document.getElementById('video-caption-text');
 
       if (!urlInput) {
         alert("پلیز ویڈیو یا میڈیا کا لنک درج کریں!");
@@ -282,10 +287,11 @@
           currentVideoUrl = data.video || data.url || "";
           currentAudioUrl = data.audio || "";
 
-          document.getElementById('video-thumb').src = data.thumbnail || 'https://via.placeholder.com/400x250/0f172a/FFFFFF?text=Video+Ready';
-          document.getElementById('video-title').innerText = data.title || 'Click below to start download:';
+          thumb.src = data.cover || data.cover_origin || data.thumbnail || 'https://via.placeholder.com/400x250/0f172a/FFFFFF?text=Video+Ready';
+          title.innerText = data.title || (data.author ? data.author.nickname : 'Creator') || 'Video Ready for Download';
+          captionText.innerText = data.caption || 'Click below to start download';
           
-          resultBox.classList.remove('hidden');
+          resBox.classList.remove('hidden');
         } else {
           alert("میڈیا کا لنک حاصل نہیں ہو سکا۔ دوبارہ کوشش کریں!");
         }
@@ -297,7 +303,6 @@
       }
     }
 
-    // Direct File Download Function
     async function triggerDirectDownload(fileUrl, fileName) {
       if (!fileUrl) {
         alert("ڈاؤن لوڈ لنک دستیاب نہیں ہے!");
@@ -323,8 +328,7 @@
           document.body.removeChild(a);
         }, 100);
       } catch (err) {
-        // Direct Fallback for mobile browsers
-        window.location.href = fileUrl;
+        window.open(fileUrl, '_blank');
       } finally {
         btn.innerHTML = origText;
       }
@@ -355,27 +359,11 @@
           document.body.removeChild(a);
         }, 100);
       } catch (err) {
-        window.location.href = fileUrl;
+        window.open(fileUrl, '_blank');
       } finally {
         btn.innerHTML = origText;
       }
     }
 
-    document.getElementById('hd-download-btn').addEventListener('click', function() {
-      triggerDirectDownload(currentVideoUrl, 'Video_' + Date.now() + '.mp4');
-    });
-
-    document.getElementById('audio-download-btn').addEventListener('click', function() {
-      triggerDirectDownloadAudio(currentAudioUrl || currentVideoUrl, 'Audio_' + Date.now() + '.mp3');
-    });
-
     function handleGenerateBio() {
       const name = document.getElementById('bio-name').value;
-      const handle = document.getElementById('bio-handle').value;
-      
-      if (!name || !handle) {
-        alert("براہ کرم اپنا نام اور ہینڈل درج کریں!");
-        return;
-      }
-
-      cons

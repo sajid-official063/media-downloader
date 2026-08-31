@@ -84,7 +84,7 @@
             <i class="fa-solid fa-bolt"></i> Fetch Media
           </button>
 
-          <!-- RESULT BOX (پہلے سے ہائیڈ رہے گا، لنک فیچ ہونے پر نظر آئے گا) -->
+          <!-- RESULT BOX -->
           <div id="video-result-box" class="hidden space-y-3 p-3 bg-slate-900 border border-slate-700 rounded-xl text-center">
             <div id="video-preview-container" class="w-full max-h-48 rounded-lg overflow-hidden bg-black flex items-center justify-center">
               <img id="video-thumb" src="" alt="Video Preview" class="max-h-48 object-contain">
@@ -93,10 +93,10 @@
             <p id="video-caption-text" class="text-[10px] text-slate-400 italic line-clamp-2"></p>
             
             <div class="space-y-2">
-              <button id="hd-download-btn" onclick="triggerDirectDownload(currentVideoUrl, 'Video.mp4')" class="w-full py-2.5 bg-green-600 hover:bg-green-500 font-bold text-xs rounded-lg flex items-center justify-center gap-2 text-white">
+              <button id="hd-download-btn" class="w-full py-2.5 bg-green-600 hover:bg-green-500 font-bold text-xs rounded-lg flex items-center justify-center gap-2 text-white">
                 <i class="fa-solid fa-download"></i> Download HD Video Directly 🎬
               </button>
-              <button id="audio-download-btn" onclick="triggerDirectDownloadAudio(currentAudioUrl || currentVideoUrl, 'Audio.mp3')" class="w-full py-2.5 bg-purple-600 hover:bg-purple-500 font-bold text-xs rounded-lg flex items-center justify-center gap-2 text-white">
+              <button id="audio-download-btn" class="w-full py-2.5 bg-purple-600 hover:bg-purple-500 font-bold text-xs rounded-lg flex items-center justify-center gap-2 text-white">
                 <i class="fa-solid fa-music"></i> Download Audio MP3 🎵
               </button>
             </div>
@@ -264,7 +264,6 @@
     async function handleFetchMedia() {
       const urlInput = document.getElementById('video-url').value.trim();
       const fetchBtn = document.getElementById('fetch-btn');
-      const resultBox = document.getElementById('video-result-box');
       const resBox = document.getElementById('video-result-box');
       const thumb = document.getElementById('video-thumb');
       const title = document.getElementById('video-title');
@@ -277,7 +276,7 @@
 
       fetchBtn.disabled = true;
       fetchBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Fetching Media...`;
-      resultBox.classList.add('hidden');
+      resBox.classList.add('hidden');
 
       try {
         const response = await fetch('/api/download?url=' + encodeURIComponent(urlInput));
@@ -365,5 +364,10 @@
       }
     }
 
-    function handleGenerateBio() {
-      const name = document.getElementById('bio-name').value;
+    document.getElementById('hd-download-btn').addEventListener('click', function() {
+      triggerDirectDownload(currentVideoUrl, 'Video_' + Date.now() + '.mp4');
+    });
+
+    document.getElementById('audio-download-btn').addEventListener('click', function() {
+      triggerDirectDownloadAudio(currentAudioUrl || currentVideoUrl, 'Audio_' + Date.now() + '.mp3');
+   

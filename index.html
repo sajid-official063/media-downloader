@@ -178,12 +178,12 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             color: #5a6a8a;
+            margin-bottom: 6px;
         }
         .ad-box {
             background: #0b0e1a;
             padding: 15px 10px;
             border-radius: 12px;
-            margin-top: 6px;
             font-size: 13px;
             color: #ccd6f6;
         }
@@ -195,10 +195,6 @@
             font-size: 26px;
             padding: 6px 0;
             color: #8892b0;
-        }
-        .supported-icons i:hover {
-            color: #f7971e;
-            transform: scale(1.1);
         }
 
         .footer {
@@ -322,8 +318,8 @@
         <p>Download HD Videos & Manage Bio Links</p>
     </div>
 
-    <!-- App Banner -->
-    <div class="app-banner">
+    <!-- App Banner (Play Store & Palm Store) -->
+    <div class="app-banner" style="margin-top:14px; margin-bottom:14px;">
         <div class="app-text">
             <strong>📱 Get Mobile App</strong><br>
             Fast & Free Download Manager
@@ -338,7 +334,7 @@
         </div>
     </div>
 
-    <!-- Tabs -->
+    <!-- Tabs Navigation -->
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('downloader', this)"><i class="fas fa-download"></i> Downloader</button>
         <button class="tab-btn" onclick="switchTab('bio', this)"><i class="fas fa-magic"></i> Bio Generator</button>
@@ -369,19 +365,19 @@
             <div id="downloadResult" style="display:none;"></div>
         </div>
 
-        <!-- AD 1 -->
+        <!-- AD 1 (User Provided) -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
-            <div class="ad-box" id="adBox1">
+            <div class="ad-box">
                 <script async="async" data-cfasync="false" src="https://pl30991536.profitableratecpmnetwork.com/448e3ccce370deb9b96e8370daef31f4/invoke.js"></script>
                 <div id="container-448e3ccce370deb9b96e8370daef31f4"></div>
             </div>
         </div>
 
-        <!-- AD 2 -->
+        <!-- AD 2 (User Provided) -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
-            <div class="ad-box" id="adBox2">
+            <div class="ad-box">
                 <script src="https://pl31087341.profitableratecpmnetwork.com/22/c9/ac/22c9ac26eef58cfaf7365f1582cddc9f.js"></script>
             </div>
         </div>
@@ -421,6 +417,7 @@
             </div>
         </div>
 
+        <!-- AD 1 (User Provided) -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
             <div class="ad-box">
@@ -458,6 +455,7 @@
             </div>
         </div>
 
+        <!-- AD 2 (User Provided) -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
             <div class="ad-box">
@@ -479,8 +477,8 @@
         </div>
     </div>
 
+    <!-- JavaScript Engine -->
     <script>
-        // ===================== TOAST NOTIFICATION =====================
         function showToast(msg) {
             const t = document.getElementById('toast');
             t.textContent = msg || '✅ Copied!';
@@ -488,7 +486,6 @@
             setTimeout(() => t.classList.remove('show'), 2500);
         }
 
-        // ===================== COPY TEXT FUNCTION =====================
         function copyText(text) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).then(() => {
@@ -509,7 +506,6 @@
             document.body.removeChild(ta);
         }
 
-        // ===================== TABS SWITCHING =====================
         function switchTab(tabId, btnElement) {
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
@@ -521,7 +517,6 @@
             btnElement.classList.add('active');
         }
 
-        // ===================== STORE MODAL =====================
         function openStoreModal(storeName) {
             document.getElementById('storeTitle').textContent = storeName;
             document.getElementById('storeDesc').textContent = storeName + " app version will be available soon. Enjoy web tools!";
@@ -531,13 +526,12 @@
             document.getElementById('storeModal').style.display = 'none';
         }
 
-        // ===================== MEDIA DOWNLOADER LOGIC =====================
         function fetchMedia() {
             const urlInput = document.getElementById('videoUrl').value.trim();
             const resultBox = document.getElementById('downloadResult');
 
             if (!urlInput) {
-                showToast('❌ پلیز کوئی لنک درج کریں!');
+                showToast('❌ براہ کرم کوئی میڈیا لنک درج کریں!');
                 return;
             }
 
@@ -549,10 +543,12 @@
                 </div>
             `;
 
-            // Simulating Media Fetching & Direct Download Options
             setTimeout(() => {
                 resultBox.innerHTML = `
                     <div class="download-result-box">
                         <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?w=400" alt="Video Thumbnail">
                         <h4>🎬 Media Ready for Download</h4>
-                        <div s
+                        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                            <a href="${urlInput}" target="_blank" class="btn btn-primary" style="flex:1; text-decoration:none; margin-top:0; font-size:13px; padding:10px;">
+                                <i class="fas fa-download"></i> Download HD Video
+                          

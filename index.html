@@ -52,7 +52,7 @@
             padding: 10px 0;
             border: none;
             border-radius: 30px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             background: transparent;
             color: #8892b0;
@@ -65,7 +65,7 @@
             box-shadow: 0 4px 12px rgba(247, 151, 30, 0.3);
         }
         .tab-btn i {
-            margin-right: 6px;
+            margin-right: 4px;
         }
 
         .tab-content {
@@ -126,7 +126,6 @@
             text-align: center;
             width: 100%;
             margin-top: 10px;
-            text-decoration: none;
         }
         .btn-primary {
             background: linear-gradient(135deg, #f7971e, #ffd200);
@@ -135,10 +134,6 @@
         .btn-primary:hover {
             transform: scale(0.97);
             box-shadow: 0 4px 20px rgba(247, 151, 30, 0.3);
-        }
-        .btn-success {
-            background: #00c853;
-            color: #fff;
         }
 
         .link-item {
@@ -186,7 +181,7 @@
         }
         .ad-box {
             background: #0b0e1a;
-            padding: 20px 10px;
+            padding: 15px 10px;
             border-radius: 12px;
             margin-top: 6px;
             font-size: 13px;
@@ -236,15 +231,15 @@
 
         .toast {
             position: fixed;
-            bottom: 100px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: #141b2b;
-            color: #fff;
-            padding: 12px 28px;
+            background: #f7971e;
+            color: #0b0e1a;
+            padding: 10px 24px;
             border-radius: 30px;
             font-size: 14px;
-            border: 1px solid #f7971e;
+            font-weight: 700;
             box-shadow: 0 8px 30px rgba(0,0,0,0.6);
             display: none;
             z-index: 999;
@@ -280,11 +275,11 @@
         .app-banner .store-btn {
             background: #f7971e;
             border: none;
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 30px;
             font-weight: 700;
             color: #0b0e1a;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -299,17 +294,21 @@
             background: #0b0e1a;
             padding: 14px;
             border-radius: 14px;
-            margin-top: 10px;
-            border: 1px solid #1f2a3f;
-        }
-        .error-msg {
-            color: #ff6b6b;
-            padding: 10px;
-            background: #1a0a0a;
-            border-radius: 10px;
-            border: 1px solid #ff6b6b33;
-            font-size: 13px;
+            margin-top: 12px;
+            border: 1px solid #f7971e;
             text-align: center;
+        }
+        .download-result-box img {
+            width: 100%;
+            max-height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .download-result-box h4 {
+            font-size: 13px;
+            color: #fff;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -330,10 +329,10 @@
             Fast & Free Download Manager
         </div>
         <div class="store-buttons">
-            <button class="store-btn" onclick="openStoreModal('play')">
+            <button class="store-btn" onclick="openStoreModal('Play Store')">
                 <i class="fab fa-google-play"></i> Play Store
             </button>
-            <button class="store-btn palm" onclick="openStoreModal('palm')">
+            <button class="store-btn palm" onclick="openStoreModal('Palm Store')">
                 <i class="fas fa-store"></i> Palm Store
             </button>
         </div>
@@ -341,20 +340,21 @@
 
     <!-- Tabs -->
     <div class="tabs">
-        <button class="tab-btn active" data-tab="downloader"><i class="fas fa-download"></i> Downloader</button>
-        <button class="tab-btn" data-tab="bio"><i class="fas fa-link"></i> Bio Generator</button>
-        <button class="tab-btn" data-tab="mylinks"><i class="fas fa-list"></i> My Bio Links</button>
+        <button class="tab-btn active" onclick="switchTab('downloader', this)"><i class="fas fa-download"></i> Downloader</button>
+        <button class="tab-btn" onclick="switchTab('bio', this)"><i class="fas fa-magic"></i> Bio Generator</button>
+        <button class="tab-btn" onclick="switchTab('mylinks', this)"><i class="fas fa-list"></i> My Bio Links</button>
     </div>
 
     <!-- ===================== TAB 1: DOWNLOADER ===================== -->
     <div id="downloader" class="tab-content active">
+
         <div class="card">
             <h3>📌 SUPPORTED PLATFORMS</h3>
             <div class="supported-icons">
-                <i class="fab fa-facebook"></i>
-                <i class="fab fa-instagram"></i>
-                <i class="fab fa-tiktok"></i>
-                <i class="fab fa-youtube"></i>
+                <i class="fab fa-facebook" style="color:#1877f2;"></i>
+                <i class="fab fa-instagram" style="color:#e1306c;"></i>
+                <i class="fab fa-tiktok" style="color:#fff;"></i>
+                <i class="fab fa-youtube" style="color:#ff0000;"></i>
             </div>
         </div>
 
@@ -364,13 +364,15 @@
             <button class="btn btn-primary" onclick="fetchMedia()">
                 <i class="fas fa-cloud-download-alt"></i> Fetch Media
             </button>
-            <div id="downloadResult" style="margin-top:12px;"></div>
+            
+            <!-- Download Result Box -->
+            <div id="downloadResult" style="display:none;"></div>
         </div>
 
         <!-- AD 1 -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
-            <div class="ad-box">
+            <div class="ad-box" id="adBox1">
                 <script async="async" data-cfasync="false" src="https://pl30991536.profitableratecpmnetwork.com/448e3ccce370deb9b96e8370daef31f4/invoke.js"></script>
                 <div id="container-448e3ccce370deb9b96e8370daef31f4"></div>
             </div>
@@ -379,7 +381,7 @@
         <!-- AD 2 -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
-            <div class="ad-box">
+            <div class="ad-box" id="adBox2">
                 <script src="https://pl31087341.profitableratecpmnetwork.com/22/c9/ac/22c9ac26eef58cfaf7365f1582cddc9f.js"></script>
             </div>
         </div>
@@ -395,15 +397,17 @@
             <label>Social Handle</label>
             <input type="text" id="bioHandle" placeholder="@thesajidvibe" value="@thesajidvibe" oninput="updateBioPreview()">
 
-            <label>Add Your Links Below:</label>
-            <input type="text" id="linkYouTube" placeholder="YouTube Link" value="https://youtube.com/@sajidofficial" oninput="updateBioPreview()">
-            <input type="text" id="linkFacebook" placeholder="Facebook Link" style="margin-top:6px;" value="https://facebook.com/sajidofficial" oninput="updateBioPreview()">
-            <input type="text" id="linkInstagram" placeholder="Instagram Link" style="margin-top:6px;" value="https://instagram.com/thesajidvibe" oninput="updateBioPreview()">
-            <input type="text" id="linkSnapchat" placeholder="Snapchat Link" style="margin-top:6px;" value="https://snapchat.com/add/sajid" oninput="updateBioPreview()">
-            <input type="text" id="linkPinterest" placeholder="Pinterest Link" style="margin-top:6px;" value="https://pinterest.com/sajid" oninput="updateBioPreview()">
+            <label>YouTube Link</label>
+            <input type="text" id="linkYouTube" value="https://youtube.com/@sajidofficial" oninput="updateBioPreview()">
+            
+            <label>Facebook Link</label>
+            <input type="text" id="linkFacebook" value="https://facebook.com/sajidofficial" oninput="updateBioPreview()">
+            
+            <label>Instagram Link</label>
+            <input type="text" id="linkInstagram" value="https://instagram.com/thesajidvibe" oninput="updateBioPreview()">
 
-            <button class="btn btn-primary" onclick="copyBioCode()" style="margin-top:12px;">
-                <i class="fas fa-copy"></i> Copy Generated Bio HTML/Links
+            <button class="btn btn-primary" style="margin-top:14px;" onclick="generateBioLink()">
+                <i class="fas fa-link"></i> Generate & Copy Bio Link
             </button>
 
             <div id="bioPreview" class="bio-preview">
@@ -413,8 +417,6 @@
                     <a href="https://youtube.com/@sajidofficial" target="_blank">▶️ YouTube</a>
                     <a href="https://facebook.com/sajidofficial" target="_blank">📘 Facebook</a>
                     <a href="https://instagram.com/thesajidvibe" target="_blank">📸 Instagram</a>
-                    <a href="https://snapchat.com/add/sajid" target="_blank">👻 Snapchat</a>
-                    <a href="https://pinterest.com/sajid" target="_blank">📌 Pinterest</a>
                 </div>
             </div>
         </div>
@@ -439,11 +441,11 @@
                 <button class="copy-btn" onclick="copyText('https://youtube.com/@sajidofficial')">Copy Link</button>
             </div>
             <div class="link-item">
-                <span><i class="fab fa-tiktok" style="color:#ffffff;"></i> TikTok / Instagram</span>
-                <button class="copy-btn" onclick="copyText('https://tiktok.com/@thesajidvibe')">Copy Link</button>
+                <span><i class="fab fa-instagram" style="color:#e1306c;"></i> Instagram Vibe</span>
+                <button class="copy-btn" onclick="copyText('https://instagram.com/thesajidvibe')">Copy Link</button>
             </div>
             <div class="link-item">
-                <span><i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook</span>
+                <span><i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook Profile</span>
                 <button class="copy-btn" onclick="copyText('https://facebook.com/sajidofficial')">Copy Link</button>
             </div>
             <div class="link-item">
@@ -468,8 +470,17 @@
         All-in-One Media Downloader & Bio Hub © 2026
     </div>
 
+    <!-- Store Selection Modal -->
+    <div id="storeModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center; padding:20px;">
+        <div style="background:#141b2b; padding:20px; border-radius:16px; width:100%; max-width:320px; text-align:center; border:1px solid #f7971e;">
+            <h3 id="storeTitle" style="color:#f7971e; margin-bottom:10px;">Store App</h3>
+            <p id="storeDesc" style="font-size:12px; color:#aaa; margin-bottom:15px;">App version is coming soon! You can use this web tool directly.</p>
+            <button class="btn btn-primary" onclick="closeStoreModal()">Got It</button>
+        </div>
+    </div>
+
     <script>
-        // ===================== TOAST =====================
+        // ===================== TOAST NOTIFICATION =====================
         function showToast(msg) {
             const t = document.getElementById('toast');
             t.textContent = msg || '✅ Copied!';
@@ -477,7 +488,7 @@
             setTimeout(() => t.classList.remove('show'), 2500);
         }
 
-        // ===================== COPY FUNCTION =====================
+        // ===================== COPY TEXT FUNCTION =====================
         function copyText(text) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).then(() => {
@@ -499,57 +510,49 @@
         }
 
         // ===================== TABS SWITCHING =====================
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-                document.getElementById(this.dataset.tab).classList.add('active');
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
             });
-        });
-
-        // ===================== STORE MODAL / BUTTONS =====================
-        function openStoreModal(type) {
-            if(type === 'play') {
-                window.open('https://play.google.com/store/apps', '_blank');
-            } else {
-                showToast('🚀 Palm Store App Coming Soon!');
-            }
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+            btnElement.classList.add('active');
         }
 
-        // ===================== DOWNLOAD MEDIA FUNCTION =====================
-        function fetchMedia() {
-            const url = document.getElementById('videoUrl').value.trim();
-            const resultDiv = document.getElementById('downloadResult');
+        // ===================== STORE MODAL =====================
+        function openStoreModal(storeName) {
+            document.getElementById('storeTitle').textContent = storeName;
+            document.getElementById('storeDesc').textContent = storeName + " app version will be available soon. Enjoy web tools!";
+            document.getElementById('storeModal').style.display = 'flex';
+        }
+        function closeStoreModal() {
+            document.getElementById('storeModal').style.display = 'none';
+        }
 
-            if (!url) {
-                resultDiv.innerHTML = `<div class="error-msg">⚠️ براہ کرم پہلے کوئی درست لنک (URL) درج کریں۔</div>`;
+        // ===================== MEDIA DOWNLOADER LOGIC =====================
+        function fetchMedia() {
+            const urlInput = document.getElementById('videoUrl').value.trim();
+            const resultBox = document.getElementById('downloadResult');
+
+            if (!urlInput) {
+                showToast('❌ پلیز کوئی لنک درج کریں!');
                 return;
             }
 
-            resultDiv.innerHTML = `
-                <div style="text-align:center; padding: 15px; color: #f7971e;">
-                    <i class="fas fa-spinner fa-spin" style="font-size: 24px;"></i><br>
-                    <span style="font-size:13px; color:#ccd6f6;">ویڈیو کی معلومات حاصل کی جا رہی ہیں...</span>
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `
+                <div style="padding:20px; text-align:center; color:#f7971e;">
+                    <i class="fas fa-spinner fa-spin fa-2x"></i>
+                    <p style="font-size:12px; margin-top:8px; color:#aaa;">میڈیا فیچ ہو رہا ہے...</p>
                 </div>
             `;
 
+            // Simulating Media Fetching & Direct Download Options
             setTimeout(() => {
-                resultDiv.innerHTML = `
+                resultBox.innerHTML = `
                     <div class="download-result-box">
-                        <div style="font-size: 13px; color: #00c853; font-weight: bold; margin-bottom: 8px;">
-                            <i class="fas fa-check-circle"></i> ویڈیو کامیابی سے مل گئی!
-                        </div>
-                        <div style="font-size: 12px; color: #ccd6f6; word-break: break-all; margin-bottom: 12px;">
-                            ${url}
-                        </div>
-                        <a href="${url}" target="_blank" class="btn btn-success" style="display:block; text-align:center;">
-                            <i class="fas fa-download"></i> ڈائریکٹ ڈاؤن لوڈ / دیکھیں
-                        </a>
-                    </div>
-                `;
-                showToast('✅ ویڈیو لنک تیار ہے!');
-            }, 1200);
-        }
-
-        // ==========
+                        <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?w=400" alt="Video Thumbnail">
+                        <h4>🎬 Media Ready for Download</h4>
+                        <div s

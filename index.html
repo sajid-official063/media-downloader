@@ -65,7 +65,6 @@
         <p>Download HD Videos & Manage Master Bio Links</p>
     </div>
 
-    <!-- App Banner -->
     <div class="app-banner">
         <div class="app-text"><strong>📱 Get Mobile App</strong><br>Fast & Free Download Manager</div>
         <div class="store-buttons">
@@ -74,15 +73,21 @@
         </div>
     </div>
 
-    <!-- Navigation Tabs -->
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('downloader', this)"><i class="fas fa-download"></i> Downloader</button>
         <button class="tab-btn" onclick="switchTab('bio', this)"><i class="fas fa-magic"></i> Bio Hub</button>
         <button class="tab-btn" onclick="switchTab('mylinks', this)"><i class="fas fa-list"></i> All Links</button>
     </div>
 
-    <!-- TAB 1: DOWNLOADER -->
     <div id="downloader" class="tab-content active">
+        <div class="ad-container">
+            <div class="ad-label">— SPONSORED AD 1 —</div>
+            <div class="ad-box">
+                <script async="async" data-cfasync="false" src="https://pl30991536.profitableratecpmnetwork.com/448e3ccce370deb9b96e8370daef31f4/invoke.js"></script>
+                <div id="container-448e3ccce370deb9b96e8370daef31f4"></div>
+            </div>
+        </div>
+
         <div class="card">
             <h3>📌 SUPPORTED PLATFORMS</h3>
             <div class="supported-icons">
@@ -102,16 +107,6 @@
             <div id="downloadResult" style="display:none;"></div>
         </div>
 
-        <!-- AD 1 -->
-        <div class="ad-container">
-            <div class="ad-label">— SPONSORED AD 1 —</div>
-            <div class="ad-box">
-                <script async="async" data-cfasync="false" src="https://pl30991536.profitableratecpmnetwork.com/448e3ccce370deb9b96e8370daef31f4/invoke.js"></script>
-                <div id="container-448e3ccce370deb9b96e8370daef31f4"></div>
-            </div>
-        </div>
-
-        <!-- AD 2 -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED AD 2 —</div>
             <div class="ad-box">
@@ -120,7 +115,6 @@
         </div>
     </div>
 
-    <!-- TAB 2: BIO HUB GENERATOR -->
     <div id="bio" class="tab-content">
         <div class="card">
             <h3>✨ Create Your Master Bio Hub Link</h3>
@@ -156,18 +150,8 @@
                 <div class="links" id="previewLinks"></div>
             </div>
         </div>
-
-        <!-- AD 1 -->
-        <div class="ad-container">
-            <div class="ad-label">— SPONSORED —</div>
-            <div class="ad-box">
-                <script async="async" data-cfasync="false" src="https://pl30991536.profitableratecpmnetwork.com/448e3ccce370deb9b96e8370daef31f4/invoke.js"></script>
-                <div id="container-448e3ccce370deb9b96e8370daef31f4"></div>
-            </div>
-        </div>
     </div>
 
-    <!-- TAB 3: ALL BIO LINKS -->
     <div id="mylinks" class="tab-content">
         <div class="card">
             <h3>📋 All Profile & Social Hub Links</h3>
@@ -196,19 +180,10 @@
                 <button class="copy-btn" onclick="copyText('https://twitter.com/sajid')">Copy</button>
             </div>
         </div>
-
-        <!-- AD 2 -->
-        <div class="ad-container">
-            <div class="ad-label">— SPONSORED —</div>
-            <div class="ad-box">
-                <script src="https://pl31087341.profitableratecpmnetwork.com/22/c9/ac/22c9ac26eef58cfaf7365f1582cddc9f.js"></script>
-            </div>
-        </div>
     </div>
 
     <div class="footer">All-in-One Media Downloader & Bio Hub © 2026</div>
 
-    <!-- Store Modal -->
     <div id="storeModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center; padding:20px;">
         <div style="background:#141b2b; padding:20px; border-radius:16px; width:100%; max-width:320px; text-align:center; border:1px solid #f7971e;">
             <h3 id="storeTitle" style="color:#f7971e; margin-bottom:10px;">Store App</h3>
@@ -301,17 +276,34 @@
             const pinterest = encodeURIComponent(document.getElementById('linkPinterest').value);
             const twitter = encodeURIComponent(document.getElementById('linkTwitter').value);
             
-            // ماسٹر لنک جس کے اندر تمام سوشل لنکس پیک ہوں گے
             const masterLink = `${window.location.origin}/?hub=${encodeURIComponent(handle)}&yt=${yt}&fb=${fb}&insta=${insta}&tiktok=${tiktok}&pin=${pinterest}&tw=${twitter}`;
             
             copyText(masterLink);
             showToast('🔗 ماسٹر بائیو لنک کاپی ہو گیا!');
         }
 
+        // Auto Load Links if opened via Master Link Hub
         window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            if(params.has('hub')) {
+                const handle = decodeURIComponent(params.get('hub'));
+                const yt = decodeURIComponent(params.get('yt') || '');
+                const fb = decodeURIComponent(params.get('fb') || '');
+                const insta = decodeURIComponent(params.get('insta') || '');
+                const tiktok = decodeURIComponent(params.get('tiktok') || '');
+                const pin = decodeURIComponent(params.get('pin') || '');
+                const tw = decodeURIComponent(params.get('tw') || '');
+
+                document.getElementById('bioHandle').value = handle;
+                if(yt) document.getElementById('linkYouTube').value = yt;
+                if(fb) document.getElementById('linkFacebook').value = fb;
+                if(insta) document.getElementById('linkInstagram').value = insta;
+                if(tiktok) document.getElementById('linkTiktok').value = tiktok;
+                if(pin) document.getElementById('linkPinterest').value = pin;
+                if(tw) document.getElementById('linkTwitter').value = tw;
+
+                switchTab('bio', document.querySelectorAll('.tab-btn')[1]);
+            }
             updateBioPreview();
         };
-    </script>
-</body>
-                </html>
-    
+                

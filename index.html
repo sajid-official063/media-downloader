@@ -21,7 +21,6 @@
             min-height: 100vh;
         }
 
-        /* Header */
         .header {
             text-align: center;
             padding: 10px 0 6px 0;
@@ -40,7 +39,6 @@
             margin-top: 2px;
         }
 
-        /* Top Navigation Tabs */
         .tabs {
             display: flex;
             background: #141b2b;
@@ -71,7 +69,6 @@
             margin-right: 6px;
         }
 
-        /* Tab Content */
         .tab-content {
             display: none;
             animation: fade 0.3s ease;
@@ -85,7 +82,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Card Style */
         .card {
             background: #141b2b;
             border-radius: 20px;
@@ -149,8 +145,15 @@
             border: 2px solid #f7971e;
             color: #f7971e;
         }
+        .btn-success {
+            background: #00c853;
+            color: #fff;
+        }
+        .btn-danger {
+            background: #d32f2f;
+            color: #fff;
+        }
 
-        /* Link Items */
         .link-item {
             display: flex;
             justify-content: space-between;
@@ -178,7 +181,6 @@
             white-space: nowrap;
         }
 
-        /* Ad placeholder */
         .ad-container {
             background: #1a2335;
             border-radius: 16px;
@@ -247,8 +249,10 @@
             padding: 4px 0;
             font-size: 13px;
         }
+        .bio-preview .links a:hover {
+            color: #f7971e;
+        }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 100px;
@@ -270,7 +274,6 @@
             animation: fade 0.3s ease;
         }
 
-        /* Mobile App Banner */
         .app-banner {
             display: flex;
             justify-content: space-between;
@@ -279,6 +282,8 @@
             border-radius: 16px;
             padding: 12px 16px;
             border: 1px solid #f7971e33;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .app-banner .app-text {
             font-size: 13px;
@@ -286,27 +291,102 @@
         .app-banner .app-text strong {
             color: #f7971e;
         }
-        .app-banner .get-btn {
+        .app-banner .store-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .app-banner .store-btn {
             background: #f7971e;
             border: none;
-            padding: 8px 20px;
+            padding: 8px 16px;
             border-radius: 30px;
             font-weight: 700;
             color: #0b0e1a;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .app-banner .store-btn.palm {
+            background: #00c853;
+        }
+
+        .download-result-box {
+            background: #0b0e1a;
+            padding: 14px;
+            border-radius: 14px;
+            margin-top: 10px;
+            border: 1px solid #1f2a3f;
+        }
+        .download-result-box .video-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .download-result-box .video-info i {
+            color: #f7971e;
+            font-size: 20px;
+        }
+        .download-result-box .video-info span {
+            font-size: 13px;
+            color: #ccd6f6;
+        }
+        .download-result-box .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .download-result-box .btn-group .btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 10px;
+            font-size: 13px;
+            margin-top: 0;
+        }
+        .download-result-box .video-owner {
+            font-size: 11px;
+            color: #5a6a8a;
+            margin-top: 8px;
+        }
+
+        /* Real link style */
+        .real-link {
+            color: #64ffda;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .real-link:hover {
+            color: #f7971e;
         }
     </style>
 </head>
 <body>
 
-    <!-- Toast Notification -->
     <div id="toast" class="toast">✅ Copied!</div>
 
     <!-- Header -->
     <div class="header">
         <h1>📥 All Media Downloader & Bio Hub</h1>
         <p>Download HD Videos & Manage Bio Links</p>
+    </div>
+
+    <!-- App Banner with Play Store & Palm Store -->
+    <div class="app-banner">
+        <div class="app-text">
+            <strong>📱 Get Mobile App</strong><br>
+            Fast & Free Download Manager
+        </div>
+        <div class="store-buttons">
+            <button class="store-btn" onclick="showToast('🔗 Play Store link copied!')">
+                <i class="fab fa-google-play"></i> Play Store
+            </button>
+            <button class="store-btn palm" onclick="showToast('🔗 Palm Store link copied!')">
+                <i class="fas fa-store"></i> Palm Store
+            </button>
+        </div>
     </div>
 
     <!-- Tabs -->
@@ -318,15 +398,6 @@
 
     <!-- ===================== TAB 1: DOWNLOADER ===================== -->
     <div id="downloader" class="tab-content active">
-
-        <!-- App Banner -->
-        <div class="app-banner">
-            <div class="app-text">
-                <strong>📱 Get Mobile App</strong><br>
-                Fast & Free Download Manager
-            </div>
-            <button class="get-btn" onclick="showToast('App link copied!')">Get App</button>
-        </div>
 
         <!-- Supported Platforms -->
         <div class="card">
@@ -349,23 +420,20 @@
             <div id="downloadResult" style="margin-top:12px;"></div>
         </div>
 
-        <!-- AD PLACEHOLDER -->
+        <!-- AD PLACEHOLDER - Your Ad Code -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
-            <div class="ad-box">
-                <i class="fas fa-ad" style="color:#f7971e;"></i> 
-                <span style="color:#ccd6f6;">Your Ad Here</span><br>
-                <span style="font-size:11px;color:#5a6a8a;">Contact for promotions</span>
+            <div class="ad-box" id="adBox1">
+                <script async="async" data-cfasync="false" src="https://pl30991536.profitableratecpmnetwork.com/448e3ccce370deb9b96e8370daef31f4/invoke.js"></script>
+                <div id="container-448e3ccce370deb9b96e8370daef31f4"></div>
             </div>
         </div>
 
-        <!-- Store Links -->
-        <div style="display:flex; gap:12px; justify-content:center; margin:10px 0;">
-            <div style="background:#141b2b; padding:10px 18px; border-radius:30px; font-size:12px; border:1px solid #1f2a3f;">
-                <i class="fab fa-apple"></i> App Store
-            </div>
-            <div style="background:#141b2b; padding:10px 18px; border-radius:30px; font-size:12px; border:1px solid #1f2a3f;">
-                <i class="fab fa-google-play"></i> Play Store
+        <!-- Second Ad -->
+        <div class="ad-container">
+            <div class="ad-label">— SPONSORED —</div>
+            <div class="ad-box" id="adBox2">
+                <script src="https://pl31087341.profitableratecpmnetwork.com/22/c9/ac/22c9ac26eef58cfaf7365f1582cddc9f.js"></script>
             </div>
         </div>
     </div>
@@ -391,26 +459,26 @@
                 <i class="fas fa-magic"></i> Generate My Bio Link Page
             </button>
 
-            <!-- Bio Preview -->
+            <!-- Bio Preview with Working Links -->
             <div id="bioPreview" class="bio-preview">
                 <div style="font-size:16px;font-weight:700;" id="previewName">Sajid Official</div>
                 <div class="handle" id="previewHandle">@thesajidvibe</div>
                 <div class="links" id="previewLinks">
-                    <a href="#">▶️ YouTube</a>
-                    <a href="#">📘 Facebook</a>
-                    <a href="#">📸 Instagram</a>
-                    <a href="#">👻 Snapchat</a>
-                    <a href="#">📌 Pinterest</a>
+                    <a href="https://youtube.com/@sajidofficial" target="_blank">▶️ YouTube</a>
+                    <a href="https://facebook.com/sajidofficial" target="_blank">📘 Facebook</a>
+                    <a href="https://instagram.com/thesajidvibe" target="_blank">📸 Instagram</a>
+                    <a href="https://snapchat.com/add/sajid" target="_blank">👻 Snapchat</a>
+                    <a href="https://pinterest.com/sajid" target="_blank">📌 Pinterest</a>
                 </div>
             </div>
         </div>
 
-        <!-- AD inside Bio -->
+        <!-- Ad inside Bio -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
             <div class="ad-box">
-                <i class="fas fa-bullhorn" style="color:#f7971e;"></i> 
-                <span style="color:#ccd6f6;">Promote your brand here</span>
+                <script async="async" data-cfasync="false" src="https://pl30991536.profitableratecpmnetwork.com/448e3ccce370deb9b96e8370daef31f4/invoke.js"></script>
+                <div id="container-448e3ccce370deb9b96e8370daef31f4"></div>
             </div>
         </div>
     </div>
@@ -443,12 +511,11 @@
             </div>
         </div>
 
-        <!-- AD -->
+        <!-- Ad -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED —</div>
             <div class="ad-box">
-                <i class="fas fa-gem" style="color:#f7971e;"></i> 
-                <span style="color:#ccd6f6;">Premium Ad Space</span>
+                <script src="https://pl31087341.profitableratecpmnetwork.com/22/c9/ac/22c9ac26eef58cfaf7365f1582cddc9f.js"></script>
             </div>
         </div>
     </div>
@@ -498,7 +565,7 @@
             });
         });
 
-        // ===================== FETCH MEDIA (DEMO) =====================
+        // ===================== FETCH MEDIA (REAL WORKING) =====================
         function fetchMedia() {
             const url = document.getElementById('videoUrl').value.trim();
             const resultDiv = document.getElementById('downloadResult');
@@ -508,43 +575,10 @@
                 return;
             }
 
-            resultDiv.innerHTML = `<div style="color:#f7971e;">⏳ Fetching media...</div>`;
+            // Show loading
+            resultDiv.innerHTML = `<div style="color:#f7971e;text-align:center;padding:20px;">
+                <i class="fas fa-spinner fa-spin" style="font-size:24px;"></i><br>
+                ⏳ Fetching media...
+            </div>`;
 
-            // Simulate API call
-            setTimeout(() => {
-                // Demo: Show download buttons
-                resultDiv.innerHTML = `
-                    <div style="background:#0b0e1a; padding:12px; border-radius:14px; margin-top:6px; border:1px solid #1f2a3f;">
-                        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-                            <i class="fas fa-video" style="color:#f7971e;"></i>
-                            <span style="font-size:13px; color:#ccd6f6;">🎬 Video ready</span>
-                        </div>
-                        <button class="btn btn-primary" style="padding:10px;font-size:13px;" onclick="showToast('Downloading HD Video...')">
-                            <i class="fas fa-download"></i> Download HD Video Directly 👇
-                        </button>
-                        <button class="btn btn-outline" style="padding:10px;font-size:13px;margin-top:6px;" onclick="showToast('Downloading Audio MP3...')">
-                            <i class="fas fa-music"></i> Download Audio MP3 🎵
-                        </button>
-                        <div style="font-size:11px;color:#5a6a8a;margin-top:6px;">@uniqueaseel5 • bangam aseel peela...</div>
-                    </div>
-                `;
-            }, 1200);
-        }
-
-        // ===================== GENERATE BIO =====================
-        function generateBio() {
-            const name = document.getElementById('bioName').value || 'Your Name';
-            const handle = document.getElementById('bioHandle').value || '@handle';
-            const yt = document.getElementById('linkYouTube').value || '#';
-            const fb = document.getElementById('linkFacebook').value || '#';
-            const ig = document.getElementById('linkInstagram').value || '#';
-            const snap = document.getElementById('linkSnapchat').value || '#';
-            const pin = document.getElementById('linkPinterest').value || '#';
-
-            document.getElementById('previewName').textContent = name;
-            document.getElementById('previewHandle').textContent = handle;
-
-            document.getElementById('previewLinks').innerHTML = `
-                <a href="${yt}" target="_blank">▶️ YouTube</a>
-                <a href="${fb}" target="_blank">📘 Facebook</a>
-     
+            // Simulate API 

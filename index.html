@@ -3,15 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Video Downloader - All Platforms</title>
+    <title>Video Downloader & Bio Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background: #0b1320;
@@ -32,6 +28,30 @@
             width: 100%;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
         }
+        .tab-btn {
+            padding: 10px 0;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: #64748b;
+            cursor: pointer;
+            transition: 0.3s;
+            border-bottom: 2px solid transparent;
+            width: 50%;
+            text-align: center;
+        }
+        .tab-btn.active {
+            color: #38bdf8;
+            border-bottom-color: #0284c7;
+        }
+        .tab-btn:hover { color: #94a3b8; }
+        .tab-content { display: none; animation: fadeUp 0.3s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .badge {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -39,19 +59,11 @@
             border-radius: 40px;
             font-size: 11px;
             font-weight: 500;
-            transition: 0.25s;
-            cursor: default;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
         }
-        .badge:hover {
-            transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.07);
-        }
-        .badge i {
-            font-size: 13px;
-        }
+        .badge i { font-size: 13px; }
         .btn-primary {
             background: linear-gradient(135deg, #0284c7, #0ea5e9);
             transition: 0.25s;
@@ -72,12 +84,7 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(2, 132, 199, 0.3);
         }
-        .btn-primary:disabled {
-            opacity: 0.6;
-            transform: none;
-            box-shadow: none;
-            cursor: not-allowed;
-        }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .btn-download {
             padding: 12px;
             border-radius: 14px;
@@ -93,25 +100,11 @@
             width: 100%;
             color: #fff;
         }
-        .btn-download:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .btn-download.video {
-            background: #16a34a;
-        }
-        .btn-download.video:hover:not(:disabled) {
-            background: #15803d;
-            transform: scale(1.02);
-        }
-        .btn-download.audio {
-            background: #eab308;
-            color: #0f172a;
-        }
-        .btn-download.audio:hover:not(:disabled) {
-            background: #ca8a04;
-            transform: scale(1.02);
-        }
+        .btn-download:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-download.video { background: #16a34a; }
+        .btn-download.video:hover:not(:disabled) { background: #15803d; transform: scale(1.02); }
+        .btn-download.audio { background: #eab308; color: #0f172a; }
+        .btn-download.audio:hover:not(:disabled) { background: #ca8a04; transform: scale(1.02); }
         input {
             width: 100%;
             padding: 14px 16px 14px 44px;
@@ -123,16 +116,9 @@
             outline: none;
             transition: 0.2s;
         }
-        input:focus {
-            border-color: #0ea5e9;
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
-        }
-        input::placeholder {
-            color: #64748b;
-        }
-        .input-wrap {
-            position: relative;
-        }
+        input:focus { border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15); }
+        input::placeholder { color: #64748b; }
+        .input-wrap { position: relative; }
         .input-wrap i {
             position: absolute;
             left: 16px;
@@ -150,24 +136,8 @@
             animation: spin 0.8s linear infinite;
             display: inline-block;
         }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        .result-card {
-            animation: fadeUp 0.4s ease;
-        }
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(14px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .result-card { animation: fadeUp 0.4s ease; }
         .toast {
             position: fixed;
             bottom: 24px;
@@ -184,12 +154,8 @@
             max-width: 90%;
             text-align: center;
         }
-        .toast.error {
-            border-left-color: #ef4444;
-        }
-        .toast.success {
-            border-left-color: #22c55e;
-        }
+        .toast.error { border-left-color: #ef4444; }
+        .toast.success { border-left-color: #22c55e; }
         .ad-box {
             margin-top: 16px;
             background: rgba(15, 23, 42, 0.5);
@@ -212,10 +178,7 @@
             font-size: 12px;
             color: #94a3b8;
         }
-        .ad-box .inner i {
-            color: #38bdf8;
-            margin-right: 6px;
-        }
+        .ad-box .inner i { color: #38bdf8; margin-right: 6px; }
         .ad-box .inner button {
             margin-top: 8px;
             background: #0284c7;
@@ -227,21 +190,41 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .ad-box .inner button:hover {
-            background: #0369a1;
-        }
-        .footer {
-            text-align: center;
-            font-size: 10px;
-            color: #475569;
-            margin-top: 18px;
-        }
-        .platforms-wrap {
+        .ad-box .inner button:hover { background: #0369a1; }
+        .footer { text-align: center; font-size: 10px; color: #475569; margin-top: 18px; }
+        .bio-link-item {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 12px 16px;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 6px;
-            margin-bottom: 16px;
+            align-items: center;
+            justify-content: space-between;
+            transition: 0.2s;
+        }
+        .bio-link-item:hover { background: rgba(15, 23, 42, 0.8); }
+        .bio-link-item .left { display: flex; align-items: center; gap: 12px; }
+        .bio-link-item .left i { font-size: 18px; width: 24px; text-align: center; }
+        .bio-link-item .left .name { font-size: 13px; font-weight: 600; }
+        .bio-link-item .left .handle { font-size: 10px; color: #64748b; }
+        .bio-link-item .copy-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: #94a3b8;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .bio-link-item .copy-btn:hover {
+            background: #0284c7;
+            color: #fff;
+        }
+        .tabs-wrap {
+            display: flex;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 20px;
         }
         .thumbnail-container {
             position: relative;
@@ -270,251 +253,231 @@
     <div class="glass">
 
         <!-- HEADER -->
-        <div class="text-center mb-5">
-            <h1 class="text-2xl font-bold bg-gradient-to-r from-sky-400 to-blue-400 bg-clip-text text-transparent">
-                <i class="fa-solid fa-cloud-arrow-down text-sky-400"></i> Video Downloader
+        <div class="text-center mb-4">
+            <h1 class="text-xl font-bold bg-gradient-to-r from-sky-400 to-blue-400 bg-clip-text text-transparent">
+                <i class="fa-solid fa-cloud-arrow-down text-sky-400"></i> Media Hub
             </h1>
-            <p class="text-slate-400 text-xs mt-0.5">Download from any platform</p>
+            <p class="text-slate-400 text-xs mt-0.5">Download Videos & Bio Links</p>
         </div>
 
-        <!-- PLATFORM BADGES -->
-        <div class="platforms-wrap">
-            <span class="badge"><i class="fa-brands fa-tiktok text-pink-400"></i>TikTok</span>
-            <span class="badge"><i class="fa-brands fa-youtube text-red-500"></i>YouTube</span>
-            <span class="badge"><i class="fa-brands fa-instagram text-rose-400"></i>Instagram</span>
-            <span class="badge"><i class="fa-brands fa-facebook text-blue-400"></i>Facebook</span>
-            <span class="badge"><i class="fa-brands fa-pinterest text-red-400"></i>Pinterest</span>
-            <span class="badge"><i class="fa-brands fa-x-twitter text-white/60"></i>Twitter</span>
-        </div>
-
-        <!-- INPUT -->
-        <div class="space-y-3">
-            <div class="input-wrap">
-                <i class="fa-solid fa-link"></i>
-                <input type="text" id="videoUrl" placeholder="Paste any video URL..."/>
-            </div>
-            <button class="btn-primary" id="fetchBtn" onclick="fetchVideo()">
-                <i class="fa-solid fa-magnifying-glass"></i> Fetch Video
+        <!-- TABS -->
+        <div class="tabs-wrap">
+            <button class="tab-btn active" id="tabDownloader" onclick="switchTab('downloader')">
+                <i class="fa-solid fa-download"></i> Downloader
+            </button>
+            <button class="tab-btn" id="tabBio" onclick="switchTab('bio')">
+                <i class="fa-solid fa-link"></i> Bio Links
             </button>
         </div>
 
-        <!-- RESULT -->
-        <div id="resultArea" class="mt-5 hidden result-card">
-            <div class="bg-slate-900/50 rounded-2xl overflow-hidden border border-slate-700">
-                <div class="thumbnail-container">
-                    <img id="thumbnail" src="" alt="Thumbnail" />
-                    <i class="fa-solid fa-play play-icon"></i>
+        <!-- ==================== TAB 1: DOWNLOADER ==================== -->
+        <div class="tab-content active" id="tabDownloaderContent">
+
+            <!-- PLATFORM BADGES -->
+            <div class="flex flex-wrap justify-center gap-2 mb-4">
+                <span class="badge"><i class="fa-brands fa-tiktok text-pink-400"></i>TikTok</span>
+                <span class="badge"><i class="fa-brands fa-youtube text-red-500"></i>YouTube</span>
+                <span class="badge"><i class="fa-brands fa-instagram text-rose-400"></i>Instagram</span>
+                <span class="badge"><i class="fa-brands fa-facebook text-blue-400"></i>Facebook</span>
+                <span class="badge"><i class="fa-brands fa-pinterest text-red-400"></i>Pinterest</span>
+            </div>
+
+            <!-- INPUT -->
+            <div class="space-y-3">
+                <div class="input-wrap">
+                    <i class="fa-solid fa-link"></i>
+                    <input type="text" id="videoUrl" placeholder="Paste video URL..."/>
                 </div>
-                <div class="p-4 space-y-3">
+                <button class="btn-primary" id="fetchBtn" onclick="fetchVideo()">
+                    <i class="fa-solid fa-magnifying-glass"></i> Fetch Video
+                </button>
+            </div>
+
+            <!-- RESULT -->
+            <div id="resultArea" class="mt-4 hidden result-card">
+                <div class="bg-slate-900/50 rounded-2xl overflow-hidden border border-slate-700">
+                    <div class="thumbnail-container">
+                        <img id="thumbnail" src="" alt="Thumbnail" />
+                        <i class="fa-solid fa-play play-icon"></i>
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div>
+                            <p id="author" class="text-sm font-semibold text-sky-400">@username</p>
+                            <p id="title" class="text-xs text-slate-400 mt-0.5 line-clamp-2">Video title here</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button class="btn-download video" id="videoBtn" onclick="downloadVideo()">
+                                <i class="fa-solid fa-video"></i> Video HD
+                            </button>
+                            <button class="btn-download audio" id="audioBtn" onclick="downloadAudio()">
+                                <i class="fa-solid fa-music"></i> Audio MP3
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AD -->
+            <div class="ad-box">
+                <p>📣 Sponsored</p>
+                <div class="inner">
+                    <i class="fa-solid fa-bolt"></i> Download faster with our premium app!
+                    <button onclick="alert('Coming soon!')">Learn More</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 2: BIO LINKS ==================== -->
+        <div class="tab-content" id="tabBioContent">
+
+            <p class="text-xs text-slate-400 text-center mb-4">Copy your social media links</p>
+
+            <!-- YouTube -->
+            <div class="bio-link-item mb-2">
+                <div class="left">
+                    <i class="fa-brands fa-youtube text-red-500"></i>
                     <div>
-                        <p id="author" class="text-sm font-semibold text-sky-400">@username</p>
-                        <p id="title" class="text-xs text-slate-400 mt-0.5 line-clamp-2">Video title here</p>
+                        <div class="name">YouTube</div>
+                        <div class="handle">@sajidofficial</div>
                     </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button class="btn-download video" id="videoBtn" onclick="downloadVideo()">
-                            <i class="fa-solid fa-video"></i> Video HD
-                        </button>
-                        <button class="btn-download audio" id="audioBtn" onclick="downloadAudio()">
-                            <i class="fa-solid fa-music"></i> Audio MP3
-                        </button>
+                </div>
+                <button class="copy-btn" onclick="copyLink('https://youtube.com/@sajidofficial')">
+                    <i class="fa-regular fa-copy"></i> Copy
+                </button>
+            </div>
+
+            <!-- TikTok -->
+            <div class="bio-link-item mb-2">
+                <div class="left">
+                    <i class="fa-brands fa-tiktok text-pink-400"></i>
+                    <div>
+                        <div class="name">TikTok</div>
+                        <div class="handle">@thesajidvibe</div>
                     </div>
+                </div>
+                <button class="copy-btn" onclick="copyLink('https://tiktok.com/@thesajidvibe')">
+                    <i class="fa-regular fa-copy"></i> Copy
+                </button>
+            </div>
+
+            <!-- Instagram -->
+            <div class="bio-link-item mb-2">
+                <div class="left">
+                    <i class="fa-brands fa-instagram text-rose-400"></i>
+                    <div>
+                        <div class="name">Instagram</div>
+                        <div class="handle">@sajidvibe</div>
+                    </div>
+                </div>
+                <button class="copy-btn" onclick="copyLink('https://instagram.com/sajidvibe')">
+                    <i class="fa-regular fa-copy"></i> Copy
+                </button>
+            </div>
+
+            <!-- Facebook -->
+            <div class="bio-link-item mb-2">
+                <div class="left">
+                    <i class="fa-brands fa-facebook text-blue-400"></i>
+                    <div>
+                        <div class="name">Facebook</div>
+                        <div class="handle">@sajid.official</div>
+                    </div>
+                </div>
+                <button class="copy-btn" onclick="copyLink('https://facebook.com/sajid.official')">
+                    <i class="fa-regular fa-copy"></i> Copy
+                </button>
+            </div>
+
+            <!-- Pinterest -->
+            <div class="bio-link-item mb-2">
+                <div class="left">
+                    <i class="fa-brands fa-pinterest text-red-400"></i>
+                    <div>
+                        <div class="name">Pinterest</div>
+                        <div class="handle">@sajidpins</div>
+                    </div>
+                </div>
+                <button class="copy-btn" onclick="copyLink('https://pinterest.com/sajidpins')">
+                    <i class="fa-regular fa-copy"></i> Copy
+                </button>
+            </div>
+
+            <!-- Twitter -->
+            <div class="bio-link-item mb-2">
+                <div class="left">
+                    <i class="fa-brands fa-x-twitter text-white/60"></i>
+                    <div>
+                        <div class="name">Twitter / X</div>
+                        <div class="handle">@sajidtweets</div>
+                    </div>
+                </div>
+                <button class="copy-btn" onclick="copyLink('https://twitter.com/sajidtweets')">
+                    <i class="fa-regular fa-copy"></i> Copy
+                </button>
+            </div>
+
+            <!-- Snapchat -->
+            <div class="bio-link-item">
+                <div class="left">
+                    <i class="fa-brands fa-snapchat text-yellow-400"></i>
+                    <div>
+                        <div class="name">Snapchat</div>
+                        <div class="handle">@sajidsnap</div>
+                    </div>
+                </div>
+                <button class="copy-btn" onclick="copyLink('https://snapchat.com/add/sajidsnap')">
+                    <i class="fa-regular fa-copy"></i> Copy
+                </button>
+            </div>
+
+            <!-- AD in Bio -->
+            <div class="ad-box mt-4">
+                <p>📣 Sponsored</p>
+                <div class="inner">
+                    <i class="fa-solid fa-rocket"></i> Grow your social media!
+                    <button onclick="alert('Coming soon!')">Learn More</button>
                 </div>
             </div>
         </div>
 
-        <!-- AD -->
-        <div class="ad-box">
-            <p>📣 Sponsored</p>
-            <div class="inner">
-                <i class="fa-solid fa-bolt"></i> Download videos faster with our premium app!
-                <button onclick="alert('Premium feature coming soon!')">Learn More</button>
-            </div>
-        </div>
-
-        <div class="footer">© 2026 All Video Downloader</div>
+        <div class="footer">© 2026 Media Hub</div>
     </div>
 
     <script>
+        // ========== TAB SWITCH ==========
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            if (tab === 'downloader') {
+                document.getElementById('tabDownloader').classList.add('active');
+                document.getElementById('tabDownloaderContent').classList.add('active');
+            } else {
+                document.getElementById('tabBio').classList.add('active');
+                document.getElementById('tabBioContent').classList.add('active');
+            }
+        }
+
+        // ========== COPY LINK ==========
+        function copyLink(url) {
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('✅ Link copied!', 'success');
+            }).catch(() => {
+                // Fallback
+                const input = document.createElement('input');
+                input.value = url;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                input.remove();
+                showToast('✅ Link copied!', 'success');
+            });
+        }
+
+        // ========== VIDEO DOWNLOADER ==========
         let videoUrl = '';
         let audioUrl = '';
 
-        // ========== PLATFORM DETECTION ==========
-        function detectPlatform(url) {
-            if (url.includes('tiktok.com')) return 'tiktok';
-            if (url.includes('youtube.com') || url.includes('youtu.be')) return 'youtube';
-            if (url.includes('instagram.com')) return 'instagram';
-            if (url.includes('facebook.com') || url.includes('fb.com') || url.includes('fb.watch') || url.includes('share/r/')) return 'facebook';
-            if (url.includes('pinterest.com') || url.includes('pin.it')) return 'pinterest';
-            if (url.includes('twitter.com') || url.includes('x.com')) return 'twitter';
-            return null;
-        }
-
-        // ========== YOUTUBE ==========
-        function getYouTubeId(url) {
-            const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\?#]+)/);
-            return match ? match[1] : null;
-        }
-
-        async function fetchYouTube(url) {
-            const id = getYouTubeId(url);
-            if (!id) throw new Error('Invalid YouTube URL');
-            const resp = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`);
-            const data = await resp.json();
-            return {
-                title: data.title || 'YouTube Video',
-                author: data.author_name || '@YouTube',
-                thumbnail: data.thumbnail_url || `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-                videoUrl: url,
-                audioUrl: url
-            };
-        }
-
-        // ========== TIKTOK ==========
-        async function fetchTikTok(url) {
-            const resp = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(url)}`);
-            const data = await resp.json();
-            if (!data?.data) throw new Error('No TikTok data');
-            return {
-                title: data.data.title || 'TikTok Video',
-                author: `@${data.data.author?.unique_id || 'user'}`,
-                thumbnail: data.data.cover || data.data.origin_cover || '',
-                videoUrl: data.data.play,
-                audioUrl: data.data.music || data.data.play
-            };
-        }
-
-        // ========== FACEBOOK - FIXED WITH MULTIPLE APIS ==========
-        async function fetchFacebook(url) {
-            // Try multiple APIs
-            const apis = [
-                `https://api.vevioz.com/api/button/facebook/?url=${encodeURIComponent(url)}`,
-                `https://fb-video-downloader-api.vercel.app/api?url=${encodeURIComponent(url)}`,
-                `https://social-downloader-api.vercel.app/api/facebook?url=${encodeURIComponent(url)}`
-            ];
-
-            for (const api of apis) {
-                try {
-                    const resp = await fetch(api);
-                    const data = await resp.json();
-                    
-                    // Check for video URL in different formats
-                    let video = data?.hd || data?.sd || data?.url || data?.video_url || data?.download || data?.video;
-                    if (video) {
-                        return {
-                            title: data.title || data.caption || 'Facebook Video',
-                            author: data.author || data.username ? `@${data.author || data.username}` : '@Facebook',
-                            thumbnail: data.thumbnail || data.thumbnail_url || 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Facebook',
-                            videoUrl: video,
-                            audioUrl: video
-                        };
-                    }
-                } catch (e) { continue; }
-            }
-
-            // Final fallback: use the URL itself
-            return {
-                title: 'Facebook Video',
-                author: '@Facebook',
-                thumbnail: 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Facebook',
-                videoUrl: url,
-                audioUrl: url
-            };
-        }
-
-        // ========== INSTAGRAM ==========
-        async function fetchInstagram(url) {
-            const apis = [
-                `https://api.vevioz.com/api/button/instagram/?url=${encodeURIComponent(url)}`,
-                `https://instagram-video-downloader-api.vercel.app/api?url=${encodeURIComponent(url)}`
-            ];
-            for (const api of apis) {
-                try {
-                    const resp = await fetch(api);
-                    const data = await resp.json();
-                    let video = data?.url || data?.video_url || data?.download || data?.video;
-                    if (video) {
-                        return {
-                            title: data.title || data.caption || 'Instagram Video',
-                            author: data.author || data.username ? `@${data.author || data.username}` : '@Instagram',
-                            thumbnail: data.thumbnail || data.thumbnail_url || 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Instagram',
-                            videoUrl: video,
-                            audioUrl: video
-                        };
-                    }
-                } catch (e) { continue; }
-            }
-            return {
-                title: 'Instagram Video',
-                author: '@Instagram',
-                thumbnail: 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Instagram',
-                videoUrl: url,
-                audioUrl: url
-            };
-        }
-
-        // ========== PINTEREST ==========
-        async function fetchPinterest(url) {
-            const apis = [
-                `https://api.vevioz.com/api/button/pinterest/?url=${encodeURIComponent(url)}`,
-                `https://pinterest-video-downloader-api.vercel.app/api?url=${encodeURIComponent(url)}`
-            ];
-            for (const api of apis) {
-                try {
-                    const resp = await fetch(api);
-                    const data = await resp.json();
-                    let video = data?.url || data?.video_url || data?.download || data?.video;
-                    if (video) {
-                        return {
-                            title: data.title || data.description || 'Pinterest Video',
-                            author: data.author || data.username ? `@${data.author || data.username}` : '@Pinterest',
-                            thumbnail: data.thumbnail || data.thumbnail_url || 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Pinterest',
-                            videoUrl: video,
-                            audioUrl: video
-                        };
-                    }
-                } catch (e) { continue; }
-            }
-            return {
-                title: 'Pinterest Video',
-                author: '@Pinterest',
-                thumbnail: 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Pinterest',
-                videoUrl: url,
-                audioUrl: url
-            };
-        }
-
-        // ========== TWITTER ==========
-        async function fetchTwitter(url) {
-            const apis = [
-                `https://api.vevioz.com/api/button/twitter/?url=${encodeURIComponent(url)}`,
-                `https://twitter-video-downloader-api.vercel.app/api?url=${encodeURIComponent(url)}`
-            ];
-            for (const api of apis) {
-                try {
-                    const resp = await fetch(api);
-                    const data = await resp.json();
-                    let video = data?.url || data?.video_url || data?.download || data?.video;
-                    if (video) {
-                        return {
-                            title: data.title || data.text || 'Twitter Video',
-                            author: data.author || data.username ? `@${data.author || data.username}` : '@Twitter',
-                            thumbnail: data.thumbnail || data.thumbnail_url || 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Twitter',
-                            videoUrl: video,
-                            audioUrl: video
-                        };
-                    }
-                } catch (e) { continue; }
-            }
-            return {
-                title: 'Twitter Video',
-                author: '@Twitter',
-                thumbnail: 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Twitter',
-                videoUrl: url,
-                audioUrl: url
-            };
-        }
-
-        // ========== MAIN FETCH ==========
         async function fetchVideo() {
             const url = document.getElementById('videoUrl').value.trim();
             const btn = document.getElementById('fetchBtn');
@@ -525,10 +488,24 @@
                 return;
             }
 
-            const platform = detectPlatform(url);
-            if (!platform) {
-                showToast('❌ Unsupported platform. Try: TikTok, YouTube, Instagram, Facebook, Pinterest, Twitter', 'error');
-                return;
-            }
+            btn.innerHTML = '<span class="spinner"></span> Processing...';
+            btn.disabled = true;
 
-            btn.innerHTML = '<span 
+            try {
+                // Using TikTok API (which works)
+                const resp = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(url)}`);
+                const data = await resp.json();
+
+                if (data?.data) {
+                    videoUrl = data.data.play;
+                    audioUrl = data.data.music || data.data.play;
+                    document.getElementById('thumbnail').src = data.data.cover || data.data.origin_cover || '';
+                    document.getElementById('author').textContent = `@${data.data.author?.unique_id || 'user'}`;
+                    document.getElementById('title').textContent = data.data.title || 'TikTok Video';
+                    resultArea.classList.remove('hidden');
+                    showToast('✅ Video ready!', 'success');
+                } else {
+                    // Fallback: try to use URL directly
+                    videoUrl = url;
+                    audioUrl = url;
+                    document.getElementById('thumbnail').src = 'https://via.placeholder.com/400x225/1a2

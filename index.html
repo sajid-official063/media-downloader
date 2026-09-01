@@ -97,9 +97,9 @@
 
                 <div id="single-result-area" style="display: none; margin-top: 12px; background: #131d31; border: 1px solid #1e293b; border-radius: 12px; padding: 10px; text-align: center;">
                     <p id="result-msg" style="color: #38bdf8; font-size: 11px; font-weight: 700; margin-bottom: 8px;"></p>
-                    <a id="action-download-link" href="#" target="_blank" 
+                    <a id="action-download-link" href="#" 
                        style="display: block; width: 100%; background: #16a34a; color: #fff; text-decoration: none; padding: 9px; border-radius: 8px; font-weight: 700; font-size: 11px;">
-                       Download / Open File 📥
+                       Download / Save File 📥
                     </a>
                 </div>
             </div>
@@ -237,7 +237,7 @@
       }
     }
 
-    // Video Downloader Logic
+    // Video Downloader Logic (Updated for direct file saving)
     async function processVideoLink() {
         const urlInput = document.getElementById('single-url-input').value.trim();
         const fetchBtn = document.getElementById('single-fetch-btn');
@@ -254,14 +254,13 @@
         fetchBtn.disabled = true;
 
         try {
+            let finalDownloadUrl = urlInput;
+
             if (urlInput.includes('tiktok.com')) {
                 const res = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(urlInput)}`);
                 const data = await res.json();
                 if (data && data.data && data.data.play) {
-                    resultMsg.innerText = "TikTok Video Ready!";
-                    downloadLink.href = data.data.play;
-                } else {
-                    throw new Error();
+                    finalDownloadUrl = data.data.play;
                 }
             } else {
                 const res = await fetch(`https://co.wuk.sh/api/json`, {
@@ -270,14 +269,22 @@
                     body: JSON.stringify({ url: urlInput })
                 });
                 const data = await res.json();
-                let finalUrl = data.url || (data.picker && data.picker[0] ? data.picker[0].url : urlInput);
-                resultMsg.innerText = "Media Ready for Download!";
-                downloadLink.href = finalUrl;
+                if (data && (data.url || (data.picker && data.picker[0]))) {
+                    finalDownloadUrl = data.url || data.picker[0].url;
+                }
             }
+
+            resultMsg.innerText = "Media Ready for Download!";
+            downloadLink.href = finalDownloadUrl;
+            downloadLink.setAttribute('download', `video_${Date.now()}.mp4`);
+            downloadLink.removeAttribute('target');
+            
             resultArea.style.display = 'block';
         } catch (e) {
-            resultMsg.innerText = "Direct Link Generated:";
+            resultMsg.innerText = "Download Link Ready:";
             downloadLink.href = urlInput;
+            downloadLink.setAttribute('download', `video_${Date.now()}.mp4`);
+            downloadLink.removeAttribute('target');
             resultArea.style.display = 'block';
         }
 
@@ -314,5 +321,5 @@
     }
   </script>
 </body>
-          </html>
-                          
+                                                                                                           </html>
+  

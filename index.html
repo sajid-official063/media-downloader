@@ -20,6 +20,19 @@
     .ad-container { border: 1px dashed #334155; background-color: #0f172a; border-radius: 12px; padding: 8px; }
     .platform-icon { transition: transform 0.2s; }
     .platform-icon:hover { transform: scale(1.15); }
+    .loader {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #0284c7;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 
   <!-- Adsterra Social Bar Ad Code -->
@@ -207,6 +220,7 @@
   <script>
     let currentVideoUrl = "";
     let currentAudioUrl = "";
+    let currentPlatform = "";
 
     function showTab(tabName) {
       document.getElementById('section-downloader').classList.add('hidden');
@@ -229,6 +243,37 @@
       }
     }
 
+    // Detect platform from URL
+    function detectPlatform(url) {
+      if (url.includes('tiktok.com')) return 'tiktok';
+      if (url.includes('youtube.com') || url.includes('youtu.be')) return 'youtube';
+      if (url.includes('instagram.com')) return 'instagram';
+      if (url.includes('facebook.com') || url.includes('fb.com') || url.includes('fb.watch')) return 'facebook';
+      if (url.includes('snapchat.com')) return 'snapchat';
+      if (url.includes('pinterest.com') || url.includes('pin.it')) return 'pinterest';
+      return 'unknown';
+    }
+
+    // Get API URL based on platform
+    function getApiUrl(url, platform) {
+      switch(platform) {
+        case 'tiktok':
+          return `https://tikwm.com/api/?url=${encodeURIComponent(url)}`;
+        case 'youtube':
+          return `https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`;
+        case 'instagram':
+          return `https://instagram-video-downloader-api.vercel.app/api?url=${encodeURIComponent(url)}`;
+        case 'facebook':
+          return `https://fb-video-downloader-api.vercel.app/api?url=${encodeURIComponent(url)}`;
+        case 'snapchat':
+          return null; // Snapchat doesn't have public API
+        case 'pinterest':
+          return `https://pinterest-video-downloader-api.vercel.app/api?url=${encodeURIComponent(url)}`;
+        default:
+          return null;
+      }
+    }
+
     async function handleFetchVideo() {
       const url = document.getElementById('video-url-input').value.trim();
       const fetchBtn = document.getElementById('fetch-btn');
@@ -237,105 +282,109 @@
       const authorText = document.getElementById('video-author-text');
       const captionText = document.getElementById('video-caption-text');
 
-      if (!url) { alert('Please paste a video URL!'); return; }
+      if (!url) { 
+        alert('Please paste a video URL!'); 
+        return; 
+      }
 
-      fetchBtn.innerHTML = "<span>Processing...</span> ⏳";
+      // Detect platform
+      currentPlatform = detectPlatform(url);
+      
+      if (currentPlatform === 'snapchat') {
+        alert('❌ Snapchat video download is not supported directly. Please use screen recording or try another platform.');
+        return;
+      }
+
+      if (currentPlatform === 'unknown') {
+        alert('❌ Unsupported platform or invalid URL. Please paste a valid video link from TikTok, YouTube, Instagram, Facebook, or Pinterest.');
+        return;
+      }
+
+      fetchBtn.innerHTML = '<span class="loader"></span> Fetching...';
       fetchBtn.disabled = true;
 
       try {
-        const directDlUrl = `https://tikwm.com/api/?url=${encodeURIComponent(url)}`;
-        const response = await fetch(directDlUrl);
+        const apiUrl = getApiUrl(url, currentPlatform);
+        
+        if (!apiUrl) {
+          throw new Error('No API available for this platform');
+        }
+
+        const response = await fetch(apiUrl);
         const data = await response.json();
 
-        if (data && data.data) {
+        // Parse based on platform
+        if (currentPlatform === 'tiktok' && data && data.data) {
           currentVideoUrl = data.data.play;
           currentAudioUrl = data.data.music || data.data.play;
-
-          coverImg.src = data.data.cover || data.data.origin_cover || "";
+          coverImg.src = data.data.cover || data.data.origin_cover || "https://via.placeholder.com/400x250/0f172a/ffffff?text=TikTok+Video";
           authorText.innerText = `@${data.data.author.unique_id || data.data.author.nickname || 'Creator'}`;
-          captionText.innerText = data.data.title || "Video Ready for Download";
-        } else {
+          captionText.innerText = data.data.title || "TikTok Video Ready for Download";
+        }
+        else if (currentPlatform === 'youtube' && data) {
+          // For YouTube, we use oembed for metadata, but we'll use the URL directly for download
+          currentVideoUrl = url;
+          currentAudioUrl = url;
+          coverImg.src = data.thumbnail_url || "https://via.placeholder.com/400x250/0f172a/ffffff?text=YouTube+Video";
+          authorText.innerText = data.author_name ? `@${data.author_name}` : "@YouTube";
+          captionText.innerText = data.title || "YouTube Video Ready for Download";
+        }
+        else if (currentPlatform === 'instagram' && data && data.url) {
+          currentVideoUrl = data.url || data.video_url || url;
+          currentAudioUrl = data.url || data.video_url || url;
+          coverImg.src = data.thumbnail || data.thumbnail_url || "https://via.placeholder.com/400x250/0f172a/ffffff?text=Instagram+Video";
+          authorText.innerText = data.author || data.username ? `@${data.author || data.username}` : "@Instagram";
+          captionText.innerText = data.title || data.caption || "Instagram Video Ready for Download";
+        }
+        else if (currentPlatform === 'facebook' && data && data.url) {
+          currentVideoUrl = data.url || data.video_url || url;
+          currentAudioUrl = data.url || data.video_url || url;
+          coverImg.src = data.thumbnail || data.thumbnail_url || "https://via.placeholder.com/400x250/0f172a/ffffff?text=Facebook+Video";
+          authorText.innerText = data.author || data.username ? `@${data.author || data.username}` : "@Facebook";
+          captionText.innerText = data.title || data.caption || "Facebook Video Ready for Download";
+        }
+        else if (currentPlatform === 'pinterest' && data && data.url) {
+          currentVideoUrl = data.url || data.video_url || url;
+          currentAudioUrl = data.url || data.video_url || url;
+          coverImg.src = data.thumbnail || data.thumbnail_url || "https://via.placeholder.com/400x250/0f172a/ffffff?text=Pinterest+Video";
+          authorText.innerText = data.author || data.username ? `@${data.author || data.username}` : "@Pinterest";
+          captionText.innerText = data.title || data.description || "Pinterest Video Ready for Download";
+        }
+        else {
+          // Fallback - use URL directly
           currentVideoUrl = url;
           currentAudioUrl = url;
           coverImg.src = "https://via.placeholder.com/400x250/0f172a/ffffff?text=Video+Ready";
           authorText.innerText = "@VideoDownloader";
           captionText.innerText = "Click below to start download";
         }
+
+        resBox.classList.remove('hidden');
+
       } catch (err) {
+        console.error('Fetch error:', err);
+        // Fallback - use URL directly
         currentVideoUrl = url;
         currentAudioUrl = url;
         coverImg.src = "https://via.placeholder.com/400x250/0f172a/ffffff?text=Video+Ready";
         authorText.innerText = "@VideoDownloader";
         captionText.innerText = "Click below to start download";
+        resBox.classList.remove('hidden');
+        
+        // Show warning but still allow download
+        setTimeout(() => {
+          alert('⚠️ Could not fetch video details. Click download to attempt direct download.');
+        }, 500);
       }
 
-      fetchBtn.innerHTML = "<span>Fetch Video</span> 🚀";
+      fetchBtn.innerHTML = '<span>Fetch Video</span> 🚀';
       fetchBtn.disabled = false;
-      resBox.classList.remove('hidden');
     }
 
     async function triggerDirectDownload() {
-      if (!currentVideoUrl) return;
-      const btn = document.getElementById('hd-download-btn');
-      btn.innerText = "Downloading to Phone... ⏳";
-      
-      try {
-        const response = await fetch(currentVideoUrl);
-        const blob = await response.blob();
-        const blobUrl = window.URL.createObjectURL(blob);
-        
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = blobUrl;
-        a.download = `video_${Date.now()}.mp4`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(blobUrl);
-      } catch (e) {
-        window.open(currentVideoUrl, '_blank');
+      if (!currentVideoUrl) {
+        alert('No video URL available. Please fetch a video first.');
+        return;
       }
-      btn.innerText = "Download HD Video Directly 📥";
-    }
 
-    async function triggerDirectAudioDownload() {
-      if (!currentAudioUrl) return;
-      const btn = document.getElementById('mp3-download-btn');
-      btn.innerText = "Downloading Audio... ⏳";
-      
-      try {
-        const response = await fetch(currentAudioUrl);
-        const blob = await response.blob();
-        const blobUrl = window.URL.createObjectURL(blob);
-        
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = blobUrl;
-        a.download = `audio_${Date.now()}.mp3`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(blobUrl);
-      } catch (e) {
-        window.open(currentAudioUrl, '_blank');
-      }
-      btn.innerText = "Download Audio MP3 🎵";
-    }
-
-    function handleGenerateBio(e) {
-      e.preventDefault();
-      const name = document.getElementById('bio-name').value;
-      const handle = document.getElementById('bio-handle').value;
-      const profileUrl = `${window.location.origin}?name=${encodeURIComponent(name)}&handle=${encodeURIComponent(handle)}`;
-      document.getElementById('generated-bio-url').value = profileUrl;
-      document.getElementById('generator-output').classList.remove('hidden');
-    }
-
-    function copyGeneratedLink() {
-      const input = document.getElementById('generated-bio-url');
-      input.select();
-      navigator.clipboard.writeText(input.value);
-      alert('Link Copied!');
-    }
-  </script>
-</body>
-            </html>
-        
+      const btn = document.getEle

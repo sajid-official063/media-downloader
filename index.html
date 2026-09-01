@@ -24,7 +24,7 @@
 
   <div class="w-full max-w-md bg-[#131d31] rounded-3xl shadow-2xl border border-slate-800 overflow-hidden flex flex-col my-auto">
     
-    <!-- ========== CARD 8: HEADER & TABS NAVIGATION MODULE ========== -->
+    <!-- ========== HEADER & TABS NAVIGATION MODULE ========== -->
     <div style="background: #131d31; border-bottom: 1px solid #1e293b; padding: 18px 16px 14px 16px; text-align: center;">
         <h1 style="color: #38bdf8; font-size: 18px; font-weight: 900; margin: 0 0 4px 0; letter-spacing: 0.5px;">
             All Media Downloader & Bio Hub
@@ -47,10 +47,10 @@
     <!-- MAIN CONTENT CONTAINER -->
     <div style="padding: 14px;">
 
-        <!-- TAB 1 CONTENT (Downloader & Supported Platforms & Banner & Ad) -->
+        <!-- TAB 1 CONTENT (Downloader & Supported Platforms & PlayStore App Banner & Ad) -->
         <div id="tab-content-downloader" style="display: block;">
             
-            <!-- ========== CARD 5: APP INSTALL BANNER MODULE ========== -->
+            <!-- ========== APP INSTALL & PLAY STORE BANNER MODULE ========== -->
             <div style="background: linear-gradient(135deg, #0284c7, #1d4ed8); border: 1px solid #38bdf840; border-radius: 16px; padding: 12px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <div style="width: 32px; height: 32px; background: #0b1320; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px;">
@@ -58,15 +58,17 @@
                     </div>
                     <div>
                         <p style="color: #fff; font-size: 11px; font-weight: 800; margin: 0; line-height: 1.2;">Get Official Mobile App</p>
-                        <span style="color: #e0f2fe; font-size: 9px;">Fast downloads & Bio link generator</span>
+                        <span style="color: #e0f2fe; font-size: 9px;">Download APK or Get from Play Store</span>
                     </div>
                 </div>
-                <button onclick="alert('App Installation Started!')" style="background: #fff; color: #0369a1; border: none; padding: 6px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; cursor: pointer; white-space: nowrap;">
-                    Install App
-                </button>
+                <div style="display: flex; gap: 6px;">
+                    <button onclick="alert('Redirecting to Play Store / APK Download...')" style="background: #fff; color: #0369a1; border: none; padding: 6px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; cursor: pointer; white-space: nowrap;">
+                        Play Store / APK
+                    </button>
+                </div>
             </div>
 
-            <!-- ========== CARD 4: SUPPORTED PLATFORMS LOGOBAR MODULE ========== -->
+            <!-- ========== SUPPORTED PLATFORMS LOGOBAR MODULE ========== -->
             <div style="background: #0b1320; border: 1px solid #1e293b; border-radius: 16px; padding: 12px; margin-bottom: 14px; text-align: center;">
                 <p style="color: #94a3b8; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Supported Platforms</p>
                 <div style="display: flex; align-items: center; justify-content: center; gap: 14px; font-size: 18px;">
@@ -79,7 +81,7 @@
                 </div>
             </div>
 
-            <!-- ========== CARD 1: VIDEO DOWNLOADER MODULE ========== -->
+            <!-- ========== VIDEO DOWNLOADER MODULE ========== -->
             <div style="background: #0b1320; border: 1px solid #1e293b; border-radius: 16px; padding: 14px; margin-bottom: 14px;">
                 <div style="text-align: center; margin-bottom: 10px;">
                     <p style="color: #cbd5e1; font-size: 11px; font-weight: 600;">Paste Video URL to Download Fast</p>
@@ -104,7 +106,7 @@
                 </div>
             </div>
 
-            <!-- ========== CARD 6: ADVERTISEMENT BANNER MODULE ========== -->
+            <!-- ========== ADVERTISEMENT BANNER MODULE ========== -->
             <div style="background: #0f172a; border: 1px dashed #334155; border-radius: 16px; padding: 10px; text-align: center;">
                 <p style="color: #facc15; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Sponsored Ad 📣</p>
                 <div style="width: 100%; min-height: 80px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
@@ -116,7 +118,7 @@
 
         <!-- TAB 2 CONTENT (Bio Generator) -->
         <div id="tab-content-generator" style="display: none;">
-            <!-- ========== CARD 2: BIO LINK GENERATOR MODULE ========== -->
+            <!-- ========== BIO LINK GENERATOR MODULE ========== -->
             <div style="background: #0b1320; border: 1px solid #1e293b; border-radius: 16px; padding: 14px;">
                 <div style="text-align: center; margin-bottom: 12px;">
                     <h2 style="color: #38bdf8; font-size: 15px; font-weight: 800; margin-bottom: 2px;">Create Bio Link</h2>
@@ -154,7 +156,7 @@
 
         <!-- TAB 3 CONTENT (My Links) -->
         <div id="tab-content-creator" style="display: none;">
-            <!-- ========== CARD 3: MY BIO LINKS MODULE ========== -->
+            <!-- ========== MY BIO LINKS MODULE ========== -->
             <div style="background: #0b1320; border: 1px solid #1e293b; border-radius: 16px; padding: 14px;">
                 <div style="text-align: center; margin-bottom: 12px;">
                     <h2 style="color: #34d399; font-size: 15px; font-weight: 800; margin-bottom: 2px;">My Profile Links</h2>
@@ -193,7 +195,7 @@
 
     </div>
 
-    <!-- ========== CARD 7: FOOTER MODULE ========== -->
+    <!-- ========== FOOTER MODULE ========== -->
     <div style="background: #0b1320; border-top: 1px solid #1e293b; padding: 12px; text-align: center;">
         <p style="color: #64748b; font-size: 9px; margin: 0; font-weight: 600;">© 2026 Media Downloader & Bio Hub. All Rights Reserved.</p>
     </div>
@@ -237,7 +239,7 @@
       }
     }
 
-    // Video Downloader Logic (Updated for direct file saving)
+    // Video Downloader Logic
     async function processVideoLink() {
         const urlInput = document.getElementById('single-url-input').value.trim();
         const fetchBtn = document.getElementById('single-fetch-btn');
@@ -321,5 +323,5 @@
     }
   </script>
 </body>
-                                                                                                           </html>
-  
+  </html>
+                      

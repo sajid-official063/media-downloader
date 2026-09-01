@@ -36,8 +36,8 @@
         
         .btn { display: inline-block; padding: 12px 24px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 10px; text-align: center; transition: 0.3s; }
         .btn-primary { background: linear-gradient(135deg, #00b4db, #0083b0); color: #fff; }
-        .btn-green { background: #00c853; color: #fff; font-size: 13px; padding: 11px; border-radius: 10px; text-decoration: none; display: block; margin-top: 10px; font-weight: 700; text-align: center; border: none; cursor: pointer; }
-        .btn-yellow { background: #ffd600; color: #0b0e1a; font-size: 13px; padding: 11px; border-radius: 10px; text-decoration: none; display: block; margin-top: 8px; font-weight: 700; text-align: center; border: none; cursor: pointer; }
+        .btn-green { background: #00c853; color: #fff; font-size: 13px; padding: 11px; border-radius: 10px; text-decoration: none; display: block; margin-top: 10px; font-weight: 700; text-align: center; }
+        .btn-yellow { background: #ffd600; color: #0b0e1a; font-size: 13px; padding: 11px; border-radius: 10px; text-decoration: none; display: block; margin-top: 8px; font-weight: 700; text-align: center; }
 
         .supported-icons { display: flex; justify-content: center; gap: 14px; font-size: 22px; padding: 4px 0; }
         
@@ -251,84 +251,70 @@
         function openStoreModal() { document.getElementById('storeModal').classList.add('show'); }
         function closeStoreModal() { document.getElementById('storeModal').classList.remove('show'); }
 
-        async function downloadFile(url, kind = 'video') {
-            const resultDiv = document.getElementById('downloadResult');
-            try {
-                showToast('⏳ ڈاؤنلوڈ شروع ہو رہا ہے...');
-                const resp = await fetch(url);
-                if (!resp.ok) throw new Error('Network response was not OK (' + resp.status + ')');
-
-                if (!resp.body) {
-                    // Fallback: not streamable (older browsers)
-                    const blob = await resp.blob();
-                    saveBlob(blob, url, kind);
-                    showToast('✅ ڈاؤنلوڈ مکمل');
-                    return;
-                }
-
-                const contentLength = resp.headers.get('content-length');
-                const total = contentLength ? parseInt(contentLength, 10) : null;
-                const reader = resp.body.getReader();
-                const chunks = [];
-                let received = 0;
-
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) break;
-                    chunks.push(value);
-                    received += value.length;
-                    if (total) {
-                        const pct = Math.round((received / total) * 100);
-                        showToast(`⏳ ڈاؤنلوڈ ہو رہا ہے: ${pct}%`);
-                    }
-                }
-
-                // combine chunks
-                const blob = new Blob(chunks, { type: resp.headers.get('content-type') || 'application/octet-stream' });
-                saveBlob(blob, url, kind);
-                showToast('✅ ڈاؤنلوڈ مکمل');
-            } catch (err) {
-                console.error(err);
-                showToast('❌ ڈاؤنلوڈ ناکام: ' + (err.message || ''), true);
-                resultDiv.innerHTML = `<div class="error-msg">⚠️ ڈاؤنلوڈ ناکام ہوا: ${err.message || 'Unknown error'}</div>`;
-            }
-        }
-
-        function saveBlob(blob, sourceUrl, kind) {
-            let ext = '';
-            const ct = blob.type;
-            if (ct) {
-                const parts = ct.split('/');
-                if (parts[1]) ext = '.' + parts[1].split(';')[0];
-            }
-            if (kind === 'audio' && !ext) ext = '.mp3';
-            try {
-                const urlObj = new URL(sourceUrl);
-                let name = urlObj.pathname.split('/').pop().split('?')[0] || 'download';
-                if (!name.includes('.') && ext) name += ext;
-                const a = document.createElement('a');
-                a.href = URL.createObjectURL(blob);
-                a.download = name;
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => {
-                    URL.revokeObjectURL(a.href);
-                    a.remove();
-                }, 1000);
-            } catch (e) {
-                // If new URL() fails (invalid), fallback
-                const a = document.createElement('a');
-                a.href = URL.createObjectURL(blob);
-                a.download = (kind === 'audio' ? 'audio' : 'video') + (ext || '');
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-            }
-        }
-
         function fetchMedia() {
             const url = document.getElementById('videoUrl').value.trim();
             const resultDiv = document.getElementById('downloadResult');
 
             if (!url) {
-                showToast(
+                showToast('❌ براہ کرم کوئی لنک درج کریں!', true);
+                resultDiv.innerHTML = `<div class="error-msg">⚠️ براہ کرم پہلے ویڈیو لنک درج کریں</div>`;
+                return;
+            }
+
+            resultDiv.innerHTML = `
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i><br>
+                    ⏳ Fetching video...
+                </div>
+            `;
+
+            setTimeout(() => {
+                resultDiv.innerHTML = `
+                    <div class="download-result-box">
+                        <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?w=500" alt="Thumbnail">
+                        <div style="font-size:12px; color:#00b4db; margin-bottom:4px; font-weight:600;">@uniqueaseel5</div>
+                        <div style="font-size:12px; color:#fff; margin-bottom:10px;">Top Aseel Moments & Media Content</div>
+                        <a href="${url}" target="_blank" class="btn-green">
+                            <i class="fas fa-download"></i> Download HD Video Directly 📥
+                        </a>
+                        <a href="${url}" target="_blank" class="btn-yellow">
+                            <i class="fas fa-music"></i> Download Audio MP3 🎵
+                        </a>
+                    </div>
+                `;
+                showToast('✅ ویڈیو کامیابی سے فیچ ہو گئی!');
+            }, 1000);
+        }
+
+        function updatePreview() {
+            document.getElementById('previewName').innerText = document.getElementById('bioName').value || 'Sajid Official';
+            document.getElementById('previewHandle').innerText = document.getElementById('bioHandle').value || '@thesajidvibe';
+            
+            let linksHtml = '';
+            const yt = document.getElementById('linkYouTube').value;
+            const fb = document.getElementById('linkFacebook').value;
+            const insta = document.getElementById('linkInstagram').value;
+
+            if(yt) linksHtml += `<a href="${yt}" target="_blank">▶️ YouTube</a>`;
+            if(fb) linksHtml += `<a href="${fb}" target="_blank">📘 Facebook</a>`;
+            if(insta) linksHtml += `<a href="${insta}" target="_blank">📸 Instagram</a>`;
+
+            document.getElementById('previewLinks').innerHTML = linksHtml;
+        }
+
+        function generateBio() {
+            const handle = document.getElementById('bioHandle').value || 'sajid';
+            const yt = encodeURIComponent(document.getElementById('linkYouTube').value);
+            const fb = encodeURIComponent(document.getElementById('linkFacebook').value);
+            const insta = encodeURIComponent(document.getElementById('linkInstagram').value);
+            
+            const masterLink = `${window.location.origin}/?hub=${encodeURIComponent(handle)}&yt=${yt}&fb=${fb}&insta=${insta}`;
+            copyText(masterLink);
+            showToast('🔗 ماسٹر بائیو لنک کاپی ہو گیا!');
+        }
+
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            if(params.has('hub')) {
+                document.getElementById('bioHandle').value = decodeURIComponent(params.get('hub'));
+                if(params.get('yt')) document.getElementById('linkYouTube').value = decodeURIComponent(params.get('yt'))

@@ -85,6 +85,7 @@
         <p>Download HD Videos & Manage Bio Links</p>
     </div>
 
+    <!-- App Banner -->
     <div class="app-banner">
         <div class="app-text">
             <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px; flex-wrap:wrap;">
@@ -100,12 +101,14 @@
         </div>
     </div>
 
+    <!-- Navigation Tabs -->
     <div class="tabs">
         <button class="tab-btn active" data-tab="downloader"><i class="fas fa-download"></i> Downloader</button>
         <button class="tab-btn" data-tab="bio"><i class="fas fa-magic"></i> Bio Generator</button>
         <button class="tab-btn" data-tab="mylinks"><i class="fas fa-list"></i> My Bio Links</button>
     </div>
 
+    <!-- ========== TAB 1: DOWNLOADER ========== -->
     <div id="downloader" class="tab-content active">
         <div class="card">
             <h3>SUPPORTED PLATFORMS</h3>
@@ -119,6 +122,7 @@
             </div>
         </div>
 
+        <!-- AD 1 -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED AD 1 —</div>
             <div class="ad-box">
@@ -127,14 +131,17 @@
             </div>
         </div>
 
+        <!-- Downloader Card -->
         <div class="card">
             <h3 style="text-align: left; margin-bottom:8px;">Paste Video URL to Download Fast</h3>
             <input type="text" id="videoUrl" placeholder="Paste TikTok, Insta, FB, YouTube Link..." style="margin-bottom:10px;">
             <button class="btn btn-primary" onclick="fetchMedia()"><i class="fas fa-rocket"></i> Fetch Video</button>
             
+            <!-- RESULT BOX (Strictly Right Under Fetch Button) -->
             <div id="downloadResult"></div>
         </div>
 
+        <!-- AD 2 -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED AD 2 —</div>
             <div class="ad-box">
@@ -143,6 +150,7 @@
         </div>
     </div>
 
+    <!-- ========== TAB 2: BIO GENERATOR ========== -->
     <div id="bio" class="tab-content">
         <div class="card">
             <h3>Create Your Custom Bio Link</h3>
@@ -166,6 +174,7 @@
 
             <button class="btn btn-primary" style="margin-top:16px;" onclick="generateBio()">Generate My Bio Link Page</button>
 
+            <!-- Bio Preview -->
             <div id="bioPreview" class="bio-preview">
                 <div style="font-size:16px; font-weight:700;" id="previewName">Sajid Official</div>
                 <div class="handle" id="previewHandle">@thesajidvibe</div>
@@ -178,6 +187,7 @@
         </div>
     </div>
 
+    <!-- ========== TAB 3: MY BIO LINKS ========== -->
     <div id="mylinks" class="tab-content">
         <div class="card">
             <h3>All Profile & Channel Links</h3>
@@ -204,6 +214,7 @@
 
     <div class="footer">© 2026 Media Downloader & Bio Hub</div>
 
+    <!-- Store Modal -->
     <div id="storeModal">
         <div class="modal-content">
             <h3>📱 Download App</h3>
@@ -310,11 +321,4 @@
             
             const masterLink = `${window.location.origin}/?hub=${encodeURIComponent(handle)}&yt=${yt}&fb=${fb}&insta=${insta}`;
             copyText(masterLink);
-            showToast('🔗 ماسٹر بائیو لنک کاپی ہو گیا!');
-        }
-
-        window.onload = function() {
-            const params = new URLSearchParams(window.location.search);
-            if(params.has('hub')) {
-                document.getElementById('bioHandle').value = decodeURIComponent(params.get('hub'));
-                if(params.get('yt')) document.getElementById('linkYouTube').value = decodeURIComponent(params.get('yt'))
+            sh

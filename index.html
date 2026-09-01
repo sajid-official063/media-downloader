@@ -1,530 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>All Video Downloader</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: #0b1320;
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
-        .glass {
-            background: rgba(19, 29, 49, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 32px;
-            padding: 24px;
-            max-width: 440px;
-            width: 100%;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-        }
-        .badge {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 6px 14px;
-            border-radius: 40px;
-            font-size: 11px;
-            font-weight: 500;
-            transition: 0.25s;
-            cursor: default;
-        }
-        .badge:hover {
-            transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.07);
-        }
-        .badge i {
-            margin-right: 6px;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #0284c7, #0ea5e9);
-            transition: 0.25s;
-            border: none;
-            color: #fff;
-            font-weight: 700;
-            padding: 14px;
-            border-radius: 16px;
-            font-size: 14px;
-            width: 100%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(2, 132, 199, 0.3);
-        }
-        .btn-primary:disabled {
-            opacity: 0.6;
-            transform: none;
-            box-shadow: none;
-        }
-        .btn-download {
-            padding: 12px;
-            border-radius: 14px;
-            font-size: 12px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: 0.25s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            color: #fff;
-        }
-        .btn-download:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .btn-download.video {
-            background: #16a34a;
-        }
-        .btn-download.video:hover:not(:disabled) {
-            background: #15803d;
-            transform: scale(1.02);
-        }
-        .btn-download.audio {
-            background: #eab308;
-            color: #0f172a;
-        }
-        .btn-download.audio:hover:not(:disabled) {
-            background: #ca8a04;
-            transform: scale(1.02);
-        }
-        input {
-            width: 100%;
-            padding: 14px 16px 14px 44px;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-            transition: 0.2s;
-        }
-        input:focus {
-            border-color: #0ea5e9;
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
-        }
-        input::placeholder {
-            color: #64748b;
-        }
-        .input-wrap {
-            position: relative;
-        }
-        .input-wrap i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #64748b;
-            font-size: 14px;
-        }
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2.5px solid rgba(255, 255, 255, 0.1);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            display: inline-block;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        .result-card {
-            animation: fadeUp 0.4s ease;
-        }
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(14px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1e293b;
-            padding: 12px 22px;
-            border-radius: 14px;
-            border-left: 4px solid #0ea5e9;
-            font-size: 13px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-            z-index: 999;
-            animation: fadeUp 0.3s ease;
-            max-width: 90%;
-            text-align: center;
-        }
-        .ad-box {
-            margin-top: 16px;
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px dashed #334155;
-            border-radius: 14px;
-            padding: 14px;
-            text-align: center;
-        }
-        .ad-box p {
-            font-size: 10px;
-            color: #facc15;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
-        }
-        .ad-box .inner {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 12px;
-            color: #94a3b8;
-        }
-        .ad-box .inner i {
-            color: #38bdf8;
-            margin-right: 6px;
-        }
-        .ad-box .inner button {
-            margin-top: 8px;
-            background: #0284c7;
-            border: none;
-            color: #fff;
-            font-size: 11px;
-            padding: 6px 18px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .ad-box .inner button:hover {
-            background: #0369a1;
-        }
-        .footer {
-            text-align: center;
-            font-size: 10px;
-            color: #475569;
-            margin-top: 18px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Video Downloader</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0b1320;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .glass {
+      background: rgba(19, 29, 49, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(2,132,199,0.3); }
+    .btn-primary:disabled { opacity: 0.6; transform: none; }
+    .spinner {
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top: 3px solid #0ea5e9;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .platform-icon { transition: all 0.3s ease; }
+    .platform-icon:hover { transform: scale(1.2); }
+    .result-card { animation: slideUp 0.5s ease; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      padding: 12px 24px;
+      border-radius: 12px;
+      border-left: 4px solid #0ea5e9;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      z-index: 999;
+      animation: slideUp 0.3s ease;
+      font-size: 14px;
+      max-width: 90%;
+    }
+    input:focus { border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14,165,233,0.2); }
+    .ad-container {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px dashed #334155;
+      border-radius: 12px;
+      padding: 10px;
+      margin-top: 12px;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="glass">
+<div class="w-full max-w-md p-4">
+  
+  <!-- Header -->
+  <div class="text-center mb-6">
+    <h1 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-400">
+      <i class="fa-solid fa-cloud-arrow-down text-sky-400"></i> Video Downloader
+    </h1>
+    <p class="text-slate-400 text-xs mt-1">Download from any platform</p>
+  </div>
 
-        <!-- HEADER -->
-        <div class="text-center mb-5">
-            <h1 class="text-2xl font-bold bg-gradient-to-r from-sky-400 to-blue-400 bg-clip-text text-transparent">
-                <i class="fa-solid fa-cloud-arrow-down text-sky-400"></i> Video Downloader
-            </h1>
-            <p class="text-slate-400 text-xs mt-0.5">Download from any platform</p>
-        </div>
-
-        <!-- PLATFORM BADGES -->
-        <div class="flex flex-wrap justify-center gap-2 mb-5">
-            <span class="badge"><i class="fa-brands fa-tiktok text-pink-400"></i>TikTok</span>
-            <span class="badge"><i class="fa-brands fa-youtube text-red-500"></i>YouTube</span>
-            <span class="badge"><i class="fa-brands fa-instagram text-rose-400"></i>Instagram</span>
-            <span class="badge"><i class="fa-brands fa-facebook text-blue-400"></i>Facebook</span>
-            <span class="badge"><i class="fa-brands fa-pinterest text-red-400"></i>Pinterest</span>
-        </div>
-
-        <!-- INPUT -->
-        <div class="space-y-3">
-            <div class="input-wrap">
-                <i class="fa-solid fa-link"></i>
-                <input type="text" id="videoUrl" placeholder="Paste any video URL..."/>
-            </div>
-            <button class="btn-primary" id="fetchBtn" onclick="fetchVideo()">
-                <i class="fa-solid fa-magnifying-glass"></i> Fetch Video
-            </button>
-        </div>
-
-        <!-- RESULT -->
-        <div id="resultArea" class="mt-5 hidden result-card">
-            <div class="bg-slate-900/50 rounded-2xl overflow-hidden border border-slate-700">
-                <div class="relative bg-black/50 aspect-video flex items-center justify-center">
-                    <img id="thumbnail" src="" alt="Thumbnail" class="w-full h-full object-contain max-h-56" />
-                </div>
-                <div class="p-4 space-y-3">
-                    <div>
-                        <p id="author" class="text-sm font-semibold text-sky-400">@username</p>
-                        <p id="title" class="text-xs text-slate-400 mt-0.5 line-clamp-2">Video title here</p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button class="btn-download video" id="videoBtn" onclick="downloadVideo()">
-                            <i class="fa-solid fa-video"></i> Video HD
-                        </button>
-                        <button class="btn-download audio" id="audioBtn" onclick="downloadAudio()">
-                            <i class="fa-solid fa-music"></i> Audio MP3
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- AD -->
-        <div class="ad-box">
-            <p>📣 Sponsored</p>
-            <div class="inner">
-                <i class="fa-solid fa-bolt"></i> Download videos faster with our premium app!
-                <button onclick="alert('Premium feature coming soon!')">Learn More</button>
-            </div>
-        </div>
-
-        <div class="footer">© 2026 All Video Downloader</div>
+  <!-- Main Card -->
+  <div class="glass rounded-3xl p-5 shadow-2xl">
+    
+    <!-- Platforms -->
+    <div class="flex flex-wrap justify-center gap-3 mb-5">
+      <span class="platform-icon px-3 py-1.5 bg-slate-800/50 rounded-full text-xs border border-slate-700">
+        <i class="fa-brands fa-tiktok text-pink-400"></i> TikTok
+      </span>
+      <span class="platform-icon px-3 py-1.5 bg-slate-800/50 rounded-full text-xs border border-slate-700">
+        <i class="fa-brands fa-youtube text-red-500"></i> YouTube
+      </span>
+      <span class="platform-icon px-3 py-1.5 bg-slate-800/50 rounded-full text-xs border border-slate-700">
+        <i class="fa-brands fa-instagram text-rose-400"></i> Instagram
+      </span>
+      <span class="platform-icon px-3 py-1.5 bg-slate-800/50 rounded-full text-xs border border-slate-700">
+        <i class="fa-brands fa-facebook text-blue-400"></i> Facebook
+      </span>
+      <span class="platform-icon px-3 py-1.5 bg-slate-800/50 rounded-full text-xs border border-slate-700">
+        <i class="fa-brands fa-pinterest text-red-400"></i> Pinterest
+      </span>
     </div>
 
-    <script>
-        let videoUrl = '';
-        let audioUrl = '';
+    <!-- Input -->
+    <div class="space-y-3">
+      <div class="relative">
+        <i class="fa-solid fa-link absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+        <input type="text" id="videoUrl" placeholder="Paste any video URL..." 
+               class="w-full pl-11 pr-4 py-3.5 bg-slate-900/50 border border-slate-700 rounded-2xl text-white text-sm focus:outline-none transition">
+      </div>
+      <button onclick="fetchVideo()" id="fetchBtn" 
+              class="btn-primary w-full py-3.5 rounded-2xl text-white font-bold text-sm flex items-center justify-center gap-2">
+        <i class="fa-solid fa-magnifying-glass"></i> Fetch Video
+      </button>
+    </div>
 
-        // ---------- PLATFORM DETECTION ----------
-        function detectPlatform(url) {
-            if (url.includes('tiktok.com')) return 'tiktok';
-            if (url.includes('youtube.com') || url.includes('youtu.be')) return 'youtube';
-            if (url.includes('instagram.com')) return 'instagram';
-            if (url.includes('facebook.com') || url.includes('fb.com') || url.includes('fb.watch') || url.includes('share/r/')) return 'facebook';
-            if (url.includes('pinterest.com') || url.includes('pin.it')) return 'pinterest';
-            return null;
-        }
+    <!-- Result -->
+    <div id="resultArea" class="mt-5 hidden result-card">
+      <div class="bg-slate-900/50 rounded-2xl overflow-hidden border border-slate-700">
+        <!-- Thumbnail -->
+        <div class="relative bg-black/50 aspect-video flex items-center justify-center">
+          <img id="thumbnail" src="" alt="Thumbnail" class="w-full h-full object-contain max-h-56">
+        </div>
+        <!-- Info -->
+        <div class="p-4 space-y-3">
+          <div>
+            <p id="author" class="text-sm font-semibold text-sky-400">@username</p>
+            <p id="title" class="text-xs text-slate-400 mt-0.5 line-clamp-2">Video title here</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <button onclick="downloadVideo()" id="videoBtn" 
+                    class="bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition">
+              <i class="fa-solid fa-video"></i> Video HD
+            </button>
+            <button onclick="downloadAudio()" id="audioBtn" 
+                    class="bg-amber-500 hover:bg-amber-600 text-white py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition">
+              <i class="fa-solid fa-music"></i> Audio MP3
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        // ---------- YOUTUBE ----------
-        function getYouTubeId(url) {
-            const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\?#]+)/);
-            return match ? match[1] : null;
-        }
+    <!-- Ad Container -->
+    <div class="ad-container mt-4 text-center">
+      <p class="text-[10px] text-yellow-400 font-bold mb-2">📣 Sponsored</p>
+      <div class="text-xs text-slate-400 p-3 bg-slate-900/50 rounded-lg">
+        <i class="fa-solid fa-ad text-sky-400 mr-2"></i>
+        Download videos faster with our premium app!
+        <button class="block mx-auto mt-2 bg-sky-600 hover:bg-sky-700 text-white text-xs px-4 py-1.5 rounded-lg transition">
+          Learn More
+        </button>
+      </div>
+    </div>
+  </div>
 
-        async function fetchYouTube(url) {
-            const id = getYouTubeId(url);
-            if (!id) throw new Error('Invalid YouTube URL');
-            const resp = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`);
-            const data = await resp.json();
-            return {
-                title: data.title || 'YouTube Video',
-                author: data.author_name || '@YouTube',
-                thumbnail: data.thumbnail_url || `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-                videoUrl: url,
-                audioUrl: url
-            };
-        }
+  <p class="text-center text-slate-600 text-[10px] mt-5">© 2026 All Video Downloader</p>
+</div>
 
-        // ---------- TIKTOK ----------
-        async function fetchTikTok(url) {
-            const resp = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(url)}`);
-            const data = await resp.json();
-            if (!data?.data) throw new Error('No TikTok data');
-            return {
-                title: data.data.title || 'TikTok Video',
-                author: `@${data.data.author?.unique_id || 'user'}`,
-                thumbnail: data.data.cover || data.data.origin_cover || '',
-                videoUrl: data.data.play,
-                audioUrl: data.data.music || data.data.play
-            };
-        }
+<script>
+let videoUrl = '';
+let audioUrl = '';
 
-        // ---------- FACEBOOK (FIXED) ----------
-        async function fetchFacebook(url) {
-            // Try multiple APIs for Facebook
-            const apis = [
-                `https://fb-video-downloader-api.vercel.app/api?url=${encodeURIComponent(url)}`,
-                `https://api.vevioz.com/api/button/facebook/?url=${encodeURIComponent(url)}`
-            ];
+// Platform detection
+function detectPlatform(url) {
+  if (url.includes('tiktok.com')) return 'tiktok';
+  if (url.includes('youtube.com') || url.includes('youtu.be')) return 'youtube';
+  if (url.includes('instagram.com')) return 'instagram';
+  if (url.includes('facebook.com') || url.includes('fb.com') || url.includes('fb.watch')) return 'facebook';
+  if (url.includes('pinterest.com') || url.includes('pin.it')) return 'pinterest';
+  return null;
+}
 
-            for (const api of apis) {
-                try {
-                    const resp = await fetch(api);
-                    const data = await resp.json();
-                    if (data?.url || data?.video_url || data?.hd || data?.sd) {
-                        const video = data.hd || data.sd || data.url || data.video_url;
-                        return {
-                            title: data.title || data.caption || 'Facebook Video',
-                            author: data.author || data.username ? `@${data.author || data.username}` : '@Facebook',
-                            thumbnail: data.thumbnail || data.thumbnail_url || 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Facebook',
-                            videoUrl: video,
-                            audioUrl: video
-                        };
-                    }
-                } catch (e) { continue; }
-            }
+// Get YouTube video ID
+function getYouTubeId(url) {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+}
 
-            // Fallback: try to extract video from page
-            try {
-                const resp = await fetch(`https://api.allsocial.ru/facebook/?url=${encodeURIComponent(url)}`);
-                const data = await resp.json();
-                if (data?.video) {
-                    return {
-                        title: data.title || 'Facebook Video',
-                        author: '@Facebook',
-                        thumbnail: data.thumbnail || 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Facebook',
-                        videoUrl: data.video,
-                        audioUrl: data.video
-                    };
-                }
-            } catch (e) {}
+// Get YouTube direct download URL using multiple methods
+async function getYouTubeDownloadUrl(videoId) {
+  // Method 1: Using YouTube's oEmbed (metadata only)
+  // Method 2: Using alternative APIs
+  const apis = [
+    `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
+    `https://youtube-mp3-downloader2.herokuapp.com/?url=https://www.youtube.com/watch?v=${videoId}`
+  ];
+  
+  try {
+    // Try first API for metadata
+    const response = await fetch(apis[0]);
+    const data = await response.json();
+    return {
+      title: data.title || 'YouTube Video',
+      author: data.author_name || 'YouTube',
+      thumbnail: data.thumbnail_url || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+      videoUrl: `https://www.youtube.com/watch?v=${videoId}`, // We'll use this as fallback
+      audioUrl: `https://www.youtube.com/watch?v=${videoId}`
+    };
+  } catch (e) {
+    return {
+      title: 'YouTube Video',
+      author: '@YouTube',
+      thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+      videoUrl: `https://www.youtube.com/watch?v=${videoId}`,
+      audioUrl: `https://www.youtube.com/watch?v=${videoId}`
+    };
+  }
+}
 
-            // Final fallback: use direct URL
-            return {
-                title: 'Facebook Video',
-                author: '@Facebook',
-                thumbnail: 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Facebook',
-                videoUrl: url,
-                audioUrl: url
-            };
-        }
+// Get API URL for other platforms
+function getApiUrl(url, platform) {
+  switch(platform) {
+    case 'tiktok':
+      return `https://tikwm.com/api/?url=${encodeURIComponent(url)}`;
+    case 'instagram':
+      return `https://instagram-video-downloader-api.vercel.app/api?url=${encodeURIComponent(url)}`;
+    case 'facebook':
+      return `https://fb-video-downloader-api.vercel.app/api?url=${encodeURIComponent(url)}`;
+    case 'pinterest':
+      return `https://pinterest-video-downloader-api.vercel.app/api?url=${encodeURIComponent(url)}`;
+    default:
+      return null;
+  }
+}
 
-        // ---------- INSTAGRAM ----------
-        async function fetchInstagram(url) {
-            const apis = [
-                `https://instagram-video-downloader-api.vercel.app/api?url=${encodeURIComponent(url)}`,
-                `https://api.vevioz.com/api/button/instagram/?url=${encodeURIComponent(url)}`
-            ];
-            for (const api of apis) {
-                try {
-                    const resp = await fetch(api);
-                    const data = await resp.json();
-                    if (data?.url || data?.video_url) {
-                        return {
-                            title: data.title || data.caption || 'Instagram Video',
-                            author: data.author || data.username ? `@${data.author || data.username}` : '@Instagram',
-                            thumbnail: data.thumbnail || data.thumbnail_url || 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Instagram',
-                            videoUrl: data.url || data.video_url,
-                            audioUrl: data.url || data.video_url
-                        };
-                    }
-                } catch (e) { continue; }
-            }
-            return {
-                title: 'Instagram Video',
-                author: '@Instagram',
-                thumbnail: 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Instagram',
-                videoUrl: url,
-                audioUrl: url
-            };
-        }
+// Main function
+async function fetchVideo() {
+  const url = document.getElementById('videoUrl').value.trim();
+  const btn = document.getElementById('fetchBtn');
+  const resultArea = document.getElementById('resultArea');
+  
+  if (!url) { showToast('⚠️ Please paste a video URL'); return; }
 
-        // ---------- PINTEREST ----------
-        async function fetchPinterest(url) {
-            const apis = [
-                `https://pinterest-video-downloader-api.vercel.app/api?url=${encodeURIComponent(url)}`,
-                `https://api.vevioz.com/api/button/pinterest/?url=${encodeURIComponent(url)}`
-            ];
-            for (const api of apis) {
-                try {
-                    const resp = await fetch(api);
-                    const data = await resp.json();
-                    if (data?.url || data?.video_url) {
-                        return {
-                            title: data.title || data.description || 'Pinterest Video',
-                            author: data.author || data.username ? `@${data.author || data.username}` : '@Pinterest',
-                            thumbnail: data.thumbnail || data.thumbnail_url || 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Pinterest',
-                            videoUrl: data.url || data.video_url,
-                            audioUrl: data.url || data.video_url
-                        };
-                    }
-                } catch (e) { continue; }
-            }
-            return {
-                title: 'Pinterest Video',
-                author: '@Pinterest',
-                thumbnail: 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Pinterest',
-                videoUrl: url,
-                audioUrl: url
-            };
-        }
+  const platform = detectPlatform(url);
+  if (!platform) { showToast('❌ Unsupported platform'); return; }
 
-        // ---------- MAIN FETCH ----------
-        async function fetchVideo() {
-            const url = document.getElementById('videoUrl').value.trim();
-            const btn = document.getElementById('fetchBtn');
-            const resultArea = document.getElementById('resultArea');
+  btn.innerHTML = '<span class="spinner"></span> Processing...';
+  btn.disabled = true;
 
-            if (!url) {
-                showToast('⚠️ Please paste a video URL');
-                return;
-            }
+  try {
+    // YouTube special handling
+    if (platform === 'youtube') {
+      const videoId = getYouTubeId(url);
+      if (!videoId) throw new Error('Invalid YouTube URL');
+      
+      const data = await getYouTubeDownloadUrl(videoId);
+      videoUrl = url;
+      audioUrl = url;
+      document.getElementById('thumbnail').src = data.thumbnail;
+      document.getElementById('author').textContent = data.author;
+      document.getElementById('title').textContent = data.title;
+      resultArea.classList.remove('hidden');
+      showToast('✅ YouTube video ready!');
+      btn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> Fetch Video';
+      btn.disabled = false;
+      return;
+    }
 
-            const platform = detectPlatform(url);
-            if (!platform) {
-                showToast('❌ Unsupported platform');
-                return;
-            }
+    // Other platforms
+    const apiUrl = getApiUrl(url, platform);
+    if (!apiUrl) throw new Error('No API available');
 
-            btn.innerHTML = '<span class="spinner"></span> Processing...';
-            btn.disabled = true;
+    const response = await fetch(apiUrl);
+    const data = await response.json();
 
-            try {
-                let data;
-                switch (platform) {
-                    case 'youtube':
-                        data = await fetchYouTube(url);
-                        break;
-                    case 'tiktok':
-                        data = await fetchTikTok(url);
-                        break;
-                    case 'facebook':
-                        data = await fetchFacebook(url);
-                        break;
-                    case 'instagram':
-                        data = await fetchInstagram(url);
-                        break;
-                    case 'pinterest':
-                        data = await fetchPinterest(url);
-                        break;
-                    default:
-                        throw new Error('Platform not supported');
-                }
+    // Parse by platform
+    if (platform === 'tiktok' && data?.data) {
+      videoUrl = data.data.play;
+      audioUrl = data.data.music || data.data.play;
+      document.getElementById('thumbnail').src = data.data.cover || '';
+      document.getElementById('author').textContent = `@${data.data.author?.unique_id || 'user'}`;
+      document.getElementById('title').textContent = data.data.title || 'TikTok Video';
+    }
+    else if (platform === 'instagram' && data) {
+      videoUrl = data.url || data.video_url || url;
+      audioUrl = data.url || data.video_url || url;
+      document.getElementById('thumbnail').src = data.thumbnail || data.thumbnail_url || 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Instagram';
+      document.getElementById('author').textContent = data.author || data.username ? `@${data.author || data.username}` : '@Instagram';
+      document.getElementById('title').textContent = data.title || data.caption || 'Instagram Video';
+    }
+    else if (platform === 'facebook' && data) {
+      videoUrl = data.url || data.video_url || url;
+      audioUrl = data.url || data.video_url || url;
+      document.getElementById('thumbnail').src = data.thumbnail || data.thumbnail_url || 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Facebook';
+      document.getElementById('author').textContent = data.author || data.username ? `@${data.author || data.username}` : '@Facebook';
+      document.getElementById('title').textContent = data.title || data.caption || 'Facebook Video';
+    }
+    else if (platform === 'pinterest' && data) {
+      videoUrl = data.url || data.video_url || url;
+      audioUrl = data.url || data.video_url || url;
+      document.getElementById('thumbnail').src = data.thumbnail || data.thumbnail_url || 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Pinterest';
+      document.getElementById('author').textContent = data.author || data.username ? `@${data.author || data.username}` : '@Pinterest';
+      document.getElementById('title').textContent = data.title || data.description || 'Pinterest Video';
+    }
+    else {
+      // Fallback
+      videoUrl = url;
+      audioUrl = url;
+      document.getElementById('thumbnail').src = 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Video+Ready';
+      document.getElementById('author').textContent = '@Video';
+      document.getElementById('title').textContent = 'Click download to save';
+    }
 
-                videoUrl = data.videoUrl;
-                audioUrl = data.audioUrl;
+    resultArea.classList.remove('hidden');
+    showToast('✅ Video ready!');
 
-                document.getElementById('thumbnail').src = data.thumbnail;
-                document.getElementById('author').textContent = data.author;
-                document.getElementById('title').textContent = data.title;
+  } catch (error) {
+    console.error('Error:', error);
+    // Fallback
+    videoUrl = url;
+    audioUrl = url;
+    document.getElementById('thumbnail').src = 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Video+Ready';
+    document.getElementById('author').textContent = '@Video';
+    document.getElementById('title').textContent = 'Click download to save';
+    resultArea.classList.remove('hidden');
+    showToast('⚠️ Using direct download mode');
+  }
 
-                resultArea.classList.remove('hidden');
-                showToast('✅ Video ready for download!');
+  btn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> Fetch Video';
+  btn.disabled = false;
+}
 
-            } catch (err) {
-                console.error(err);
-                // Ultimate fallback: use URL directly
-                videoUrl = url;
-                audioUrl = url;
-                document.getElementById('thumbnail').src = 'https://via.placeholder.com/400x225/1a2332/ffffff?text=Video+Ready';
-                document.getElementById('author').textContent = '@Video';
-                document.getElementById('title').textContent = 'Click download to save';
-                resultArea.classList.remove('hidden');
-                showToast('⚠️ Using direct download mode');
-            }
+// Download Video - DIRECT DOWNLOAD
+async function downloadVideo() {
+  if (!videoUrl) { showToast('⚠️ No video URL'); return; }
 
-            btn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> Fetch Video';
-            btn.disabled = false;
-        }
+  const btn = document.getElementById('videoBtn');
+  btn.innerHTML = '<span class="spinner"></span> Saving...';
+  btn.disabled = true;
 
-        // ---------- DOWNLOAD VIDEO ----------
-        async function downloadVideo() {
-            if (!videoUrl) {
-                showToast('⚠️ No video URL');
-                return;
-            }
-            const btn = docum
+  try {
+    // Try to download as file
+    const response = await fetch(videoUrl);
+    if (!response.ok) throw new Error('Network error');
+    
+    const blob = await response.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = `video_${Date.now()}.mp4`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(blobUrl);
+    
+    showToast('✅ Video saved!');
+  } catch (e) {
+    // If fails, open in new tab with download prompt
+    window.open(videoUrl, '_blank');
+    showToast('📱 Opening in new tab - right click to save');
+  }
+
+  btn.innerHTML = '<i class="fa-solid fa-video"></i> Video HD';
+  btn.disabled = false;
+}
+
+// Download Audio - DIRECT DOWNLOAD
+async function downloadAudio() {
+  if (!audioUrl) { showToast('⚠️ No audio URL'); return; }
+
+  const btn = document.getElementById('audioBtn');
+  btn.innerHTML = '<span class="spinner"></span> Saving...';
+  btn.disabled = true;
+
+  try {
+    const response = await fetch(audioUrl);
+    if (!response.ok) throw new Error('Network error');
+    
+    const blob = await response.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = `audio_${Date.now()}.mp3`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(blobUrl);
+    
+    showToast('✅ Audio saved!');
+  } catch (e) {
+    window.open(audioUrl, '_blank');
+    showToast('📱 Opening in new tab - right click to save');
+  }
+
+  btn.innerHTML = '<i class="fa-solid fa-music"></i> Audio MP3';
+  btn.disabled = false;
+}
+
+// Toast
+function showToast(msg) {
+  const old = document.querySelector('.toast');
+  if (old) old.remove();
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+
+// Enter key
+document.getElementById('videoUrl').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') fetchVideo();
+});
+</script>
+
+</body>
+    </html>

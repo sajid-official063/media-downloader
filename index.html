@@ -45,10 +45,6 @@
         .link-item span { font-size: 13px; color: #ccd6f6; word-break: break-all; display: flex; align-items: center; gap: 8px; }
         .copy-btn { background: #00b4db; border: none; color: #fff; padding: 6px 14px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; white-space: nowrap; }
         .copy-btn.pink { background: #e1306c; }
-
-        .ad-container { background: #141b2b; border-radius: 16px; padding: 14px; text-align: center; margin: 18px 0; border: 1px dashed #00b4db33; }
-        .ad-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #5a6a8a; margin-bottom: 6px; }
-        .ad-box { background: #0b0e1a; padding: 15px 10px; border-radius: 12px; font-size: 13px; color: #ccd6f6; min-height: 60px; }
         
         .download-result-box { background: #0b0e1a; padding: 14px; border-radius: 14px; margin-top: 14px; border: 1px solid #00b4db; text-align: center; }
         .download-result-box img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; border: 1px solid #1f2a3f; }
@@ -122,31 +118,14 @@
             </div>
         </div>
 
-        <!-- AD 1 -->
-        <div class="ad-container">
-            <div class="ad-label">— SPONSORED AD 1 —</div>
-            <div class="ad-box">
-                <script async="async" data-cfasync="false" src="https://pl30991536.profitableratecpmnetwork.com/448e3ccce370deb9b96e8370daef31f4/invoke.js"></script>
-                <div id="container-448e3ccce370deb9b96e8370daef31f4"></div>
-            </div>
-        </div>
-
-        <!-- Downloader Card -->
+        <!-- Downloader Card (Result box is strictly placed right inside this card, right under Fetch Button) -->
         <div class="card">
             <h3 style="text-align: left; margin-bottom:8px;">Paste Video URL to Download Fast</h3>
             <input type="text" id="videoUrl" placeholder="Paste TikTok, Insta, FB, YouTube Link..." style="margin-bottom:10px;">
             <button class="btn btn-primary" onclick="fetchMedia()"><i class="fas fa-rocket"></i> Fetch Video</button>
             
-            <!-- RESULT BOX (Strictly Right Under Fetch Button) -->
+            <!-- RESULT BOX -->
             <div id="downloadResult"></div>
-        </div>
-
-        <!-- AD 2 -->
-        <div class="ad-container">
-            <div class="ad-label">— SPONSORED AD 2 —</div>
-            <div class="ad-box">
-                <script src="https://pl31087341.profitableratecpmnetwork.com/22/c9/ac/22c9ac26eef58cfaf7365f1582cddc9f.js"></script>
-            </div>
         </div>
     </div>
 
@@ -321,4 +300,21 @@
             
             const masterLink = `${window.location.origin}/?hub=${encodeURIComponent(handle)}&yt=${yt}&fb=${fb}&insta=${insta}`;
             copyText(masterLink);
-            sh
+            showToast('🔗 ماسٹر بائیو لنک کاپی ہو گیا!');
+        }
+
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            if(params.has('hub')) {
+                document.getElementById('bioHandle').value = decodeURIComponent(params.get('hub'));
+                if(params.get('yt')) document.getElementById('linkYouTube').value = decodeURIComponent(params.get('yt'));
+                if(params.get('fb')) document.getElementById('linkFacebook').value = decodeURIComponent(params.get('fb'));
+                if(params.get('insta')) document.getElementById('linkInstagram').value = decodeURIComponent(params.get('insta'));
+                updatePreview();
+                document.querySelectorAll('.tab-btn')[1].click();
+            }
+        };
+    </script>
+</body>
+                    </html>
+                

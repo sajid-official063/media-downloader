@@ -477,35 +477,67 @@
         // ========== VIDEO DOWNLOADER ==========
         let videoUrl = '';
         let audioUrl = '';
+// ========= VIDEO DOWNLOADER =========
+let videoUrl = '';
+let audioUrl = '';
 
-        async function fetchVideo() {
-            const url = document.getElementById('videoUrl').value.trim();
-            const btn = document.getElementById('fetchBtn');
-            const resultArea = document.getElementById('resultArea');
+async function fetchVideo() {
+    const url = document.getElementById('videourl').value.trim();
+    const btn = document.getElementById('fetchBtn');
+    const resultArea = document.getElementById('resultArea');
 
-            if (!url) {
-                showToast('⚠️ Please paste a video URL', 'error');
-                return;
-            }
+    if (!url) {
+        showToast('⚠️ Please paste a video URL!', 'error');
+        return;
+    }
 
-            btn.innerHTML = '<span class="spinner"></span> Processing...';
-            btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Processing...';
+    btn.disabled = true;
 
-            try {
-                // Using TikTok API (which works)
-                const resp = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(url)}`);
-                const data = await resp.json();
+    try {
+        const resp = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(url)}`);
+        const data = await resp.json();
 
-                if (data?.data) {
-                    videoUrl = data.data.play;
-                    audioUrl = data.data.music || data.data.play;
-                    document.getElementById('thumbnail').src = data.data.cover || data.data.origin_cover || '';
-                    document.getElementById('author').textContent = `@${data.data.author?.unique_id || 'user'}`;
-                    document.getElementById('title').textContent = data.data.title || 'TikTok Video';
-                    resultArea.classList.remove('hidden');
-                    showToast('✅ Video ready!', 'success');
-                } else {
-                    // Fallback: try to use URL directly
-                    videoUrl = url;
-                    audioUrl = url;
-                    document.getElementById('thumbnail').src = 'https://via.placeholder.com/400x225/1a2
+        if (data && data.data) {
+            videoUrl = data.data.play;
+            audioUrl = data.data.music || data.data.play;
+            
+            document.getElementById('thumbnail').src = data.data.cover || data.data.origin_cover || '';
+            document.getElementById('author').textContent = `@${data.data.author?.unique_id || 'user'}`;
+            document.getElementById('title').textContent = data.data.title || 'TikTok Video';
+            
+            resultArea.classList.remove('hidden');
+            showToast('✅ Video ready!', 'success');
+        } else {
+            videoUrl = url;
+            audioUrl = url;
+            resultArea.classList.remove('hidden');
+            showToast('✅ Ready to download!', 'success');
+        }
+    } catch (err) {
+        videoUrl = url;
+        audioUrl = url;
+        resultArea.classList.remove('hidden');
+        showToast('✅ Ready to download!', 'success');
+    } finally {
+        btn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> Fetch Video';
+        btn.disabled = false;
+    }
+}
+
+function downloadVideo() {
+    if (videoUrl) {
+        window.open(videoUrl, '_blank');
+    } else {
+        showToast('⚠️ No video URL available!', 'error');
+    }
+}
+
+function downloadAudio() {
+    if (audioUrl) {
+        window.open(audioUrl, '_blank');
+    } else {
+        showToast('⚠️ No audio URL available!', 'error');
+    }
+        }
+        

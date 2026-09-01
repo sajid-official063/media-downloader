@@ -9,51 +9,50 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: #0b0e1a; color: #fff; padding: 16px 14px 80px 14px; min-height: 100vh; }
         .header { text-align: center; padding: 10px 0 6px 0; }
-        .header h1 { font-size: 20px; font-weight: 700; background: linear-gradient(135deg, #f7971e, #ffd200); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header h1 { font-size: 20px; font-weight: 700; background: linear-gradient(135deg, #38ef7d, #11998e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .header p { font-size: 12px; color: #aaa; margin-top: 2px; }
         
-        .app-banner { display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #1a2335, #0b0e1a); border-radius: 16px; padding: 12px 16px; border: 1px solid #f7971e33; margin: 14px 0; gap: 10px; }
+        .app-banner { display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #141b2b, #0b0e1a); border-radius: 16px; padding: 12px 16px; border: 1px solid #1f2a3f; margin: 14px 0; gap: 10px; }
         .app-text { font-size: 13px; }
-        .app-text strong { color: #f7971e; }
-        .store-buttons { display: flex; gap: 8px; }
-        .store-btn { background: #f7971e; border: none; padding: 8px 14px; border-radius: 30px; font-weight: 700; color: #0b0e1a; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-        .store-btn.palm { background: #00c853; color: #fff; }
+        .app-text strong { color: #fff; }
+        .store-buttons { display: flex; gap: 8px; align-items: center; }
+        .official-badge { background: #11998e; color: #fff; font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
+        .install-btn { background: #00c853; border: none; padding: 8px 14px; border-radius: 10px; font-weight: 700; color: #fff; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
 
         .tabs { display: flex; background: #141b2b; border-radius: 30px; padding: 5px; margin: 14px 0 18px 0; gap: 4px; }
         .tab-btn { flex: 1; padding: 10px 0; border: none; border-radius: 30px; font-size: 12px; font-weight: 600; background: transparent; color: #8892b0; cursor: pointer; transition: 0.3s; }
-        .tab-btn.active { background: #f7971e; color: #0b0e1a; box-shadow: 0 4px 12px rgba(247, 151, 30, 0.3); }
+        .tab-btn.active { background: #00b4db; color: #fff; box-shadow: 0 4px 12px rgba(0, 180, 219, 0.3); }
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fade 0.3s ease; }
         @keyframes fade { from { opacity: 0.4; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
         .card { background: #141b2b; border-radius: 20px; padding: 18px 16px; margin-bottom: 18px; border: 1px solid #1f2a3f; }
-        .card h3 { font-size: 15px; margin-bottom: 10px; color: #f7971e; }
+        .card h3 { font-size: 14px; margin-bottom: 12px; color: #fff; text-align: center; letter-spacing: 0.5px; }
         .card label { font-size: 13px; color: #ccd6f6; display: block; margin: 8px 0 4px 0; }
-        .card input { width: 100%; padding: 12px 14px; border-radius: 14px; border: 1px solid #1f2a3f; background: #0b0e1a; color: #fff; font-size: 14px; outline: none; }
+        .card input { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid #1f2a3f; background: #0b0e1a; color: #fff; font-size: 14px; outline: none; }
         
-        .btn { display: inline-block; padding: 12px 24px; border: none; border-radius: 30px; font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 10px; text-align: center; }
-        .btn-primary { background: linear-gradient(135deg, #f7971e, #ffd200); color: #0b0e1a; }
+        .btn { display: inline-block; padding: 12px 24px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 10px; text-align: center; }
+        .btn-primary { background: linear-gradient(135deg, #00b4db, #0083b0); color: #fff; }
+        .btn-green { background: #00c853; color: #fff; font-size: 13px; padding: 10px; border-radius: 10px; text-decoration: none; display: block; margin-top: 8px; }
+        .btn-yellow { background: #ffd600; color: #0b0e1a; font-size: 13px; padding: 10px; border-radius: 10px; text-decoration: none; display: block; margin-top: 6px; }
+
+        .supported-icons { display: flex; justify-content: center; gap: 14px; font-size: 22px; padding: 4px 0; }
         
-        .supported-icons { display: flex; justify-content: center; gap: 14px; font-size: 24px; padding: 6px 0; }
-        .link-item { display: flex; justify-content: space-between; align-items: center; background: #0b0e1a; padding: 10px 14px; border-radius: 14px; margin: 6px 0; border-left: 3px solid #f7971e; }
+        .link-item { display: flex; justify-content: space-between; align-items: center; background: #0b0e1a; padding: 12px 14px; border-radius: 12px; margin: 8px 0; border: 1px solid #1f2a3f; }
         .link-item span { font-size: 13px; color: #ccd6f6; word-break: break-all; display: flex; align-items: center; gap: 8px; }
-        .copy-btn { background: #f7971e; border: none; color: #0b0e1a; padding: 6px 14px; border-radius: 20px; font-weight: 600; font-size: 12px; cursor: pointer; white-space: nowrap; }
-        
-        .ad-container { background: #1a2335; border-radius: 16px; padding: 14px; text-align: center; margin: 18px 0; border: 1px dashed #f7971e; }
+        .copy-btn { background: #00b4db; border: none; color: #fff; padding: 6px 14px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; white-space: nowrap; }
+        .copy-btn.pink { background: #e1306c; }
+
+        .ad-container { background: #141b2b; border-radius: 16px; padding: 14px; text-align: center; margin: 18px 0; border: 1px dashed #00b4db33; }
         .ad-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #5a6a8a; margin-bottom: 6px; }
         .ad-box { background: #0b0e1a; padding: 15px 10px; border-radius: 12px; font-size: 13px; color: #ccd6f6; }
         
-        .bio-preview { background: #0b0e1a; border-radius: 14px; padding: 14px; margin-top: 12px; border: 1px solid #1f2a3f; text-align: center; }
-        .bio-preview .handle { color: #f7971e; font-weight: 600; margin-bottom: 10px; }
-        .bio-preview .links a { color: #0b0e1a; background: #f7971e; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 11px; border-radius: 12px; margin: 8px 0; font-size: 13px; font-weight: 700; transition: 0.2s; }
-        .bio-preview .links a:hover { opacity: 0.9; transform: scale(0.98); }
-
-        .download-result-box { background: #0b0e1a; padding: 14px; border-radius: 14px; margin-top: 12px; border: 1px solid #f7971e; text-align: center; }
-        .download-result-box img { width: 100%; max-height: 160px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; border: 1px solid #1f2a3f; }
+        .download-result-box { background: #0b0e1a; padding: 14px; border-radius: 14px; margin-top: 14px; border: 1px solid #00b4db; text-align: center; }
+        .download-result-box img { width: 100%; max-height: 220px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; border: 1px solid #1f2a3f; }
         
-        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #f7971e; color: #0b0e1a; padding: 10px 24px; border-radius: 30px; font-size: 14px; font-weight: 700; box-shadow: 0 8px 30px rgba(0,0,0,0.6); display: none; z-index: 999; }
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #00c853; color: #fff; padding: 10px 24px; border-radius: 30px; font-size: 14px; font-weight: 700; box-shadow: 0 8px 30px rgba(0,0,0,0.6); display: none; z-index: 999; }
         .toast.show { display: block; animation: fade 0.3s ease; }
-        .footer { text-align: center; font-size: 11px; color: #5a6a8a; padding: 20px 0 10px 0; border-top: 1px solid #1a2335; margin-top: 10px; }
+        .footer { text-align: center; font-size: 11px; color: #5a6a8a; padding: 20px 0 10px 0; border-top: 1px solid #141b2b; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -61,25 +60,34 @@
     <div id="toast" class="toast">✅ Copied!</div>
 
     <div class="header">
-        <h1>📥 All Media Downloader & Bio Hub</h1>
-        <p>Download HD Videos & Manage Master Bio Links</p>
+        <h1>All Media Downloader & Bio Hub</h1>
+        <p>Download HD Videos & Manage Bio Links</p>
     </div>
 
+    <!-- App Banner -->
     <div class="app-banner">
-        <div class="app-text"><strong>📱 Get Mobile App</strong><br>Fast & Free Download Manager</div>
+        <div class="app-text">
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                <strong>Download Mobile App</strong>
+                <span class="official-badge">OFFICIAL</span>
+            </div>
+            <span style="font-size:11px; color:#aaa;">Play Store & Palm Store Available</span>
+        </div>
         <div class="store-buttons">
-            <button class="store-btn" onclick="openStoreModal('Play Store')"><i class="fab fa-google-play"></i> Play</button>
-            <button class="store-btn palm" onclick="openStoreModal('Palm Store')"><i class="fas fa-store"></i> Palm</button>
+            <button class="install-btn" onclick="openStoreModal('App Store')"><i class="fas fa-download"></i> Install App</button>
         </div>
     </div>
 
+    <!-- Navigation Tabs -->
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('downloader', this)"><i class="fas fa-download"></i> Downloader</button>
-        <button class="tab-btn" onclick="switchTab('bio', this)"><i class="fas fa-magic"></i> Bio Hub</button>
-        <button class="tab-btn" onclick="switchTab('mylinks', this)"><i class="fas fa-list"></i> All Links</button>
+        <button class="tab-btn" onclick="switchTab('bio', this)"><i class="fas fa-magic"></i> Bio Generator</button>
+        <button class="tab-btn" onclick="switchTab('mylinks', this)"><i class="fas fa-list"></i> My Bio Links</button>
     </div>
 
+    <!-- TAB 1: DOWNLOADER -->
     <div id="downloader" class="tab-content active">
+        <!-- AD 1 -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED AD 1 —</div>
             <div class="ad-box">
@@ -89,24 +97,25 @@
         </div>
 
         <div class="card">
-            <h3>📌 SUPPORTED PLATFORMS</h3>
+            <h3>SUPPORTED PLATFORMS</h3>
             <div class="supported-icons">
-                <i class="fab fa-facebook" style="color:#1877f2;" title="Facebook"></i>
-                <i class="fab fa-instagram" style="color:#e1306c;" title="Instagram"></i>
-                <i class="fab fa-tiktok" style="color:#fff;" title="TikTok"></i>
                 <i class="fab fa-youtube" style="color:#ff0000;" title="YouTube"></i>
+                <i class="fab fa-tiktok" style="color:#fff;" title="TikTok"></i>
+                <i class="fab fa-instagram" style="color:#e1306c;" title="Instagram"></i>
+                <i class="fab fa-facebook" style="color:#1877f2;" title="Facebook"></i>
+                <i class="fab fa-snapchat" style="color:#fffc00;" title="Snapchat"></i>
                 <i class="fab fa-pinterest" style="color:#e60023;" title="Pinterest"></i>
-                <i class="fab fa-twitter" style="color:#1da1f2;" title="Twitter"></i>
             </div>
         </div>
 
         <div class="card">
-            <h3>🔗 Paste Video URL to Download Fast</h3>
-            <input type="text" id="videoUrl" placeholder="Paste Insta, TikTok, FB, YT Link here..." style="margin-bottom:8px;">
-            <button class="btn btn-primary" onclick="fetchMedia()"><i class="fas fa-cloud-download-alt"></i> Fetch & Preview Media</button>
+            <h3 style="text-align: left; margin-bottom:8px;">Paste Video URL to Download Fast</h3>
+            <input type="text" id="videoUrl" placeholder="Paste TikTok, Insta, FB, YouTube Link..." style="margin-bottom:10px;">
+            <button class="btn btn-primary" onclick="fetchMedia()"><i class="fas fa-rocket"></i> Fetch Video</button>
             <div id="downloadResult" style="display:none;"></div>
         </div>
 
+        <!-- AD 2 -->
         <div class="ad-container">
             <div class="ad-label">— SPONSORED AD 2 —</div>
             <div class="ad-box">
@@ -115,79 +124,62 @@
         </div>
     </div>
 
+    <!-- TAB 2: BIO GENERATOR -->
     <div id="bio" class="tab-content">
         <div class="card">
-            <h3>✨ Create Your Master Bio Hub Link</h3>
-            <label>Name / Page Title</label>
-            <input type="text" id="bioName" value="Sajid Official" oninput="updateBioPreview()">
+            <h3>Create Your Custom Bio Link</h3>
             
-            <label>Social Handle</label>
-            <input type="text" id="bioHandle" value="@thesajidvibe" oninput="updateBioPreview()">
+            <label>Name / Page Title:</label>
+            <input type="text" id="bioName" value="Sajid Official">
+            
+            <label>Social Handle:</label>
+            <input type="text" id="bioHandle" value="@thesajidvibe">
+            
+            <div style="margin-top:10px; font-weight:600; font-size:13px; color:#00b4db;">Add Your Links Below:</div>
             
             <label>YouTube Link</label>
-            <input type="text" id="linkYouTube" value="https://youtube.com/@sajidofficial" oninput="updateBioPreview()">
+            <input type="text" id="linkYouTube" value="https://youtube.com/@sajidofficial" placeholder="YouTube Link">
             
             <label>Facebook Link</label>
-            <input type="text" id="linkFacebook" value="https://facebook.com/sajidofficial" oninput="updateBioPreview()">
+            <input type="text" id="linkFacebook" value="https://facebook.com/sajidofficial" placeholder="Facebook Link">
             
             <label>Instagram Link</label>
-            <input type="text" id="linkInstagram" value="https://instagram.com/thesajidvibe" oninput="updateBioPreview()">
+            <input type="text" id="linkInstagram" value="https://instagram.com/thesajidvibe" placeholder="Instagram Link">
 
-            <label>TikTok Link</label>
-            <input type="text" id="linkTiktok" value="https://tiktok.com/@sajid" oninput="updateBioPreview()">
+            <label>Snapchat Link</label>
+            <input type="text" id="linkSnapchat" value="" placeholder="Snapchat Link">
 
             <label>Pinterest Link</label>
-            <input type="text" id="linkPinterest" value="https://pinterest.com/sajid" oninput="updateBioPreview()">
+            <input type="text" id="linkPinterest" value="" placeholder="Pinterest Link">
 
-            <label>Twitter / X Link</label>
-            <input type="text" id="linkTwitter" value="https://twitter.com/sajid" oninput="updateBioPreview()">
-
-            <button class="btn btn-primary" style="margin-top:14px;" onclick="generateBioLink()"><i class="fas fa-link"></i> Generate & Copy Master Bio Link</button>
-
-            <div id="bioPreview" class="bio-preview" style="margin-top:15px;">
-                <div style="font-size:18px;font-weight:700;" id="previewName">Sajid Official</div>
-                <div class="handle" id="previewHandle">@thesajidvibe</div>
-                <div class="links" id="previewLinks"></div>
-            </div>
+            <button class="btn btn-primary" style="margin-top:16px;" onclick="generateBioLink()">Generate My Bio Link Page</button>
         </div>
     </div>
 
+    <!-- TAB 3: MY BIO LINKS -->
     <div id="mylinks" class="tab-content">
         <div class="card">
-            <h3>📋 All Profile & Social Hub Links</h3>
+            <h3>All Profile & Channel Links</h3>
+            <p style="font-size:11px; color:#aaa; text-align:center; margin-bottom:12px;">Copy your official links directly to paste on your profiles</p>
+            
             <div class="link-item">
                 <span><i class="fab fa-youtube" style="color:#ff0000;"></i> YouTube Channel</span>
-                <button class="copy-btn" onclick="copyText('https://youtube.com/@sajidofficial')">Copy</button>
+                <button class="copy-btn" onclick="copyText('https://youtube.com/@sajidofficial')">Copy Link</button>
             </div>
             <div class="link-item">
-                <span><i class="fab fa-instagram" style="color:#e1306c;"></i> Instagram Vibe</span>
-                <button class="copy-btn" onclick="copyText('https://instagram.com/thesajidvibe')">Copy</button>
-            </div>
-            <div class="link-item">
-                <span><i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook Profile</span>
-                <button class="copy-btn" onclick="copyText('https://facebook.com/sajidofficial')">Copy</button>
-            </div>
-            <div class="link-item">
-                <span><i class="fab fa-tiktok" style="color:#fff;"></i> TikTok Profile</span>
-                <button class="copy-btn" onclick="copyText('https://tiktok.com/@sajid')">Copy</button>
-            </div>
-            <div class="link-item">
-                <span><i class="fab fa-pinterest" style="color:#e60023;"></i> Pinterest Board</span>
-                <button class="copy-btn" onclick="copyText('https://pinterest.com/sajid')">Copy</button>
-            </div>
-            <div class="link-item">
-                <span><i class="fab fa-twitter" style="color:#1da1f2;"></i> Twitter / X Profile</span>
-                <button class="copy-btn" onclick="copyText('https://twitter.com/sajid')">Copy</button>
+                <span><i class="fab fa-tiktok" style="color:#fff;"></i> TikTok / Instagram</span>
+                <button class="copy-btn pink" onclick="copyText('https://tiktok.com/@thesajidvibe')">Copy Link</button>
             </div>
         </div>
     </div>
 
-    <div class="footer">All-in-One Media Downloader & Bio Hub © 2026</div>
+    <div class="footer">© 2026 Media Downloader & Bio Hub</div>
 
+    <!-- Store Modal -->
     <div id="storeModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center; padding:20px;">
-        <div style="background:#141b2b; padding:20px; border-radius:16px; width:100%; max-width:320px; text-align:center; border:1px solid #f7971e;">
-            <h3 id="storeTitle" style="color:#f7971e; margin-bottom:10px;">Store App</h3>
-            <p id="storeDesc" style="font-size:12px; color:#aaa; margin-bottom:15px;">App version is coming soon!</p>
+        <div style="background:#141b2b; padding:20px; border-radius:16px; width:100%; max-width:320px; text-align:center; border:1px solid #00b4db;">
+            <h3 id="storeTitle" style="color:#fff; margin-bottom:10px;">App Download</h3>
+            <p style="font-size:12px; color:#aaa; margin-bottom:15px;">App version will be available soon on Play Store & Palm Store!</p>
             <button class="btn btn-primary" onclick="closeStoreModal()">Got It</button>
         </div>
     </div>
@@ -217,8 +209,6 @@
             btnElement.classList.add('active');
         }
         function openStoreModal(storeName) {
-            document.getElementById('storeTitle').textContent = storeName;
-            document.getElementById('storeDesc').textContent = storeName + " app version will be available soon!";
             document.getElementById('storeModal').style.display = 'flex';
         }
         function closeStoreModal() { document.getElementById('storeModal').style.display = 'none'; }
@@ -228,43 +218,23 @@
             const resultBox = document.getElementById('downloadResult');
             if (!urlInput) { showToast('❌ براہ کرم کوئی میڈیا لنک درج کریں!'); return; }
             resultBox.style.display = 'block';
-            resultBox.innerHTML = `<div style="padding:15px; text-align:center; color:#f7971e;"><i class="fas fa-spinner fa-spin"></i> فیچ ہو رہا ہے...</div>`;
+            resultBox.innerHTML = `<div style="padding:15px; text-align:center; color:#00b4db;"><i class="fas fa-spinner fa-spin"></i> Fetching video...</div>`;
             setTimeout(() => {
                 resultBox.innerHTML = `
                     <div class="download-result-box">
-                        <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?w=500" alt="Media Thumbnail">
-                        <h4 style="font-size:13px; margin-bottom:8px; color:#fff;">🎬 HD Video / Media Ready</h4>
-                        <a href="${urlInput}" target="_blank" class="btn btn-primary" style="text-decoration:none; display:block; padding:10px; font-size:13px; margin-top:0;">
-                            <i class="fas fa-download"></i> Download Media File
+                        <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?w=500" alt="Thumbnail">
+                        <div style="font-size:12px; color:#00b4db; margin-bottom:4px;">@uniqueaseel5</div>
+                        <div style="font-size:12px; color:#fff; margin-bottom:10px;">Top Aseel Moments & Media Content</div>
+                        <a href="${urlInput}" target="_blank" class="btn-green">
+                            <i class="fas fa-download"></i> Download HD Video Directly 📥
+                        </a>
+                        <a href="${urlInput}" target="_blank" class="btn-yellow">
+                            <i class="fas fa-music"></i> Download Audio MP3 🎵
                         </a>
                     </div>
                 `;
-                showToast('✅ میڈیا کامیابی سے لوڈ ہو گیا!');
+                showToast('✅ ویڈیو کامیابی سے فیچ ہو گئی!');
             }, 1000);
-        }
-
-        function updateBioPreview() {
-            const name = document.getElementById('bioName').value || 'Sajid Official';
-            const handle = document.getElementById('bioHandle').value || '@thesajidvibe';
-            const yt = document.getElementById('linkYouTube').value;
-            const fb = document.getElementById('linkFacebook').value;
-            const insta = document.getElementById('linkInstagram').value;
-            const tiktok = document.getElementById('linkTiktok').value;
-            const pinterest = document.getElementById('linkPinterest').value;
-            const twitter = document.getElementById('linkTwitter').value;
-
-            document.getElementById('previewName').textContent = name;
-            document.getElementById('previewHandle').textContent = handle;
-            
-            let linksHtml = '';
-            if(yt) linksHtml += `<a href="${yt}" target="_blank"><i class="fab fa-youtube" style="color:#ff0000; font-size:16px;"></i> YouTube Channel</a>`;
-            if(fb) linksHtml += `<a href="${fb}" target="_blank"><i class="fab fa-facebook" style="color:#1877f2; font-size:16px;"></i> Facebook Profile</a>`;
-            if(insta) linksHtml += `<a href="${insta}" target="_blank"><i class="fab fa-instagram" style="color:#e1306c; font-size:16px;"></i> Instagram Vibe</a>`;
-            if(tiktok) linksHtml += `<a href="${tiktok}" target="_blank"><i class="fab fa-tiktok" style="color:#fff; font-size:16px;"></i> TikTok Profile</a>`;
-            if(pinterest) linksHtml += `<a href="${pinterest}" target="_blank"><i class="fab fa-pinterest" style="color:#e60023; font-size:16px;"></i> Pinterest Board</a>`;
-            if(twitter) linksHtml += `<a href="${twitter}" target="_blank"><i class="fab fa-twitter" style="color:#1da1f2; font-size:16px;"></i> Twitter / X Profile</a>`;
-            
-            document.getElementById('previewLinks').innerHTML = linksHtml;
         }
 
         function generateBioLink() {
@@ -272,38 +242,28 @@
             const yt = encodeURIComponent(document.getElementById('linkYouTube').value);
             const fb = encodeURIComponent(document.getElementById('linkFacebook').value);
             const insta = encodeURIComponent(document.getElementById('linkInstagram').value);
-            const tiktok = encodeURIComponent(document.getElementById('linkTiktok').value);
-            const pinterest = encodeURIComponent(document.getElementById('linkPinterest').value);
-            const twitter = encodeURIComponent(document.getElementById('linkTwitter').value);
+            const snap = encodeURIComponent(document.getElementById('linkSnapchat').value);
+            const pin = encodeURIComponent(document.getElementById('linkPinterest').value);
             
-            const masterLink = `${window.location.origin}/?hub=${encodeURIComponent(handle)}&yt=${yt}&fb=${fb}&insta=${insta}&tiktok=${tiktok}&pin=${pinterest}&tw=${twitter}`;
+            const masterLink = `${window.location.origin}/?hub=${encodeURIComponent(handle)}&yt=${yt}&fb=${fb}&insta=${insta}&snap=${snap}&pin=${pin}`;
             
             copyText(masterLink);
             showToast('🔗 ماسٹر بائیو لنک کاپی ہو گیا!');
         }
 
-        // Auto Load Links if opened via Master Link Hub
         window.onload = function() {
             const params = new URLSearchParams(window.location.search);
             if(params.has('hub')) {
-                const handle = decodeURIComponent(params.get('hub'));
-                const yt = decodeURIComponent(params.get('yt') || '');
-                const fb = decodeURIComponent(params.get('fb') || '');
-                const insta = decodeURIComponent(params.get('insta') || '');
-                const tiktok = decodeURIComponent(params.get('tiktok') || '');
-                const pin = decodeURIComponent(params.get('pin') || '');
-                const tw = decodeURIComponent(params.get('tw') || '');
-
-                document.getElementById('bioHandle').value = handle;
-                if(yt) document.getElementById('linkYouTube').value = yt;
-                if(fb) document.getElementById('linkFacebook').value = fb;
-                if(insta) document.getElementById('linkInstagram').value = insta;
-                if(tiktok) document.getElementById('linkTiktok').value = tiktok;
-                if(pin) document.getElementById('linkPinterest').value = pin;
-                if(tw) document.getElementById('linkTwitter').value = tw;
-
+                document.getElementById('bioHandle').value = decodeURIComponent(params.get('hub'));
+                if(params.get('yt')) document.getElementById('linkYouTube').value = decodeURIComponent(params.get('yt'));
+                if(params.get('fb')) document.getElementById('linkFacebook').value = decodeURIComponent(params.get('fb'));
+                if(params.get('insta')) document.getElementById('linkInstagram').value = decodeURIComponent(params.get('insta'));
+                if(params.get('snap')) document.getElementById('linkSnapchat').value = decodeURIComponent(params.get('snap'));
+                if(params.get('pin')) document.getElementById('linkPinterest').value = decodeURIComponent(params.get('pin'));
                 switchTab('bio', document.querySelectorAll('.tab-btn')[1]);
             }
-            updateBioPreview();
         };
-                
+    </script>
+</body>
+        </html>
+    ح

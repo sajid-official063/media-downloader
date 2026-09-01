@@ -473,11 +473,7 @@
                 showToast('✅ Link copied!', 'success');
             });
         }
-
-        // ========== VIDEO DOWNLOADER ==========
-        let videoUrl = '';
-        let audioUrl = '';
-// ========= VIDEO DOWNLOADER =========
+        // ========= VIDEO DOWNLOADER =========
 let videoUrl = '';
 let audioUrl = '';
 
@@ -527,17 +523,29 @@ async function fetchVideo() {
 
 function downloadVideo() {
     if (videoUrl) {
-        window.open(videoUrl, '_blank');
+        const a = document.createElement('a');
+        a.href = videoUrl;
+        a.target = '_blank';
+        a.download = 'video.mp4';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     } else {
-        showToast('⚠️ No video URL available!', 'error');
+        showToast('⚠️ پہلے ویڈیو فیچ کریں!', 'error');
     }
 }
 
 function downloadAudio() {
     if (audioUrl) {
-        window.open(audioUrl, '_blank');
+        const a = document.createElement('a');
+        a.href = audioUrl;
+        a.target = '_blank';
+        a.download = 'audio.mp3';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     } else {
-        showToast('⚠️ No audio URL available!', 'error');
+        showToast('⚠️ پہلے ویڈیو فیچ کریں!', 'error');
     }
         }
         
